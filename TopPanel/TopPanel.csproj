@@ -1,17 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>WinExe</OutputType>
         <TargetFramework>net6.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
-        <RootNamespace>BrowserApp</RootNamespace>
     </PropertyGroup>
+
     <ItemGroup>
+      <ProjectReference Include="..\ControlExt\ControlExt.csproj" />
       <ProjectReference Include="..\PresenterBase\PresenterBase.csproj" />
-      <ProjectReference Include="..\TopPanel\TopPanel.csproj" />
     </ItemGroup>
-    <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-    </ItemGroup>
+
 </Project>

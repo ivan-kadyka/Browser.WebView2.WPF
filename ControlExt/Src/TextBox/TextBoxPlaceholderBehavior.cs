@@ -1,8 +1,7 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace App;
+namespace ControlExt.TextBox;
 
 public static class TextBoxPlaceholderBehavior
 {
@@ -25,7 +24,7 @@ public static class TextBoxPlaceholderBehavior
 
     private static void OnPlaceholderChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
     {
-        if (dependencyObject is TextBox textBox)
+        if (dependencyObject is System.Windows.Controls.TextBox textBox)
         {
             textBox.Loaded += (_, _) => AddPlaceholder(textBox, (string)e.NewValue);
             textBox.GotFocus += (_, _) => RemovePlaceholder(textBox);
@@ -33,7 +32,7 @@ public static class TextBoxPlaceholderBehavior
         }
     }
 
-    private static void AddPlaceholder(TextBox textBox, string placeholder)
+    private static void AddPlaceholder(System.Windows.Controls.TextBox textBox, string placeholder)
     {
         if (string.IsNullOrEmpty(textBox.Text))
         {
@@ -42,7 +41,7 @@ public static class TextBoxPlaceholderBehavior
         }
     }
 
-    private static void RemovePlaceholder(TextBox textBox)
+    private static void RemovePlaceholder(System.Windows.Controls.TextBox textBox)
     {
         if (textBox.Text == GetPlaceholder(textBox))
         {

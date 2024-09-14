@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresenterBase", "PresenterBase\PresenterBase.csproj", "{58F533A2-2B71-4C4A-997A-F7E8D618CAFB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopPanel", "TopPanel\TopPanel.csproj", "{B552E486-108E-4916-9A1C-D22A8328E824}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlExt", "ControlExt\ControlExt.csproj", "{382B502E-80E4-4D45-9083-DADF4CD56337}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{58F533A2-2B71-4C4A-997A-F7E8D618CAFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58F533A2-2B71-4C4A-997A-F7E8D618CAFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58F533A2-2B71-4C4A-997A-F7E8D618CAFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B552E486-108E-4916-9A1C-D22A8328E824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B552E486-108E-4916-9A1C-D22A8328E824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B552E486-108E-4916-9A1C-D22A8328E824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B552E486-108E-4916-9A1C-D22A8328E824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{382B502E-80E4-4D45-9083-DADF4CD56337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{382B502E-80E4-4D45-9083-DADF4CD56337}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{382B502E-80E4-4D45-9083-DADF4CD56337}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{382B502E-80E4-4D45-9083-DADF4CD56337}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

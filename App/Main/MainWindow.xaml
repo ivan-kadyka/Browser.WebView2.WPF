@@ -10,9 +10,8 @@
                  d:DataContext="{d:DesignInstance global:MainViewModel, IsDesignTimeCreatable=True}">
     <Grid>
         <StackPanel Orientation="Vertical">
-            <TextBlock Text="{Binding Title}" />
-            <ContentControl x:Name="TopPanelContent" />
-            <ContentControl x:Name="PageContent" />
+            <ContentControl x:Name="TopPanel" />
+            <ContentControl x:Name="Page" />
         </StackPanel>
     </Grid>
 </view:WindowView>
