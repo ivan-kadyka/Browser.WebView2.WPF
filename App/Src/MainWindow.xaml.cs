@@ -5,7 +5,7 @@ namespace BrowserApp
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : WindowView
+    internal partial class MainWindow : WindowView
     {
         public MainWindow()
         {

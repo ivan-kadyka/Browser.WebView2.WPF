@@ -1,5 +1,5 @@
 ﻿using PresenterBase.View;
-public partial class PageView : UserControlView
+internal partial class PageView : UserControlView
 {
     public PageView()
     {

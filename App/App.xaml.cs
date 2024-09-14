@@ -1,12 +1,10 @@
 ﻿using System.Windows;
+using BrowserApp.Module;
 using Microsoft.Extensions.DependencyInjection;
 using PresenterBase.Presenter;
 
 namespace BrowserApp
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App
     {
         private readonly IPresenter _mainPresenter;
@@ -15,25 +13,9 @@ namespace BrowserApp
         
         public App()
         {
-            _serviceProvider = ConfigureServices();
-
+            _serviceProvider = AppServiceProvider.Create();
             _mainPresenter = _serviceProvider.GetRequiredService<MainPresenter>();
         }
-        
-        private ServiceProvider ConfigureServices()
-        {
-            var services = new ServiceCollection();
-            
-            services.AddTransient<MainViewModel>();
-            services.AddTransient<MainWindow>();
-            
-            services.AddSingleton<MainPresenter>();
-
-            var provider = services.BuildServiceProvider();
-
-            return provider;
-        }
-
         
         protected override async void OnStartup(StartupEventArgs e)
         { 
