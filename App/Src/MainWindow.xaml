@@ -10,10 +10,12 @@
                  d:DataContext="{d:DesignInstance global:MainViewModel, IsDesignTimeCreatable=True}"
                  x:ClassModifier="internal">
     <Grid>
-        <StackPanel Orientation="Vertical">
-            <ContentControl x:Name="TopPanel" />
-            <ContentControl x:Name="Page" />
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ContentControl Grid.Row="0" x:Name="TopPanel" />
+        <ContentControl Grid.Row="1" x:Name="Page" />
     </Grid>
 </view:WindowView>
 
