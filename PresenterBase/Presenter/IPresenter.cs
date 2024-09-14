@@ -8,10 +8,15 @@ namespace PresenterBase.Presenter;
 public interface IPresenter : IDisposable
 {
     IView View { get; }
+
+
+    Task Start(CancellationToken token = default);
     
     
-    Task Show(CancellationToken token = default);
-    
-    
-    Task Hide(CancellationToken token = default);
+    Task Stop(CancellationToken token = default);
 }
+
+
+
+
+

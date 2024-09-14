@@ -23,7 +23,7 @@ namespace WpfApp1
         { 
             base.OnStartup(e);
 
-            await _mainPresenter.Show();
+            await _mainPresenter.Start();
         }
     }
 }

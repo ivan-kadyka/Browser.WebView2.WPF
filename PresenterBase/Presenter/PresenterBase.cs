@@ -11,11 +11,14 @@ public abstract class PresenterBase<TView, TViewModel> : IPresenter
 {
     public IView View { get; }
     
+    protected TView TypeView { get; private set; }
+    
     protected TViewModel ViewModel { get; }
 
     protected PresenterBase(TView view, TViewModel viewModel)
     {
         View = view;
+        TypeView = view;
         ViewModel = viewModel;
         
         View.DataContext = ViewModel;
@@ -26,12 +29,12 @@ public abstract class PresenterBase<TView, TViewModel> : IPresenter
     }
     
 
-    public async Task Show(CancellationToken token = default)
+    public async Task Start(CancellationToken token = default)
     {
         await View.Show(token);
     }
 
-    public async Task Hide(CancellationToken token = default)
+    public async Task Stop(CancellationToken token = default)
     {
         await View.Hide(token);
     }
