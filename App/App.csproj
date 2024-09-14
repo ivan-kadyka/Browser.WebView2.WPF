@@ -8,6 +8,7 @@
         <RootNamespace>BrowserApp</RootNamespace>
     </PropertyGroup>
     <ItemGroup>
+      <ProjectReference Include="..\PageTabs\PageTabs.csproj" />
       <ProjectReference Include="..\PresenterBase\PresenterBase.csproj" />
       <ProjectReference Include="..\TopPanel\TopPanel.csproj" />
     </ItemGroup>

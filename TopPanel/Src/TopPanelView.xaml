@@ -13,8 +13,8 @@
         <StackPanel Orientation="Vertical">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/> <!-- Buttons -->
-                    <ColumnDefinition Width="*"/> <!-- TextBox takes remaining space -->
+                    <ColumnDefinition Width="Auto"/> 
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <Button Content="◀" Width="30" Height="30" Margin="5" />

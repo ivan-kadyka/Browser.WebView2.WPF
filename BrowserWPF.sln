@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopPanel", "TopPanel\TopPan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlExt", "ControlExt\ControlExt.csproj", "{382B502E-80E4-4D45-9083-DADF4CD56337}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{925DEBE2-70FF-4CAB-9B82-756C650A496B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageTabs", "PageTabs\PageTabs.csproj", "{DC4D0F98-600B-4416-9071-F4439D80351A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{382B502E-80E4-4D45-9083-DADF4CD56337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{382B502E-80E4-4D45-9083-DADF4CD56337}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{382B502E-80E4-4D45-9083-DADF4CD56337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC4D0F98-600B-4416-9071-F4439D80351A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC4D0F98-600B-4416-9071-F4439D80351A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC4D0F98-600B-4416-9071-F4439D80351A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC4D0F98-600B-4416-9071-F4439D80351A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{382B502E-80E4-4D45-9083-DADF4CD56337} = {925DEBE2-70FF-4CAB-9B82-756C650A496B}
+		{58F533A2-2B71-4C4A-997A-F7E8D618CAFB} = {925DEBE2-70FF-4CAB-9B82-756C650A496B}
 	EndGlobalSection
 EndGlobal
