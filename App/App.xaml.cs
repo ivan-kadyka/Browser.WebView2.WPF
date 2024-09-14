@@ -7,20 +7,20 @@ namespace BrowserApp
 {
     public partial class App
     {
-        private readonly IPresenter _mainPresenter;
+        private IPresenter _mainPresenter;
 
         private readonly ServiceProvider _serviceProvider;
         
         public App()
         {
             _serviceProvider = AppServiceProvider.Create();
-            _mainPresenter = _serviceProvider.GetRequiredService<MainPresenter>();
         }
         
         protected override async void OnStartup(StartupEventArgs e)
         { 
             base.OnStartup(e);
 
+            _mainPresenter = _serviceProvider.GetRequiredService<MainPresenter>();
             await _mainPresenter.Start();
         }
 

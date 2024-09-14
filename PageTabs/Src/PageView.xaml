@@ -5,10 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:view="clr-namespace:PresenterBase.View;assembly=PresenterBase"
              xmlns:global="clr-namespace:"
+             xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance global:PageViewModel}" x:ClassModifier="internal">
     <Grid>
         <TextBlock Text="{Binding Description}"/>
+        <wpf:WebView2 Name="webView" />
     </Grid>
 </view:UserControlView>
