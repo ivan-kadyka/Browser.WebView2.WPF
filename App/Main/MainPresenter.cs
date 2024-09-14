@@ -1,9 +1,6 @@
-﻿using PresenterBase.Presenter;
-using WpfApp1.Main;
-using WpfApp1.Page;
-using WpfApp1.TopPanel;
+﻿using BrowserApp;
+using PresenterBase.Presenter;
 
-namespace WpfApp1.Presenters;
 
 public class MainPresenter : PresenterBase<MainWindow>
 {
@@ -22,12 +19,4 @@ public class MainPresenter : PresenterBase<MainWindow>
         view.TopPanelContent.Content = _topPanelPresenter.View;
         view.PageContent.Content = _pagePresenter.View;
     }
-    
-    /*
-    public async override Task Show(CancellationToken token = default)
-    {
-        await _topPanelPresenter.Show(token);
-        await base.Show(token); 
-    }
-    */
 }

@@ -1,14 +1,36 @@
-﻿<view:UserControlView x:Class="WpfApp1.TopPanel.TopPanelView"
+﻿<view:UserControlView x:Class="TopPanelView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:WpfApp1.TopPanel"
              xmlns:view="clr-namespace:PresenterBase.View;assembly=PresenterBase"
+             xmlns:app="clr-namespace:App"
+             xmlns:global="clr-namespace:"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" d:DesignSource="TopPanelViewModel"
-             d:DataContext="{d:DesignInstance local:TopPanelViewModel, IsDesignTimeCreatable=True}">
-    <Grid>
-        <TextBlock Text="{Binding  Title}" />
+             d:DataContext="{d:DesignInstance global:TopPanelViewModel, IsDesignTimeCreatable=True}">
+    <Grid Background="#F9F9F9" HorizontalAlignment="Stretch">
+        <StackPanel Orientation="Vertical">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/> <!-- Buttons -->
+                    <ColumnDefinition Width="*"/> <!-- TextBox takes remaining space -->
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="◀" Width="30" Height="30" Margin="5" />
+                    <Button Content="▶" Width="30" Height="30" Margin="5" />
+                    <Button Content="⟳" Width="30" Height="30" Margin="5" />
+                </StackPanel>
+                <TextBox Height="30" VerticalAlignment="Bottom" TextAlignment="Left" Margin="5"
+                         Padding="0 5 0 0" Grid.Column="1"
+                         app:TextBoxPlaceholderBehavior.Placeholder="Search or enter address..."/>
+            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <Button Content="Bookmarks" Width="70" Height="30" Margin="5"/>
+                <Button Content="Mail" Width="50" Height="30" Margin="5"/>
+                <Button Content="YouTube" Width="50" Height="30" Margin="5"/>
+                <Button Content="Maps" Width="50" Height="30" Margin="5"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </view:UserControlView>

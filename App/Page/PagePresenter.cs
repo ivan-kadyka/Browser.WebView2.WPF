@@ -1,5 +1,4 @@
-﻿namespace WpfApp1.Page;
-using PresenterBase.Presenter;
+﻿using PresenterBase.Presenter;
 
 internal class PagePresenter : PresenterBase<PageView>
 {

@@ -1,10 +1,8 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using PresenterBase.Presenter;
-using WpfApp1.Main;
-using WpfApp1.Presenters;
 
-namespace WpfApp1
+namespace BrowserApp
 {
     /// <summary>
     /// Interaction logic for App.xaml

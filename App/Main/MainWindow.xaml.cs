@@ -1,6 +1,6 @@
 ﻿using PresenterBase.View;
 
-namespace WpfApp1
+namespace BrowserApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
