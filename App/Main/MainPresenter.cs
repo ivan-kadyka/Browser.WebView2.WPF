@@ -10,7 +10,7 @@ public class MainPresenter : PresenterBase<MainWindow, MainViewModel>
     private readonly IPresenter _topPanelPresenter;
     private readonly IPresenter _pagePresenter;
 
-    public MainPresenter(MainViewModel viewModel) : base(viewModel)
+    public MainPresenter(MainWindow view, MainViewModel viewModel) : base(view, viewModel)
     {
         // Instantiate the child TopPanelPresenter
         var topPanelViewModel = new TopPanelViewModel();
@@ -19,9 +19,8 @@ public class MainPresenter : PresenterBase<MainWindow, MainViewModel>
         var pageViewModel = new PageViewModel();
         _pagePresenter = new PagePresenter(pageViewModel);
         
-        var mainView = View as MainWindow;
-        mainView.TopPanelContent.Content = _topPanelPresenter.View;
-        mainView.PageContent.Content = _pagePresenter.View;
+        view.TopPanelContent.Content = _topPanelPresenter.View;
+        view.PageContent.Content = _pagePresenter.View;
     }
     
     /*

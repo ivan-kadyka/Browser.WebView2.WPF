@@ -4,7 +4,7 @@ namespace WpfApp1.TopPanel;
  
 public class TopPanelPresenter : PresenterBase<TopPanelView, TopPanelViewModel>
 {
-    public TopPanelPresenter(TopPanelViewModel viewModel) : base(viewModel)
+    public TopPanelPresenter(TopPanelViewModel viewModel) : base(new TopPanelView(), viewModel)
     {
     }
 }
