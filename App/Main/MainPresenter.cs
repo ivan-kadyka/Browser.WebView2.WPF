@@ -5,7 +5,7 @@ using WpfApp1.TopPanel;
 
 namespace WpfApp1.Presenters;
 
-public class MainPresenter : PresenterBase<MainWindow, MainViewModel>
+public class MainPresenter : PresenterBase<MainWindow>
 {
     private readonly IPresenter _topPanelPresenter;
     private readonly IPresenter _pagePresenter;

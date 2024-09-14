@@ -5,22 +5,17 @@ using PresenterBase.ViewModel;
 
 namespace PresenterBase.Presenter;
 
-public abstract class PresenterBase<TView, TViewModel> : IPresenter
+public abstract class PresenterBase<TView> : IPresenter
     where TView : class, IView
-    where TViewModel : class, IViewModel
 {
     public IView View { get; }
     
     protected TView ProtectedView { get; private set; }
-    
-    protected TViewModel ViewModel { get; }
 
-    protected PresenterBase(TView view, TViewModel viewModel)
+    protected PresenterBase(TView view, IViewModel viewModel)
     {
         View = ProtectedView = view;
-        ViewModel = viewModel;
-        
-        View.DataContext = ViewModel;
+        View.DataContext = viewModel;
     }
     
 
