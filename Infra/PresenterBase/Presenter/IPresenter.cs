@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PresenterBase.View;
 
 namespace PresenterBase.Presenter;
 
-public interface IPresenter : IDisposable
+public interface IPresenter :  IDisposable
 {
-    IView View { get; }
-
-
+    object Content { get; }
+    
     Task Start(CancellationToken token = default);
     
     

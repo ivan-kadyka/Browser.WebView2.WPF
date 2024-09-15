@@ -10,14 +10,17 @@ namespace PresenterBase.Presenter;
 
 public abstract class Presenter : DisposableBase, IPresenter
 {
-    public IView View { get; }
+    public object Content { get; }
+    
+    protected IView View { get; }
 
     private readonly CompositeDisposable _disposables = new();
 
     protected Presenter(IView view, IViewModel viewModel)
     {
         View = view;
-        View.DataContext = viewModel;
+        Content = view;
+        view.DataContext = viewModel;
     }
     
     

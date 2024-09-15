@@ -16,8 +16,8 @@ internal class MainPresenter : Presenter
         _topPanelPresenter = topPanelPresenter;
         _pagePresenter = pagePresenter;
 
-        view.TopPanel.Content = topPanelPresenter.View;
-        view.Page.Content = pagePresenter.View;
+        view.TopPanel.Content = topPanelPresenter.Content;
+        view.Page.Content = pagePresenter.Content;
     }
     
     protected override async Task OnStarted(CancellationToken token = default)

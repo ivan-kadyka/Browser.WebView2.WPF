@@ -10,5 +10,4 @@ public interface IView
     Task Show(CancellationToken token = default);
     
     Task Hide(CancellationToken token = default);
-
 }
