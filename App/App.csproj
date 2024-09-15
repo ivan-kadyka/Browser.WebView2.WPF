@@ -8,8 +8,8 @@
         <RootNamespace>BrowserApp</RootNamespace>
     </PropertyGroup>
     <ItemGroup>
+      <ProjectReference Include="..\Infra\PresenterBase\PresenterBase.csproj" />
       <ProjectReference Include="..\PageTabs\PageTabs.csproj" />
-      <ProjectReference Include="..\PresenterBase\PresenterBase.csproj" />
       <ProjectReference Include="..\TopPanel\TopPanel.csproj" />
     </ItemGroup>
     <ItemGroup>
