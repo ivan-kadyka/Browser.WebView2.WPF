@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Browser.Module;
+using Microsoft.Extensions.DependencyInjection;
 using PageTabs.Module;
 using PresenterBase.Presenter;
 using TopPanel.Module;
@@ -9,7 +10,8 @@ public static class AppModule
 {
     public static IServiceCollection AddAppServices(this IServiceCollection services)
     {
-        services.AddTopPanelServices()
+        services.AddBrowserServices()
+            .AddTopPanelServices()
             .AddPageTabsServices();
         
         services.AddTransient<MainViewModel>();
