@@ -16,8 +16,40 @@
                              MinimumTabWidth="140"
                              PinnedTabWidth="50"
                              MaximumTabWidth="200">
-            <!-- Set custom width and height for each tab -->
-         
+            
+            <ct:ChromeTabControl.Template>
+                <ControlTemplate TargetType="{x:Type ct:ChromeTabControl}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Border Background="{TemplateBinding Background}"
+                                BorderThickness="0,0,0,1"
+                                BorderBrush="#FF999999"
+                                Grid.Row="0"
+                                Padding="10,5,10,0">
+                            <ct:ChromeTabPanel IsItemsHost="True"
+                                               Background="{TemplateBinding Background}" />
+                        </Border>
+                        <Grid Grid.Row="1">
+                            <Border Background="WhiteSmoke">
+                                <ContentPresenter Content="{TemplateBinding SelectedContent}" />
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </ct:ChromeTabControl.Template>
+
+            <ct:ChromeTabControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type tabsPanel:TabItemViewModel}">
+                    <TextBlock Text="{Binding Header}"
+                               Margin="10,0,0,0"
+                               TextWrapping="NoWrap"
+                               TextTrimming="CharacterEllipsis"
+                               VerticalAlignment="Center" />
+                </DataTemplate>
+            </ct:ChromeTabControl.ItemTemplate>
         </ct:ChromeTabControl>
     </Grid>
 </UserControl>

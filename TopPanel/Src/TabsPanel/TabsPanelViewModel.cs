@@ -26,9 +26,9 @@ public class TabsPanelViewModel : ViewModelBase
     {
         Tabs = new ObservableCollection<TabItemViewModel>
         {
-            new TabItemViewModel { Header = "Tab 1", Content = "Content of Tab 1" },
-            new TabItemViewModel { Header = "Tab 2", Content = "Content of Tab 2" },
-            new TabItemViewModel { Header = "Tab 3", Content = "Content of Tab 3" }
+            new TabItemViewModel { Header = "Tab 1" },
+            new TabItemViewModel { Header = "Tab 2"},
+            new TabItemViewModel { Header = "Tab 3" }
         };
         SelectedTab = Tabs[0];
 
@@ -38,7 +38,7 @@ public class TabsPanelViewModel : ViewModelBase
 
     private void AddTab(object obj)
     {
-        var newTab = new TabItemViewModel { Header = $"Tab {Tabs.Count + 1}", Content = $"Content of Tab {Tabs.Count + 1}" };
+        var newTab = new TabItemViewModel { Header = $"Tab {Tabs.Count + 1}"};
         Tabs.Add(newTab);
         SelectedTab = newTab;
     }
@@ -55,5 +55,4 @@ public class TabsPanelViewModel : ViewModelBase
 public class TabItemViewModel
 {
     public string Header { get; set; }
-    public string Content { get; set; }
 }
