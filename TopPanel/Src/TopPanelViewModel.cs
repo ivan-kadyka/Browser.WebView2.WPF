@@ -1,12 +1,15 @@
 ﻿using System.Windows.Input;
 using Browser.Core.Navigation;
 using PresenterBase.ViewModel;
-using TopPanel.Command;
+using TopPanel.TabsPanel;
 
 namespace TopPanel;
 
 internal class TopPanelViewModel : ViewModelBase
 {
+    public TabsPanelViewModel TabsPanelViewModel { get; }
+    
+    
     private readonly IBrowserRouter _browserRouter;
     
     private string _searchAddress;
@@ -23,9 +26,10 @@ internal class TopPanelViewModel : ViewModelBase
         _searchAddress = string.Empty;
         _browserRouter = browserRouter;
         SearchCommand = new RelayCommand(OnSearch);
+        TabsPanelViewModel = new TabsPanelViewModel();
     }
 
-    private void OnSearch()
+    private void OnSearch(object data)
     {
         _browserRouter.Navigate(SearchAddress);
     }

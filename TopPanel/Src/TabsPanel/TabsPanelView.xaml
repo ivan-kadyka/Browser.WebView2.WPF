@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="TopPanel.TabsPanel.TabsPanelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:tabsPanel="clr-namespace:TopPanel.TabsPanel"
+             mc:Ignorable="d"
+             xmlns:ct="clr-namespace:ChromeTabs;assembly=ChromeTabs"
+             d:DesignHeight="50" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance tabsPanel:TabsPanelViewModel, IsDesignTimeCreatable=True}">
+    <Grid>
+        <ct:ChromeTabControl ItemsSource="{Binding Tabs}"
+                             SelectedItem="{Binding SelectedTab}"
+                             AddTabCommand="{Binding AddTabCommand}"
+                             CloseTabCommand="{Binding CloseTabCommand}"
+                             MinimumTabWidth="140"
+                             PinnedTabWidth="50"
+                             MaximumTabWidth="200">
+            <!-- Set custom width and height for each tab -->
+         
+        </ct:ChromeTabControl>
+    </Grid>
+</UserControl>

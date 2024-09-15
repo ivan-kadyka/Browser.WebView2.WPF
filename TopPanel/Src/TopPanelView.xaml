@@ -4,15 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:view="clr-namespace:PresenterBase.View;assembly=PresenterBase"
-             xmlns:global="clr-namespace:"
              xmlns:textBox="clr-namespace:ControlExt.TextBox;assembly=ControlExt"
              xmlns:topPanel="clr-namespace:TopPanel"
+             xmlns:tabsPanel="clr-namespace:TopPanel.TabsPanel"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" d:DesignSource="TopPanelViewModel"
              d:DataContext="{d:DesignInstance topPanel:TopPanelViewModel, IsDesignTimeCreatable=True}"
              x:ClassModifier="internal">
     <Grid Background="#F9F9F9" HorizontalAlignment="Stretch">
         <StackPanel Orientation="Vertical">
+            <tabsPanel:TabsPanelView DataContext="{Binding TabsPanelViewModel}" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/> 
