@@ -1,35 +1,39 @@
-﻿using System.Threading;
+﻿using System;
+using System.Reactive.Disposables;
+using System.Threading;
 using System.Threading.Tasks;
+using Disposable;
 using PresenterBase.View;
 using PresenterBase.ViewModel;
 
 namespace PresenterBase.Presenter;
 
-public abstract class PresenterBase<TView> : IPresenter
+public abstract class PresenterBase<TView> : DisposableBase, IPresenter
     where TView : class, IView
 {
-    public IView View { get; }
+    public IView View => _view;
+
+    protected readonly TView _view;
     
-    protected TView ProtectedView { get; private set; }
+    private readonly CompositeDisposable _disposables = new();
 
     protected PresenterBase(TView view, IViewModel viewModel)
     {
-        View = ProtectedView = view;
-        View.DataContext = viewModel;
+        _view = view;
+        _view.DataContext = viewModel;
     }
     
     
     public async Task Start(CancellationToken token = default)
     {
-        await View.Show(token);
-        
+        await _view.Show(token);
         await OnStarted(token);
     }
     
     
     public async Task Stop(CancellationToken token = default)
     {
-        await View.Hide(token);
+        await _view.Hide(token);
         await OnStopped(token);
     }
     
@@ -44,9 +48,16 @@ public abstract class PresenterBase<TView> : IPresenter
         return Task.CompletedTask;
     }
     
-
-    public void Dispose()
+    protected void AddDisposable(IDisposable disposable)
     {
-        // TODO release managed resources here
+        _disposables.Add(disposable);
+    }
+
+   protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _disposables.Dispose();
+        }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
 using Browser.Core.Navigation;
@@ -8,7 +7,6 @@ using PresenterBase.Presenter;
 internal class PagePresenter : PresenterBase<PageView>
 {
     private readonly IBrowserPathRouter _browserPathRouter;
-    private readonly CompositeDisposable _disposables = new();
     
     public PagePresenter(PageViewModel viewModel, IBrowserPathRouter browserPathRouter) : base(new PageView(), viewModel)
     {
@@ -19,11 +17,11 @@ internal class PagePresenter : PresenterBase<PageView>
     {
         await base.OnStarted(token);
         
-         await ProtectedView.Start();
+         await _view.Start();
         
-        _disposables.Add(_browserPathRouter.Path.Subscribe(path =>
+        AddDisposable(_browserPathRouter.Path.Subscribe(path =>
         {
-            ProtectedView.Navigate(path);
+            _view.Navigate(path);
         }));
     }
 }

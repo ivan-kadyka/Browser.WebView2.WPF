@@ -10,11 +10,11 @@ internal partial class PageView : UserControlView
     
     public void Navigate(string url)
     {
-        webView.CoreWebView2.Navigate("https://www."+ url);
+        WebView.CoreWebView2.Navigate("https://www."+ url);
     }
 
     public async Task Start()
     {
-        await webView.EnsureCoreWebView2Async(null);
+        await WebView.EnsureCoreWebView2Async(null);
     }
 }

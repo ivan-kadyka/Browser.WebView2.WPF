@@ -8,20 +8,19 @@ namespace TopPanel;
 internal class TopPanelViewModel : ViewModelBase
 {
     private readonly IBrowserRouter _browserRouter;
-    public string Title { get; set; } = "TopPanel Title";
     
     private string _searchAddress;
     public string SearchAddress
     {
         get => _searchAddress;
-        set => SetField(ref _searchAddress, value);
+        set => SerProperty(ref _searchAddress, value);
     }
-
-    // Define the command
+    
     public ICommand SearchCommand { get; }
 
     public TopPanelViewModel(IBrowserRouter browserRouter)
     {
+        _searchAddress = string.Empty;
         _browserRouter = browserRouter;
         SearchCommand = new RelayCommand(OnSearch);
     }
