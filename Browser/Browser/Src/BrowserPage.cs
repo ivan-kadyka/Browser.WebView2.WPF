@@ -7,11 +7,20 @@ namespace Browser;
 
 internal class BrowserPage : IBrowserPage
 {
+    public string Id { get; }
+
+    public string Title { get; }
+    
     public IObservableValue<string> Path  => _pathSubject;
     
     private readonly ObservableValue<string> _pathSubject = new("duckduckgo.com");
     
-    
+    public BrowserPage()
+    {
+        Id = Guid.NewGuid().ToString();
+        Title = "Browser Page";
+    }
+
     public void Forward()
     {
     }

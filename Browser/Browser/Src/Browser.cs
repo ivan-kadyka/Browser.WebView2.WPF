@@ -1,51 +1,103 @@
-﻿using Browser.Core;
+﻿using System.Reactive.Subjects;
+using Browser.Core;
 using Browser.Core.Navigation;
+using Disposable;
 using Reactive.Extensions;
 using Reactive.Extensions.Observable;
 
 namespace Browser;
 
-public class Browser : IBrowser
+public class Browser : DisposableBase, IBrowser
 {
-    public IObservableValue<IBrowserPage> CurrentPage { get; }
-    
-    public bool CanForward => _currentPage.CanForward;
-    
-    public bool CanBack => _currentPage.CanBack;
-    
-    public IObservableValue<string> Path => _currentPage.Path;
+    public IObservableValue<IBrowserPage> CurrentPage => _currentPageSubject;
 
+    public bool CanForward => ActivePage.CanForward;
     
-    private IBrowserPage _currentPage;
+    public bool CanBack => ActivePage.CanBack;
+    
+    public IObservableValue<string> Path => ActivePage.Path;
+
+    public IObservable<IBrowserPage> PageAdded => _pageAdded;
+    public IObservable<IBrowserPage> PageRemoved => _pageRemoved;
+    public IObservableList<IBrowserPage> Pages {get;}
+    
+    private readonly Subject<IBrowserPage> _pageAdded = new();
+    private readonly Subject<IBrowserPage> _pageRemoved = new();
+    private readonly ObservableList<IBrowserPage> _pages = new(new List<IBrowserPage>());
+
+    private readonly ObservableValue<IBrowserPage> _currentPageSubject;
+    private IBrowserPage ActivePage => _currentPageSubject.Value;
     
     public Browser()
     {
-        _currentPage = new BrowserPage();
-        CurrentPage = new ObservableValue<IBrowserPage>(_currentPage);
+        Pages = _pages;
+        _currentPageSubject = new ObservableValue<IBrowserPage>(new BrowserPage());
     }
+    
+
     
     public void Forward()
     {
-        _currentPage.Forward();
+        ActivePage.Forward();
     }
 
     public void Back()
     {
-        _currentPage.Back();
+        ActivePage.Back();
     }
 
     public void Refresh()
     {
-        _currentPage.Refresh();
+        ActivePage.Refresh();
     }
 
     public void Push(INavigateOptions options)
     {
-        _currentPage.Push(options);
+        ActivePage.Push(options);
     }
 
     public void Replace(INavigateOptions options)
     {
-        _currentPage.Replace(options);
+        ActivePage.Replace(options);
+    }
+
+    public Task AddPage(IBrowserPage page)
+    {
+       _pageAdded.OnNext(page);
+
+       var newPages = _pages.Value.ToList();
+       newPages.Add(page);
+       
+       _pages.OnNext(newPages);
+       SetCurrentPage(page);
+       
+       return Task.CompletedTask;
+    }
+
+    public Task RemovePage(IBrowserPage page)
+    {
+        _pageRemoved.OnNext(page);
+        
+        var newPages = _pages.Value.ToList();
+        newPages.Remove(page);
+        
+        _pages.OnNext(newPages);
+        
+        if (newPages.Count > 0)
+        {
+            SetCurrentPage(newPages.Last());
+        }
+        
+        return Task.CompletedTask;
+    }
+
+    public void SetCurrentPage(IBrowserPage page)
+    {
+        _currentPageSubject.OnNext(page);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        
     }
 }

@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Infra\Disposable\Disposable.csproj" />
       <ProjectReference Include="..\Browser.Core\Browser.Core.csproj" />
     </ItemGroup>
 
