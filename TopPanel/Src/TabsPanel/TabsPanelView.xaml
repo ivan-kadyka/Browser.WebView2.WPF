@@ -8,7 +8,13 @@
              xmlns:ct="clr-namespace:ChromeTabs;assembly=ChromeTabs"
              d:DesignHeight="50" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance tabsPanel:TabsPanelViewModel, IsDesignTimeCreatable=True}">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type tabsPanel:TabItemViewModel}">
+            
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid>
+      
         <ct:ChromeTabControl ItemsSource="{Binding Tabs}"
                              SelectedItem="{Binding SelectedTab}"
                              AddTabCommand="{Binding AddTabCommand}"

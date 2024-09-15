@@ -1,4 +1,5 @@
-﻿using PresenterBase.ViewModel;
+﻿using System;
+using PresenterBase.ViewModel;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -26,9 +27,9 @@ public class TabsPanelViewModel : ViewModelBase
     {
         Tabs = new ObservableCollection<TabItemViewModel>
         {
-            new TabItemViewModel { Header = "Tab 1" },
-            new TabItemViewModel { Header = "Tab 2"},
-            new TabItemViewModel { Header = "Tab 3" }
+            new TabItemViewModel { Header = "Tab 1", TabUri = new Uri("https://google.com") },
+            new TabItemViewModel { Header = "Tab 2", TabUri = new Uri("https://google.com") },
+            new TabItemViewModel { Header = "Tab 3",  TabUri = new Uri("https://google.com")  }
         };
         SelectedTab = Tabs[0];
 
@@ -55,4 +56,6 @@ public class TabsPanelViewModel : ViewModelBase
 public class TabItemViewModel
 {
     public string Header { get; set; }
+    
+    public Uri TabUri { get; set; }
 }

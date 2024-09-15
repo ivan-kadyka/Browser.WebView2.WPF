@@ -8,8 +8,19 @@
                  mc:Ignorable="d"
                  Title="BrowserWPF" Height="800" Width="1200"
                  d:DataContext="{d:DesignInstance global:MainViewModel, IsDesignTimeCreatable=True}"
-                 x:ClassModifier="internal">
+                 x:ClassModifier="internal"
+                >
+    <Window.Resources>
+        <Style TargetType="Window">
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
