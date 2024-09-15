@@ -7,10 +7,21 @@
              xmlns:textBox="clr-namespace:ControlExt.TextBox;assembly=ControlExt"
              xmlns:topPanel="clr-namespace:TopPanel"
              xmlns:tabsPanel="clr-namespace:TopPanel.TabsPanel"
+             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" d:DesignSource="TopPanelViewModel"
              d:DataContext="{d:DesignInstance topPanel:TopPanelViewModel, IsDesignTimeCreatable=True}"
              x:ClassModifier="internal">
+    <UserControl.Resources>
+        <Style x:Key="IconButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="30" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </UserControl.Resources>
     <Grid Background="#F9F9F9" HorizontalAlignment="Stretch">
         <StackPanel Orientation="Vertical">
             <tabsPanel:TabsPanelView DataContext="{Binding TabsPanelViewModel}" />
@@ -20,9 +31,15 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="◀" Width="30" Height="30" Margin="5" />
-                    <Button Content="▶" Width="30" Height="30" Margin="5" />
-                    <Button Content="⟳" Width="30" Height="30" Margin="5" />
+                    <Button Style="{StaticResource IconButtonStyle}">
+                        <svgc:SvgViewbox Source="pack://application:,,,/TopPanel;component/Images/arrow-left.svg"/>
+                    </Button>
+                    <Button Style="{StaticResource IconButtonStyle}">
+                        <svgc:SvgViewbox Source="pack://application:,,,/TopPanel;component/Images/arrow-right.svg"/>
+                    </Button>
+                    <Button Style="{StaticResource IconButtonStyle}">
+                        <svgc:SvgViewbox Source="pack://application:,,,/TopPanel;component/Images/rotate-cw.svg"/>
+                    </Button>
                 </StackPanel>
                 <TextBox Height="30" VerticalAlignment="Bottom" TextAlignment="Left" Margin="5"
                          Padding="0 5 0 0" Grid.Column="1"
@@ -33,12 +50,13 @@
                     </TextBox.InputBindings>
                 </TextBox>
             </Grid>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Separator Margin="0 5 0 0" Height="0.5" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+            <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
                 <Button Content="Bookmarks" Width="70" Height="30" Margin="5"/>
                 <Button Content="Mail" Width="50" Height="30" Margin="5"/>
                 <Button Content="YouTube" Width="50" Height="30" Margin="5"/>
                 <Button Content="Maps" Width="50" Height="30" Margin="5"/>
-            </StackPanel>
+            </StackPanel>-->
         </StackPanel>
     </Grid>
 </view:UserControlView>

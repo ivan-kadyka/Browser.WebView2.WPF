@@ -15,6 +15,7 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
       <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+      <PackageReference Include="SharpVectors" Version="1.8.4.2" />
       <PackageReference Include="WPFChromeTabsMVVM" Version="1.4.0" />
     </ItemGroup>
 
@@ -25,6 +26,25 @@
       <Reference Include="Microsoft.Web.WebView2.Wpf">
         <HintPath>..\..\..\..\Users\ivankadyka\.nuget\packages\microsoft.web.webview2\1.0.2739.15\lib_manual\netcoreapp3.0\Microsoft.Web.WebView2.Wpf.dll</HintPath>
       </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Images\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Images\arrow-left.svg" />
+      <Resource Include="Images\arrow-left.svg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Images\arrow-right.svg" />
+      <Resource Include="Images\arrow-right.svg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Images\rotate-cw.svg" />
+      <Resource Include="Images\rotate-cw.svg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
 </Project>
