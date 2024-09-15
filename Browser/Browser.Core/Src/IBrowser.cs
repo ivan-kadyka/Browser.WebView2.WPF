@@ -7,5 +7,4 @@ public interface IBrowser : IBrowserRouter
 {
     IObservableValue<IBrowserPage> CurrentPage { get; }
     
-    
 }

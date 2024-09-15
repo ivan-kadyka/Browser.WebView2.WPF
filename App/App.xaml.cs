@@ -24,6 +24,7 @@ namespace BrowserApp
             await _mainPresenter.Start();
         }
 
+
         protected override void OnExit(ExitEventArgs e)
         {
             _serviceProvider.Dispose();

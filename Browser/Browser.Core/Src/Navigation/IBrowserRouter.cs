@@ -1,11 +1,16 @@
 ﻿namespace Browser.Core.Navigation;
 
-public interface IBrowserRouter : IPathRouter
+public interface IBrowserRouter : IBrowserPathRouter
 {
     void Forward();
+    
+    bool CanForward { get; }
 
 
     void Back();
+    
+    
+    bool CanBack { get; }
     
     
     void Refresh();

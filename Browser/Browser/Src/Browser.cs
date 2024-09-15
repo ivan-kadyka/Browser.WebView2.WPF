@@ -9,7 +9,12 @@ public class Browser : IBrowser
 {
     public IObservableValue<IBrowserPage> CurrentPage { get; }
     
-    public string Path => _currentPage.Path;
+    public bool CanForward => _currentPage.CanForward;
+    
+    public bool CanBack => _currentPage.CanBack;
+    
+    public IObservableValue<string> Path => _currentPage.Path;
+
     
     private IBrowserPage _currentPage;
     

@@ -1,19 +1,28 @@
 ﻿using Browser.Core;
 using Browser.Core.Navigation;
+using Reactive.Extensions;
+using Reactive.Extensions.Observable;
 
 namespace Browser;
 
 internal class BrowserPage : IBrowserPage
 {
-    public string Path { get;  private set; }
+    public IObservableValue<string> Path  => _pathSubject;
+    
+    private readonly ObservableValue<string> _pathSubject = new("duckduckgo.com");
+    
     
     public void Forward()
     {
     }
 
+    public bool CanForward { get; }
+
     public void Back()
     {
     }
+
+    public bool CanBack { get; }
 
     public void Refresh()
     {
@@ -21,11 +30,11 @@ internal class BrowserPage : IBrowserPage
 
     public void Push(INavigateOptions options)
     {
-        Path = options.Address;
+        _pathSubject.OnNext(options.Address);
     }
 
     public void Replace(INavigateOptions options)
     {
-        Path = options.Address;
+        _pathSubject.OnNext(options.Address);
     }
 }

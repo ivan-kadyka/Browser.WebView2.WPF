@@ -6,12 +6,10 @@
              xmlns:view="clr-namespace:PresenterBase.View;assembly=PresenterBase"
              xmlns:global="clr-namespace:"
              xmlns:textBox="clr-namespace:ControlExt.TextBox;assembly=ControlExt"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:ei="http://www.beautiful.code/behaviors"
-             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:topPanel="clr-namespace:TopPanel"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" d:DesignSource="TopPanelViewModel"
-             d:DataContext="{d:DesignInstance global:TopPanelViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance topPanel:TopPanelViewModel, IsDesignTimeCreatable=True}"
              x:ClassModifier="internal">
     <Grid Background="#F9F9F9" HorizontalAlignment="Stretch">
         <StackPanel Orientation="Vertical">
@@ -29,11 +27,9 @@
                          Padding="0 5 0 0" Grid.Column="1"
                          Text="{Binding SearchAddress, UpdateSourceTrigger=PropertyChanged}"
                          textBox:TextBoxPlaceholderBehavior.Placeholder="Search or enter address...">
-                    <b:Interaction.Triggers>
-                        <b:EventTrigger EventName="KeyDown">
-                            <b:CallMethodAction MethodName="OnEnterKeyPressed" TargetObject="{Binding}" />
-                        </b:EventTrigger>
-                    </b:Interaction.Triggers>
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding Path=SearchCommand}" Key="Enter" />
+                    </TextBox.InputBindings>
                 </TextBox>
             </Grid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >

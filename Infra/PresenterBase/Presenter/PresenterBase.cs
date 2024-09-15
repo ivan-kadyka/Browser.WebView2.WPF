@@ -18,16 +18,32 @@ public abstract class PresenterBase<TView> : IPresenter
         View.DataContext = viewModel;
     }
     
-
+    
     public async Task Start(CancellationToken token = default)
     {
         await View.Show(token);
+        
+        await OnStarted(token);
     }
-
+    
+    
     public async Task Stop(CancellationToken token = default)
     {
         await View.Hide(token);
+        await OnStopped(token);
     }
+    
+    
+    protected virtual Task OnStarted(CancellationToken token = default)
+    {
+        return Task.CompletedTask;
+    }
+    
+    protected virtual Task OnStopped(CancellationToken token = default)
+    {
+        return Task.CompletedTask;
+    }
+    
 
     public void Dispose()
     {

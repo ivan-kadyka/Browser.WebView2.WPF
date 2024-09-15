@@ -1,10 +1,13 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
+using Browser.Core.Navigation;
 using PresenterBase.ViewModel;
 using TopPanel.Command;
 
-public class TopPanelViewModel : ViewModelBase
+namespace TopPanel;
+
+internal class TopPanelViewModel : ViewModelBase
 {
+    private readonly IBrowserRouter _browserRouter;
     public string Title { get; set; } = "TopPanel Title";
     
     private string _searchAddress;
@@ -17,24 +20,14 @@ public class TopPanelViewModel : ViewModelBase
     // Define the command
     public ICommand SearchCommand { get; }
 
-    public TopPanelViewModel()
+    public TopPanelViewModel(IBrowserRouter browserRouter)
     {
+        _browserRouter = browserRouter;
         SearchCommand = new RelayCommand(OnSearch);
     }
 
     private void OnSearch()
     {
-        // Implement the action to be taken when Enter is pressed
-        // For example, you could search or process the SearchAddress
-        System.Diagnostics.Debug.WriteLine($"Searching for: {SearchAddress}");
-    }
-    
-    public void OnEnterKeyPressed(object sender, KeyEventArgs e)
-    {
-        if (e.Key == Key.Enter)
-        {
-            Console.WriteLine("Enter" + _searchAddress);
-            SearchCommand.Execute(null);
-        }
+        _browserRouter.Navigate(SearchAddress);
     }
 }
