@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using BrowserApp;
 using PresenterBase.Presenter;
 
-internal class MainPresenter : PresenterBase<MainWindow>
+internal class MainPresenter : Presenter
 {
     private readonly IPresenter _topPanelPresenter;
     private readonly IPresenter _pagePresenter;

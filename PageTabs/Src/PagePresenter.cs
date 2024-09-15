@@ -4,20 +4,29 @@ using System.Threading.Tasks;
 using Browser.Core.Navigation;
 using PresenterBase.Presenter;
 
-internal class PagePresenter : PresenterBase<PageView>
+internal class PagePresenter : Presenter
 {
     private readonly IBrowserPathRouter _browserPathRouter;
+    private readonly PageView _view;
     
-    public PagePresenter(PageViewModel viewModel, IBrowserPathRouter browserPathRouter) : base(new PageView(), viewModel)
+    public PagePresenter(PageViewModel viewModel, IBrowserPathRouter browserPathRouter)
+        : this(viewModel, browserPathRouter, new PageView())
     {
+    }
+    
+
+    public PagePresenter(PageViewModel viewModel, 
+        IBrowserPathRouter browserPathRouter,
+        PageView view) : base(view, viewModel)
+    {
+        _view = view;
         _browserPathRouter = browserPathRouter;
     }
+
 
     protected override async Task OnStarted(CancellationToken token = default)
     {
         await base.OnStarted(token);
-        
-         await _view.Start();
         
         AddDisposable(_browserPathRouter.Path.Subscribe(path =>
         {

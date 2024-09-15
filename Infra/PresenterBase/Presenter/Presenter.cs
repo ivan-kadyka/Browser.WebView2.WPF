@@ -8,32 +8,29 @@ using PresenterBase.ViewModel;
 
 namespace PresenterBase.Presenter;
 
-public abstract class PresenterBase<TView> : DisposableBase, IPresenter
-    where TView : class, IView
+public abstract class Presenter : DisposableBase, IPresenter
 {
-    public IView View => _view;
+    public IView View { get; }
 
-    protected readonly TView _view;
-    
     private readonly CompositeDisposable _disposables = new();
 
-    protected PresenterBase(TView view, IViewModel viewModel)
+    protected Presenter(IView view, IViewModel viewModel)
     {
-        _view = view;
-        _view.DataContext = viewModel;
+        View = view;
+        View.DataContext = viewModel;
     }
     
     
     public async Task Start(CancellationToken token = default)
     {
-        await _view.Show(token);
+        await View.Show(token);
         await OnStarted(token);
     }
     
     
     public async Task Stop(CancellationToken token = default)
     {
-        await _view.Hide(token);
+        await View.Hide(token);
         await OnStopped(token);
     }
     

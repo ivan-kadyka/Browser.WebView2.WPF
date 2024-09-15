@@ -15,7 +15,7 @@ public class UserControlView : UserControl, IView
 
     public async Task Hide(CancellationToken token = default)
     {
-        Visibility = Visibility.Collapsed;
+        Visibility = Visibility.Hidden;
         await Task.CompletedTask;
     }
 }
