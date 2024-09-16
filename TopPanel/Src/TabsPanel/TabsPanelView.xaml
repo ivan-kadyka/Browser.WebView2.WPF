@@ -9,13 +9,13 @@
              d:DesignHeight="50" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance tabsPanel:TabsPanelViewModel, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type tabsPanel:TabItemViewModel}">
+        <DataTemplate DataType="{x:Type tabsPanel:PageTabItemViewModel}">
             
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <ct:ChromeTabControl ItemsSource="{Binding Tabs}"
-                             SelectedItem="{Binding SelectedTab}"
+                             SelectedItem="{Binding SelectedPageTab}"
                              AddTabCommand="{Binding AddTabCommand}"
                              CloseTabCommand="{Binding CloseTabCommand}"
                              MinimumTabWidth="140"
@@ -47,8 +47,8 @@
             </ct:ChromeTabControl.Template>
 
             <ct:ChromeTabControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type tabsPanel:TabItemViewModel}">
-                    <TextBlock Text="{Binding Header}"
+                <DataTemplate DataType="{x:Type tabsPanel:PageTabItemViewModel}">
+                    <TextBlock Text="{Binding Header, Mode=OneWay}"
                                Margin="10,0,0,0"
                                TextWrapping="NoWrap"
                                TextTrimming="CharacterEllipsis"

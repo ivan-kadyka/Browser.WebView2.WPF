@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PresenterBase.Presenter;
+using TopPanel.TabsPanel;
 
 namespace TopPanel.Module;
 
@@ -12,6 +13,8 @@ public static class TopPanelModule
         services.AddTransient<TopPanelView>();
         services.AddTransient<TopPanelViewModel>();
         services.AddKeyedSingleton<IPresenter, TopPanelPresenter>(PresenterName);
+        
+        services.AddTransient<TabsPanelViewModel>();
         
         return services;
     }

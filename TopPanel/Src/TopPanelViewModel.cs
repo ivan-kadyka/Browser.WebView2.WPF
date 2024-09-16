@@ -35,8 +35,10 @@ internal class TopPanelViewModel : ViewModelBase,
     private readonly RelayCommand _forwardCommand;
     private readonly RelayCommand _refreshCommand;
 
-    public TopPanelViewModel(IBrowserRouter browserRouter)
+    public TopPanelViewModel(IBrowserRouter browserRouter, TabsPanelViewModel tabsPanelViewModel)
     {
+        TabsPanelViewModel = tabsPanelViewModel;
+        
         _searchAddress = string.Empty;
         _browserRouter = browserRouter;
         
@@ -45,8 +47,6 @@ internal class TopPanelViewModel : ViewModelBase,
         _backCommand = new RelayCommand(_browserRouter.Back, ()=> browserRouter.CanBack);
         _forwardCommand = new RelayCommand(_browserRouter.Forward, ()=> browserRouter.CanForward);
         _refreshCommand = new RelayCommand(_browserRouter.Refresh, ()=>browserRouter.CanRefresh);
-        
-        TabsPanelViewModel = new TabsPanelViewModel();
     }
 
     private void OnSearch()

@@ -20,20 +20,22 @@ public class Browser : DisposableBase, IBrowser
 
     public IObservable<IBrowserPage> PageAdded => _pageAdded;
     public IObservable<IBrowserPage> PageRemoved => _pageRemoved;
-    public IObservableList<IBrowserPage> Pages {get;}
+    public IReadOnlyList<IBrowserPage> Pages => _pages;
     
     private readonly Subject<IBrowserPage> _pageAdded = new();
     private readonly Subject<IBrowserPage> _pageRemoved = new();
-    private readonly ObservableList<IBrowserPage> _pages = new(new List<IBrowserPage>());
+    
+    
+    private readonly List<IBrowserPage> _pages = new();
 
     private readonly ObservableValue<IBrowserPage> _currentPageSubject;
     private IBrowserPage ActivePage => _currentPageSubject.Value;
     
     public Browser(IMessenger messenger)
     {
-        Pages = _pages;
-        
         var page = new BrowserPage(messenger);
+        _pages.Add(page);
+        
         _currentPageSubject = new ObservableValue<IBrowserPage>(page);
     }
     
@@ -66,12 +68,9 @@ public class Browser : DisposableBase, IBrowser
 
     public Task AddPage(IBrowserPage page)
     {
-       _pageAdded.OnNext(page);
+       _pages.Add(page);
 
-       var newPages = _pages.Value.ToList();
-       newPages.Add(page);
-       
-       _pages.OnNext(newPages);
+       _pageAdded.OnNext(page);
        SetCurrentPage(page);
        
        return Task.CompletedTask;
@@ -79,16 +78,17 @@ public class Browser : DisposableBase, IBrowser
 
     public Task RemovePage(IBrowserPage page)
     {
-        var newPages = _pages.Value.ToList();
-        newPages.Remove(page);
-        
-        if (newPages.Count > 0)
+        var isRemoved = _pages.Remove(page);
+
+        if (isRemoved)
         {
-            SetCurrentPage(newPages.Last());
+            _pageRemoved.OnNext(page);
+            
+            if (_pages.Count > 0)
+            {
+                SetCurrentPage(_pages[0]);
+            }
         }
-        
-        _pageRemoved.OnNext(page);
-        _pages.OnNext(newPages);
         
         return Task.CompletedTask;
     }

@@ -8,7 +8,7 @@ public interface IBrowserObservable
     
     IObservable<IBrowserPage> PageRemoved { get; }
     
-    IObservableList<IBrowserPage> Pages { get; }
+    IReadOnlyList<IBrowserPage> Pages { get; }
     
     IObservableValue<IBrowserPage> CurrentPage { get; }
 }

@@ -12,7 +12,7 @@ public static class BrowserModule
        services.AddSingleton<IBrowser, Browser>();
        services.AddSingleton<IBrowserRouter>(sp => sp.GetRequiredService<IBrowser>());
        services.AddSingleton<IBrowserPathRouter>(sp => sp.GetRequiredService<IBrowser>());
-       
+       services.AddSingleton<IBrowserObservable>(sp => sp.GetRequiredService<IBrowser>());
        
        services.AddMessagesServices();
        

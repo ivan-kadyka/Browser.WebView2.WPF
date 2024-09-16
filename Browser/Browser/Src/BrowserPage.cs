@@ -25,7 +25,7 @@ internal class BrowserPage : DisposableBase, IBrowserPage
     public BrowserPage(IMessenger messenger)
     {
         Id = Guid.NewGuid().ToString();
-        Title = "Browser Page";
+        Title = "New Tab";
         
         _messenger = messenger;
         _history = new(new UrlNavigateOptions("duckduckgo.com"));
