@@ -2,6 +2,7 @@
 using PresenterBase.ViewModel;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 
 namespace TopPanel.TabsPanel;
 
@@ -34,21 +35,21 @@ public class TabsPanelViewModel : ViewModelBase
         SelectedTab = Tabs[0];
 
         AddTabCommand = new RelayCommand(AddTab);
-        CloseTabCommand = new RelayCommand(CloseTab);
+        CloseTabCommand = new RelayCommand<TabItemViewModel>(CloseTab);
     }
 
-    private void AddTab(object obj)
+    private void AddTab()
     {
         var newTab = new TabItemViewModel { Header = $"Tab {Tabs.Count + 1}"};
         Tabs.Add(newTab);
         SelectedTab = newTab;
     }
 
-    private void CloseTab(object tabItem)
+    private void CloseTab(TabItemViewModel? tabItem)
     {
-        if (tabItem is TabItemViewModel tab && Tabs.Contains(tab))
+        if (tabItem != null && Tabs.Contains(tabItem))
         {
-            Tabs.Remove(tab);
+            Tabs.Remove(tabItem);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using Browser.Core.Navigation;
+using CommunityToolkit.Mvvm.Input;
 using PresenterBase.ViewModel;
 using TopPanel.TabsPanel;
 
@@ -29,7 +30,7 @@ internal class TopPanelViewModel : ViewModelBase
         TabsPanelViewModel = new TabsPanelViewModel();
     }
 
-    private void OnSearch(object data)
+    private void OnSearch()
     {
         _browserRouter.Navigate(SearchAddress);
     }
