@@ -10,7 +10,6 @@
              d:DataContext="{d:DesignInstance tabsPanel:TabsPanelViewModel, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type tabsPanel:PageTabItemViewModel}">
-            
         </DataTemplate>
     </UserControl.Resources>
     <Grid>

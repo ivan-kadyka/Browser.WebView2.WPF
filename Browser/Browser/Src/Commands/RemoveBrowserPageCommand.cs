@@ -14,7 +14,9 @@ public class RemoveBrowserPageCommand : CommandBase<string>
     protected override void OnExecute(string? pageId)
     {
         if (pageId == null)
-            return;
+        {
+            pageId = _browser.CurrentPage.Value.Id;
+        }
         
         var page = _browser.Pages.FirstOrDefault(it => it.Id == pageId);
         

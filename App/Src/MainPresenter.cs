@@ -1,7 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using BrowserApp;
 using PresenterBase.Presenter;
+
+namespace BrowserApp;
 
 internal class MainPresenter : Presenter
 {

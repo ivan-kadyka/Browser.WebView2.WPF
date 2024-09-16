@@ -20,6 +20,10 @@
             </Setter>
         </Style>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding AddTabCommand}" Key="T" Modifiers="Control"/>
+        <KeyBinding Command="{Binding CloseTabCommand}" Key="W" Modifiers="Control"/>
+    </Window.InputBindings>
     <Grid>
         
         <Grid.RowDefinitions>
