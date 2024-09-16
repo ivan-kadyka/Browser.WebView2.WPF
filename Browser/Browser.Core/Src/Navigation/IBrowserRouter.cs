@@ -15,6 +15,8 @@ public interface IBrowserRouter : IBrowserPathRouter
     
     void Refresh();
     
+    bool CanRefresh { get; }
+    
     
     void Push(INavigateOptions options);
     

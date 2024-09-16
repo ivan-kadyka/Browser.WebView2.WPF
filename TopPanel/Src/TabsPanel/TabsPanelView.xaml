@@ -14,7 +14,6 @@
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
-      
         <ct:ChromeTabControl ItemsSource="{Binding Tabs}"
                              SelectedItem="{Binding SelectedTab}"
                              AddTabCommand="{Binding AddTabCommand}"

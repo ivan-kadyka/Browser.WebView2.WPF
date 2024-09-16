@@ -40,6 +40,8 @@ internal class BrowserPage : IBrowserPage
     {
     }
 
+    public bool CanRefresh => !string.IsNullOrWhiteSpace(_history.Current.Value);
+
     public void Push(INavigateOptions options)
     {
         _history.Do(options.Address);

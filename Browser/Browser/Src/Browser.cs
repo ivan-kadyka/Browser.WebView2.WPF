@@ -51,6 +51,8 @@ public class Browser : DisposableBase, IBrowser
         ActivePage.Refresh();
     }
 
+    public bool CanRefresh => ActivePage.CanRefresh;
+
     public void Push(INavigateOptions options)
     {
         ActivePage.Push(options);

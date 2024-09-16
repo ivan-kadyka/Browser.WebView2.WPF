@@ -20,6 +20,13 @@
             <Setter Property="Padding" Value="8" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Background" Value="Transparent" />
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="Gray"/>
+                    <Setter Property="Opacity" Value="0.5"/>
+                    <Setter Property="Cursor" Value="Arrow"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </UserControl.Resources>
     <Grid Background="#F9F9F9" HorizontalAlignment="Stretch">
@@ -31,13 +38,13 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
-                    <Button Style="{StaticResource IconButtonStyle}">
+                    <Button Style="{StaticResource IconButtonStyle}" Command="{Binding BackCommand}">
                         <svgc:SvgViewbox Source="pack://application:,,,/TopPanel;component/Images/arrow-left.svg"/>
                     </Button>
-                    <Button Style="{StaticResource IconButtonStyle}">
+                    <Button Style="{StaticResource IconButtonStyle}" Command="{Binding ForwardCommand}">
                         <svgc:SvgViewbox Source="pack://application:,,,/TopPanel;component/Images/arrow-right.svg"/>
                     </Button>
-                    <Button Style="{StaticResource IconButtonStyle}">
+                    <Button Style="{StaticResource IconButtonStyle}" Command="{Binding RefreshCommand}">
                         <svgc:SvgViewbox Source="pack://application:,,,/TopPanel;component/Images/rotate-cw.svg"/>
                     </Button>
                 </StackPanel>
@@ -51,12 +58,6 @@
                 </TextBox>
             </Grid>
             <Separator Margin="0 5 0 0" Height="0.5" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-            <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                <Button Content="Bookmarks" Width="70" Height="30" Margin="5"/>
-                <Button Content="Mail" Width="50" Height="30" Margin="5"/>
-                <Button Content="YouTube" Width="50" Height="30" Margin="5"/>
-                <Button Content="Maps" Width="50" Height="30" Margin="5"/>
-            </StackPanel>-->
         </StackPanel>
     </Grid>
 </view:UserControlView>
