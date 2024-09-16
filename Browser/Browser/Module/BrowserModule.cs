@@ -16,7 +16,8 @@ public static class BrowserModule
        services.AddSingleton<IBrowserObservable>(sp => sp.GetRequiredService<IBrowser>());
        
        // Commands
-       services.AddSingleton<AddBrowserPageCommand>();
+       services.AddTransient<AddBrowserPageCommand>();
+       services.AddTransient<RemoveBrowserPageCommand>();
        
        services.AddMessagesServices();
        

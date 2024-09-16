@@ -84,9 +84,11 @@ public class Browser : DisposableBase, IBrowser
         {
             _pageRemoved.OnNext(page);
             
-            if (_pages.Count > 0)
+            var lastPage = _pages.LastOrDefault();
+            
+            if (lastPage != null)
             {
-                SetCurrentPage(_pages[0]);
+                SetCurrentPage(lastPage);
             }
         }
         
@@ -100,6 +102,10 @@ public class Browser : DisposableBase, IBrowser
 
     protected override void Dispose(bool disposing)
     {
-        
+        if (disposing)
+        {
+            _pageAdded.Dispose();
+            _pageRemoved.Dispose();
+        }
     }
 }

@@ -6,6 +6,8 @@ namespace TopPanel.TabsPanel;
 
 public class PageTabItemViewModel : ViewModelBase
 {
+    public string Id => _page.Id;
+    
     public string Header
     {
         get
