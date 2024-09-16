@@ -22,17 +22,17 @@ internal class BrowserPage : DisposableBase, IBrowserPage
     
     private readonly CompositeDisposable _disposables = new();
     
-    public BrowserPage(IMessenger messenger)
+    public BrowserPage(IMessenger messenger, INavigateOptions options)
     {
         Id = Guid.NewGuid().ToString();
-        Title = "New Tab";
+        Title = options.Address;
         
         _messenger = messenger;
-        _history = new(new UrlNavigateOptions("duckduckgo.com"));
+        _history = new UndoRedoStack<INavigateOptions>(options);
         
-        _disposables.Add(_history.Current.Subscribe(options =>
+        _disposables.Add(_history.Current.Subscribe(it =>
         {
-            _messenger.Send(new NavigationPathChangedMessage(options));
+            _messenger.Send(new NavigationPathChangedMessage(it));
         }));
     }
 

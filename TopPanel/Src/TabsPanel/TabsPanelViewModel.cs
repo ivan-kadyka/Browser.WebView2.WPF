@@ -1,7 +1,9 @@
-﻿using PresenterBase.ViewModel;
+﻿using System;
+using PresenterBase.ViewModel;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using Browser.Commands;
 using Browser.Core;
 using CommunityToolkit.Mvvm.Input;
 
@@ -27,24 +29,26 @@ internal class TabsPanelViewModel : ViewModelBase
     
     private readonly ObservableCollection<PageTabItemViewModel> _tabs;
 
-    public TabsPanelViewModel(IBrowserObservable browserObservable)
+    public TabsPanelViewModel(IBrowserObservable browserObservable, AddBrowserPageCommand addBrowserPageCommand)
     {
         _tabs = new ObservableCollection<PageTabItemViewModel>(
             browserObservable.Pages.Select(it => new PageTabItemViewModel(it)));
+        
+        browserObservable.PageAdded.Subscribe(OnAddNewTab);
        
         SelectedPageTab = Tabs[0];
 
-        AddTabCommand = new RelayCommand(AddTab);
+        AddTabCommand = addBrowserPageCommand;
         CloseTabCommand = new RelayCommand<PageTabItemViewModel>(CloseTab);
     }
 
-    private void AddTab()
+    private void OnAddNewTab(IBrowserPage page)
     {
-        //  var newTab = new TabItemViewModel("New Tab", "");
-        //Tabs.Add(newTab);
-       // SelectedTab = newTab;
+        var tabItem = new PageTabItemViewModel(page);
+        Tabs.Add(tabItem);
+        SelectedPageTab = tabItem;
     }
-
+    
     private void CloseTab(PageTabItemViewModel? tabItem)
     {
         if (tabItem != null && Tabs.Contains(tabItem))

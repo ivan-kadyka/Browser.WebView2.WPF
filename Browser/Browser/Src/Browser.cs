@@ -33,7 +33,8 @@ public class Browser : DisposableBase, IBrowser
     
     public Browser(IMessenger messenger)
     {
-        var page = new BrowserPage(messenger);
+        var navigationOptions = new UrlNavigateOptions("duckduckgo.com");
+        var page = new BrowserPage(messenger, navigationOptions);
         _pages.Add(page);
         
         _currentPageSubject = new ObservableValue<IBrowserPage>(page);
@@ -69,7 +70,6 @@ public class Browser : DisposableBase, IBrowser
     public Task AddPage(IBrowserPage page)
     {
        _pages.Add(page);
-
        _pageAdded.OnNext(page);
        SetCurrentPage(page);
        

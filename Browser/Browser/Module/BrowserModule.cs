@@ -1,4 +1,5 @@
-﻿using Browser.Core;
+﻿using Browser.Commands;
+using Browser.Core;
 using Browser.Core.Navigation;
 using Browser.Messages.Module;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,9 @@ public static class BrowserModule
        services.AddSingleton<IBrowserRouter>(sp => sp.GetRequiredService<IBrowser>());
        services.AddSingleton<IBrowserPathRouter>(sp => sp.GetRequiredService<IBrowser>());
        services.AddSingleton<IBrowserObservable>(sp => sp.GetRequiredService<IBrowser>());
+       
+       // Commands
+       services.AddSingleton<AddBrowserPageCommand>();
        
        services.AddMessagesServices();
        
