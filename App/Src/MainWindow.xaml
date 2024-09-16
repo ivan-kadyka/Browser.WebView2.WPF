@@ -5,8 +5,9 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:view="clr-namespace:PresenterBase.View;assembly=PresenterBase"
                  xmlns:global="clr-namespace:"
+                 WindowState="Maximized"
                  mc:Ignorable="d"
-                 Title="BrowserWPF" Height="800" Width="1200"
+                 Title="BrowserWPF"
                  d:DataContext="{d:DesignInstance global:MainViewModel, IsDesignTimeCreatable=True}"
                  x:ClassModifier="internal"
                 >

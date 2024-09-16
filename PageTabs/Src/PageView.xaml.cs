@@ -15,6 +15,6 @@ internal partial class PageView : UserControlView
     
     public void Navigate(string url)
     {
-         WebView.CoreWebView2.Navigate("https://www."+ url);
+         WebView.CoreWebView2.Navigate("https://"+ url);
     }
 }

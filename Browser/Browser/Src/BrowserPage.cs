@@ -1,6 +1,6 @@
 ﻿using Browser.Core;
 using Browser.Core.Navigation;
-using Reactive.Extensions;
+using Browser.Stack;
 using Reactive.Extensions.Observable;
 
 namespace Browser;
@@ -11,27 +11,30 @@ internal class BrowserPage : IBrowserPage
 
     public string Title { get; }
     
-    public IObservableValue<string> Path  => _pathSubject;
-    
-    private readonly ObservableValue<string> _pathSubject = new("duckduckgo.com");
+    public IObservableValue<string> Path  => _history.Current;
+
+    private readonly UndoRedoStack<string> _history;
     
     public BrowserPage()
     {
         Id = Guid.NewGuid().ToString();
+        _history = new("duckduckgo.com");
         Title = "Browser Page";
     }
 
     public void Forward()
     {
+        _history.Redo();
     }
 
-    public bool CanForward { get; }
+    public bool CanForward => _history.CanRedo;
 
     public void Back()
     {
+        _history.Undo();
     }
 
-    public bool CanBack { get; }
+    public bool CanBack => _history.CanUndo;
 
     public void Refresh()
     {
@@ -39,11 +42,11 @@ internal class BrowserPage : IBrowserPage
 
     public void Push(INavigateOptions options)
     {
-        _pathSubject.OnNext(options.Address);
+        _history.Do(options.Address);
     }
 
     public void Replace(INavigateOptions options)
     {
-        _pathSubject.OnNext(options.Address);
+       // _history.Redo(options.Address);
     }
 }
