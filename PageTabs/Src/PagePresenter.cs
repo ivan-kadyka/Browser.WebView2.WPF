@@ -28,9 +28,9 @@ internal class PagePresenter : Presenter
     {
         await base.OnStarted(token);
         
-        AddDisposable(_browserPathRouter.Path.Subscribe(path =>
+        AddDisposable(_browserPathRouter.Path.Subscribe(options =>
         {
-            _view.Navigate(path);
+            _view.Navigate(options.Address);
         }));
     }
 }

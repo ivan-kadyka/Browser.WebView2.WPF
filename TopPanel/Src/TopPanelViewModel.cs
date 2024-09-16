@@ -1,17 +1,20 @@
-﻿using System;
-using System.Reactive.Disposables;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Browser.Core.Navigation;
+using Browser.Messages;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using PresenterBase.ViewModel;
 using TopPanel.TabsPanel;
 
 namespace TopPanel;
 
-internal class TopPanelViewModel : ViewModelBase
+internal class TopPanelViewModel : ViewModelBase,
+    IRecipient<BrowserForwardMessage>,
+    IRecipient<BrowserBackMessage>,
+    IRecipient<BrowserRefreshMessage>,
+    IRecipient<NavigationPathChangedMessage>
 {
     public TabsPanelViewModel TabsPanelViewModel { get; }
-    
     
     private readonly IBrowserRouter _browserRouter;
     
@@ -24,7 +27,6 @@ internal class TopPanelViewModel : ViewModelBase
     
     public ICommand SearchCommand { get; }
     
-    
     public ICommand BackCommand => _backCommand;
     public ICommand ForwardCommand => _forwardCommand;
     public ICommand RefreshCommand => _refreshCommand;
@@ -32,48 +34,19 @@ internal class TopPanelViewModel : ViewModelBase
     private readonly RelayCommand _backCommand;
     private readonly RelayCommand _forwardCommand;
     private readonly RelayCommand _refreshCommand;
-    
-    private readonly CompositeDisposable _disposables = new();
 
     public TopPanelViewModel(IBrowserRouter browserRouter)
     {
         _searchAddress = string.Empty;
         _browserRouter = browserRouter;
         
-        _disposables.Add(browserRouter.Path.Subscribe(OnPathChanged));  
-        
         SearchCommand = new RelayCommand(OnSearch);
         
-        _backCommand = new RelayCommand(DoBack, ()=> browserRouter.CanBack);
-        _forwardCommand = new RelayCommand(DoForward, ()=> browserRouter.CanForward);
-        _refreshCommand = new RelayCommand(DoRefresh, ()=>browserRouter.CanRefresh);
+        _backCommand = new RelayCommand(_browserRouter.Back, ()=> browserRouter.CanBack);
+        _forwardCommand = new RelayCommand(_browserRouter.Forward, ()=> browserRouter.CanForward);
+        _refreshCommand = new RelayCommand(_browserRouter.Refresh, ()=>browserRouter.CanRefresh);
         
         TabsPanelViewModel = new TabsPanelViewModel();
-    }
-    
-    private void OnPathChanged(string path)
-    {
-        SearchAddress = path;
-    }
-
-    private void DoBack()
-    {
-        _browserRouter.Back();
-        _backCommand.NotifyCanExecuteChanged();
-        _forwardCommand.NotifyCanExecuteChanged();
-    }
-    
-    private void DoForward()
-    {
-        _browserRouter.Forward();
-        _forwardCommand.NotifyCanExecuteChanged();
-        _backCommand.NotifyCanExecuteChanged();
-    }
-    
-    private void DoRefresh()
-    {
-        _browserRouter.Refresh();
-        _refreshCommand.NotifyCanExecuteChanged();
     }
 
     private void OnSearch()
@@ -83,5 +56,27 @@ internal class TopPanelViewModel : ViewModelBase
         _backCommand.NotifyCanExecuteChanged();
         _forwardCommand.NotifyCanExecuteChanged();
         _refreshCommand.NotifyCanExecuteChanged();
+    }
+
+    public void Receive(BrowserForwardMessage message)
+    {
+        _forwardCommand.NotifyCanExecuteChanged();
+        _backCommand.NotifyCanExecuteChanged();
+    }
+
+    public void Receive(BrowserBackMessage message)
+    {
+        _forwardCommand.NotifyCanExecuteChanged();
+        _backCommand.NotifyCanExecuteChanged();
+    }
+
+    public void Receive(BrowserRefreshMessage message)
+    {
+        _refreshCommand.NotifyCanExecuteChanged();
+    }
+
+    public void Receive(NavigationPathChangedMessage message)
+    {
+        SearchAddress = message.Address;
     }
 }

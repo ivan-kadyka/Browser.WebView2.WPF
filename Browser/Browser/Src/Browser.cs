@@ -1,6 +1,7 @@
 ﻿using System.Reactive.Subjects;
 using Browser.Core;
 using Browser.Core.Navigation;
+using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
 using Reactive.Extensions;
 using Reactive.Extensions.Observable;
@@ -15,7 +16,7 @@ public class Browser : DisposableBase, IBrowser
     
     public bool CanBack => ActivePage.CanBack;
     
-    public IObservableValue<string> Path => ActivePage.Path;
+    public IObservableValue<INavigateOptions> Path => ActivePage.Path;
 
     public IObservable<IBrowserPage> PageAdded => _pageAdded;
     public IObservable<IBrowserPage> PageRemoved => _pageRemoved;
@@ -28,13 +29,13 @@ public class Browser : DisposableBase, IBrowser
     private readonly ObservableValue<IBrowserPage> _currentPageSubject;
     private IBrowserPage ActivePage => _currentPageSubject.Value;
     
-    public Browser()
+    public Browser(IMessenger messenger)
     {
         Pages = _pages;
-        _currentPageSubject = new ObservableValue<IBrowserPage>(new BrowserPage());
+        
+        var page = new BrowserPage(messenger);
+        _currentPageSubject = new ObservableValue<IBrowserPage>(page);
     }
-    
-
     
     public void Forward()
     {
@@ -78,17 +79,16 @@ public class Browser : DisposableBase, IBrowser
 
     public Task RemovePage(IBrowserPage page)
     {
-        _pageRemoved.OnNext(page);
-        
         var newPages = _pages.Value.ToList();
         newPages.Remove(page);
-        
-        _pages.OnNext(newPages);
         
         if (newPages.Count > 0)
         {
             SetCurrentPage(newPages.Last());
         }
+        
+        _pageRemoved.OnNext(page);
+        _pages.OnNext(newPages);
         
         return Task.CompletedTask;
     }
