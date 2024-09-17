@@ -1,7 +1,7 @@
 ﻿
 using System.Windows.Controls;
 
-namespace TopPanel.TabsPanel;
+namespace Browser.TopPanel.Wpf.TabsPanel;
 
 public partial class TabsPanelView : UserControl
 {

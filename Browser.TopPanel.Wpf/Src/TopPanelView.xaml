@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:view="clr-namespace:PresenterBase.View;assembly=PresenterBase"
              xmlns:textBox="clr-namespace:ControlExt.TextBox;assembly=ControlExt"
-             xmlns:topPanel="clr-namespace:TopPanel"
-             xmlns:tabsPanel="clr-namespace:TopPanel.TabsPanel"
+             xmlns:topPanel="clr-namespace:Browser.TopPanel.Wpf"
+             xmlns:tabsPanel="clr-namespace:Browser.TopPanel.Wpf.TabsPanel"
              xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" d:DesignSource="TopPanelViewModel"
@@ -39,13 +39,13 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <Button Style="{StaticResource IconButtonStyle}" Command="{Binding BackCommand}">
-                        <svgc:SvgViewbox Source="pack://application:,,,/TopPanel;component/Images/arrow-left.svg"/>
+                        <svgc:SvgViewbox Source="pack://application:,,,/Browser.TopPanel.Wpf;component/Images/arrow-left.svg"/>
                     </Button>
                     <Button Style="{StaticResource IconButtonStyle}" Command="{Binding ForwardCommand}">
-                        <svgc:SvgViewbox Source="pack://application:,,,/TopPanel;component/Images/arrow-right.svg"/>
+                        <svgc:SvgViewbox Source="pack://application:,,,/Browser.TopPanel.Wpf;component/Images/arrow-right.svg"/>
                     </Button>
                     <Button Style="{StaticResource IconButtonStyle}" Command="{Binding RefreshCommand}">
-                        <svgc:SvgViewbox Source="pack://application:,,,/TopPanel;component/Images/rotate-cw.svg"/>
+                        <svgc:SvgViewbox Source="pack://application:,,,/Browser.TopPanel.Wpf;component/Images/rotate-cw.svg"/>
                     </Button>
                 </StackPanel>
                 <TextBox Height="30" VerticalAlignment="Bottom" TextAlignment="Left" Margin="5"

@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Browser.TopPanel.Wpf.TabsPanel;
+using Microsoft.Extensions.DependencyInjection;
 using PresenterBase.Presenter;
-using TopPanel.TabsPanel;
 
-namespace TopPanel.Module;
+namespace Browser.TopPanel.Wpf.Module;
 
 public static class TopPanelModule
 {

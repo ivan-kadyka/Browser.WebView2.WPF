@@ -1,7 +1,7 @@
 ﻿using Browser.Messages;
 using CommunityToolkit.Mvvm.Messaging;
 using PresenterBase.Presenter;
-using TopPanel;
+using Browser.TopPanel.Wpf;
 
 internal class TopPanelPresenter : Presenter
 {

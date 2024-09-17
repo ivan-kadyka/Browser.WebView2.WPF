@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{D739D7B8-3602-40DD-B2B9-CE008620CEC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopPanel", "TopPanel\TopPanel.csproj", "{B552E486-108E-4916-9A1C-D22A8328E824}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser.TopPanel.Wpf", "Browser.TopPanel.Wpf\Browser.TopPanel.Wpf.csproj", "{B552E486-108E-4916-9A1C-D22A8328E824}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageTabs", "PageTabs\PageTabs.csproj", "{DC4D0F98-600B-4416-9071-F4439D80351A}"
 EndProject

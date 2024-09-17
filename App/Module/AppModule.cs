@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using PageTabs.Module;
 using PresenterBase.Presenter;
-using TopPanel.Module;
+using Browser.TopPanel.Wpf.Module;
 
 namespace BrowserApp.Module;
 

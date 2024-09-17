@@ -2,7 +2,7 @@
 using Browser.Abstractions;
 using PresenterBase.ViewModel;
 
-namespace TopPanel.TabsPanel;
+namespace Browser.TopPanel.Wpf.TabsPanel;
 
 public class PageTabItemViewModel : ViewModelBase
 {

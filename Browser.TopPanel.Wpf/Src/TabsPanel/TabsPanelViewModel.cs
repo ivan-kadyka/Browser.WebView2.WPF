@@ -7,7 +7,7 @@ using Browser.Abstractions;
 using Browser.Core.Commands;
 using CommunityToolkit.Mvvm.Input;
 
-namespace TopPanel.TabsPanel;
+namespace Browser.TopPanel.Wpf.TabsPanel;
 
 internal class TabsPanelViewModel : ViewModelBase
 {

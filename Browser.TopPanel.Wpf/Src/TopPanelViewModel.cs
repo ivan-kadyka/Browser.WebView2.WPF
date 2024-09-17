@@ -1,12 +1,12 @@
 ﻿using System.Windows.Input;
 using Browser.Abstractions.Navigation;
 using Browser.Messages;
+using Browser.TopPanel.Wpf.TabsPanel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using PresenterBase.ViewModel;
-using TopPanel.TabsPanel;
 
-namespace TopPanel;
+namespace Browser.TopPanel.Wpf;
 
 internal class TopPanelViewModel : ViewModelBase,
     IRecipient<BrowserForwardMessage>,
