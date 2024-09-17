@@ -62,12 +62,9 @@ internal class BrowserPage : DisposableBase, IBrowserPage
 
     public async Task Load(CancellationToken token = default)
     {
+        _webView.Source = new Uri(Path.Value.Address);
+        
         await _webView.EnsureCoreWebView2Async();
-
-        if (!string.IsNullOrWhiteSpace(Path.Value.Address))
-        {
-            _webView.CoreWebView2.Navigate(Path.Value.Address);
-        }
     }
 
     public void Forward()

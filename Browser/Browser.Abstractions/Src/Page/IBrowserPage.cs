@@ -1,5 +1,4 @@
-﻿using Browser.Abstractions.Content;
-using Browser.Abstractions.Navigation;
+﻿using Browser.Abstractions.Navigation;
 
 namespace Browser.Abstractions.Page;
 

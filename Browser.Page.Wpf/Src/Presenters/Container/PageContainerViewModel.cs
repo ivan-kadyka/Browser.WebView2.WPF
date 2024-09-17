@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
-using System.Windows.Controls;
 using Browser.Abstractions;
 using Browser.Abstractions.Page;
 using PresenterBase.ViewModel;
@@ -12,40 +10,22 @@ public class PageContainerViewModel : ViewModelBase
 {
     private readonly IBrowser _browser;
 
-    public ObservableCollection<TabItem> WebView2Tabs
+    public object WebContent
     {
-        get { return _webView2Tabs; }
-        set
+        get => _content;
+        private set
         {
-            if (_webView2Tabs == value)
+            if (_content == value)
                 return;
-
-            //set value
-            _webView2Tabs = value;
-
+            
+            _content = value;
             OnPropertyChanged();
         }
     }
     
-    public int SelectedIndex
-    {
-        get { return _selectedIndex; }
-        set
-        {
-            if (_selectedIndex == value)
-                return;
-
-            //set value
-            _selectedIndex = value;
-
-            OnPropertyChanged();
-        }
-    }
     
-    private int _tabCount = 0;
-    private int _selectedIndex = 0;
-
-    private ObservableCollection<TabItem> _webView2Tabs = new ObservableCollection<TabItem>();
+    private object _content;
+    
     
     private readonly CompositeDisposable _disposables = new();
     
@@ -66,27 +46,15 @@ public class PageContainerViewModel : ViewModelBase
         AddTab(page);
     }
 
-    private async void OnCurrentPageChanged(IBrowserPage page)
+    private void OnCurrentPageChanged(IBrowserPage page)
     {
-        for (int i = 0; i < _webView2Tabs.Count; i++)
-        {
-            if (_webView2Tabs[i].Content == page.Content)
-            {
-                SelectedIndex = i;
-                return;
-            }
-        }
+        WebContent = page.Content;
     }
 
 
     private async void AddTab(IBrowserPage page)
     {
-        _tabCount++;
-        
-        //add TabItem
-        _webView2Tabs.Add(new TabItem { Header = null, Content = page.Content, Name = $"tab_{_tabCount}" });
-        
-        SelectedIndex = _webView2Tabs.Count - 1;
+        WebContent = page.Content;
         
         await page.Load();
     }

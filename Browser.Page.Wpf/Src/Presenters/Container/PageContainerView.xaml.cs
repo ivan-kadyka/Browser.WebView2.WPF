@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
+﻿namespace Browser.Page.Wpf.Presenters.Container;
 
-namespace Browser.Page.Wpf.Presenters.Container;
-
-public partial class PageContainerView : UserControl
+public partial class PageContainerView
 {
     public PageContainerView()
     {

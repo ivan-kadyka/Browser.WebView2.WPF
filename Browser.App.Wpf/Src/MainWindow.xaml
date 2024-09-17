@@ -31,7 +31,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <ContentControl Grid.Row="0" x:Name="TopPanel" />
+        <ContentControl  Grid.Row="0" x:Name="TopPanel" />
         <ContentControl Grid.Row="1" x:Name="Page" />
     </Grid>
 </view:WindowView>
