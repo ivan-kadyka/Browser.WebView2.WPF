@@ -1,18 +1,18 @@
 ﻿using Browser.Abstractions;
 using Browser.Abstractions.Navigation;
-using CommunityToolkit.Mvvm.Messaging;
+using Browser.Abstractions.Page;
 
 namespace Browser.Core.Commands;
 
 public class AddBrowserPageCommand : CommandBase<INavigateOptions>
 {
     private readonly IBrowser _browser;
-    private readonly IMessenger _messenger;
+    private readonly IBrowserPageFactory _browserPageFactory;
 
-    public AddBrowserPageCommand(IBrowser browser, IMessenger messenger)
+    public AddBrowserPageCommand(IBrowser browser, IBrowserPageFactory browserPageFactory)
     {
         _browser = browser;
-        _messenger = messenger;
+        _browserPageFactory = browserPageFactory;
     }
     
     protected override void OnExecute(INavigateOptions? parameter)
@@ -22,7 +22,9 @@ public class AddBrowserPageCommand : CommandBase<INavigateOptions>
             parameter = new UrlNavigateOptions("");
         }
         
-        _browser.AddPage(new BrowserPage(_messenger, parameter));
+        var page = _browserPageFactory.Create(parameter);
+        
+        _browser.AddPage(page);
     }
 }
 

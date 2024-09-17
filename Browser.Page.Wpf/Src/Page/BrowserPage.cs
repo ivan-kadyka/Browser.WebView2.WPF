@@ -1,23 +1,24 @@
-﻿using System.Reactive.Disposables;
-using Browser.Abstractions;
-using Browser.Abstractions.Content;
+﻿using System;
+using System.Reactive.Disposables;
 using Browser.Abstractions.Navigation;
-using Browser.Core.Stack;
+using Browser.Abstractions.Page;
 using Browser.Messenger;
 using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
+using Microsoft.Web.WebView2.Wpf;
 using Reactive.Extensions.Observable;
 
-namespace Browser.Core;
+namespace Browser.Page.Wpf.Page;
 
 internal class BrowserPage : DisposableBase, IBrowserPage
 {
+    private readonly IWebView2 _webView;
     private readonly IMessenger _messenger;
     public string Id { get; }
 
     public string Title { get; }
     
-    public IContent Content { get; }
+    public object Content => _webView;
 
     public IObservableValue<INavigateOptions> Path  => _history.Current;
 
@@ -25,11 +26,14 @@ internal class BrowserPage : DisposableBase, IBrowserPage
     
     private readonly CompositeDisposable _disposables = new();
     
-    public BrowserPage(IMessenger messenger, INavigateOptions options)
+    public BrowserPage(
+        IWebView2 webView,
+        IMessenger messenger, INavigateOptions options)
     {
         Id = Guid.NewGuid().ToString();
         Title = options.Address;
-        
+
+        _webView = webView;
         _messenger = messenger;
         _history = new UndoRedoStack<INavigateOptions>(options);
         
@@ -37,6 +41,8 @@ internal class BrowserPage : DisposableBase, IBrowserPage
         {
             _messenger.Send(new NavigationPathChangedMessage(it));
         }));
+        
+        _disposables.Add(_webView);
     }
 
     public void Forward()

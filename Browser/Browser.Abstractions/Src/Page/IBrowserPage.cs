@@ -1,7 +1,7 @@
 ﻿using Browser.Abstractions.Content;
 using Browser.Abstractions.Navigation;
 
-namespace Browser.Abstractions;
+namespace Browser.Abstractions.Page;
 
 public interface IBrowserPage : IBrowserRouter
 {
@@ -9,5 +9,5 @@ public interface IBrowserPage : IBrowserRouter
     
     string Title { get; }
     
-    IContent Content { get; }
+    object Content { get; }
 }

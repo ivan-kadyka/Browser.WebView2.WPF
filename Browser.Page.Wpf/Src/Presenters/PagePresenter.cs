@@ -2,23 +2,22 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Browser.Abstractions.Navigation;
+using Browser.Page.Wpf.Page;
 using PresenterBase.Presenter;
 
-namespace Browser.Page.Wpf.Page;
+namespace Browser.Page.Wpf.Presenters;
 
 internal class PagePresenter : Presenter
 {
     private readonly IBrowserPathRouter _browserPathRouter;
     private readonly PageView _view;
     
-    public PagePresenter(PageViewModel viewModel, IBrowserPathRouter browserPathRouter)
-        : this(viewModel, browserPathRouter, new PageView())
+    public PagePresenter(IBrowserPathRouter browserPathRouter, PageViewModel viewModel)
+        : this(browserPathRouter, viewModel, new PageView())
     {
     }
     
-
-    public PagePresenter(PageViewModel viewModel, 
-        IBrowserPathRouter browserPathRouter,
+    public PagePresenter(IBrowserPathRouter browserPathRouter,  PageViewModel viewModel,
         PageView view) : base(view, viewModel)
     {
         _view = view;

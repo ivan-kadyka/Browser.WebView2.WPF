@@ -1,7 +1,6 @@
 ﻿using System.Reactive.Subjects;
-using Reactive.Extensions.Observable;
 
-namespace Reactive.Extensions;
+namespace Reactive.Extensions.Observable;
 
 public class ObservableValue<T> : ISubject<T>, IDisposable, IObservableValue<T>
 {

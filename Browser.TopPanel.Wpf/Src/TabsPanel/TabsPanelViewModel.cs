@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Browser.Abstractions;
+using Browser.Abstractions.Page;
 using Browser.Core.Commands;
 using CommunityToolkit.Mvvm.Input;
 

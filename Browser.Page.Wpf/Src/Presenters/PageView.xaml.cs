@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Wpf;
 using PresenterBase.View;
 
-namespace Browser.Page.Wpf.Page;
+namespace Browser.Page.Wpf.Presenters;
 
 internal partial class PageView : UserControlView
 {

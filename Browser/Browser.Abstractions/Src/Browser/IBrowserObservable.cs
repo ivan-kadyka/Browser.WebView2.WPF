@@ -1,4 +1,5 @@
-﻿using Reactive.Extensions.Observable;
+﻿using Browser.Abstractions.Page;
+using Reactive.Extensions.Observable;
 
 namespace Browser.Abstractions;
 

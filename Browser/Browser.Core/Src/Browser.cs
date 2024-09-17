@@ -1,9 +1,9 @@
 ﻿using System.Reactive.Subjects;
 using Browser.Abstractions;
 using Browser.Abstractions.Navigation;
+using Browser.Abstractions.Page;
 using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
-using Reactive.Extensions;
 using Reactive.Extensions.Observable;
 
 namespace Browser.Core;
@@ -25,16 +25,16 @@ public class Browser : DisposableBase, IBrowser
     private readonly Subject<IBrowserPage> _pageAdded = new();
     private readonly Subject<IBrowserPage> _pageRemoved = new();
     
-    
     private readonly List<IBrowserPage> _pages = new();
 
     private readonly ObservableValue<IBrowserPage> _currentPageSubject;
     private IBrowserPage ActivePage => _currentPageSubject.Value;
     
-    public Browser(IMessenger messenger)
+    public Browser(IMessenger messenger, IBrowserPageFactory browserPageFactory)
     {
         var navigationOptions = new UrlNavigateOptions("duckduckgo.com");
-        var page = new BrowserPage(messenger, navigationOptions);
+        var page = browserPageFactory.Create(navigationOptions);
+        
         _pages.Add(page);
         
         _currentPageSubject = new ObservableValue<IBrowserPage>(page);

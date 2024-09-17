@@ -5,10 +5,11 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:view="clr-namespace:PresenterBase.View;assembly=PresenterBase"
                  xmlns:global="clr-namespace:"
+                 xmlns:browserApp="clr-namespace:BrowserApp"
                  WindowState="Maximized"
                  mc:Ignorable="d"
                  Title="Browser.Wpf"
-                 d:DataContext="{d:DesignInstance global:MainViewModel, IsDesignTimeCreatable=True}"
+                 d:DataContext="{d:DesignInstance browserApp:MainViewModel, IsDesignTimeCreatable=True}"
                  x:ClassModifier="internal"
                 >
     <Window.Resources>

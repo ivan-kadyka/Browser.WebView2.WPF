@@ -1,7 +1,8 @@
 ﻿using Browser.Messenger;
 using CommunityToolkit.Mvvm.Messaging;
 using PresenterBase.Presenter;
-using Browser.TopPanel.Wpf;
+
+namespace Browser.TopPanel.Wpf;
 
 internal class TopPanelPresenter : Presenter
 {

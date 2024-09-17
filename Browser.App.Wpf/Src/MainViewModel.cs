@@ -2,6 +2,8 @@
 using Browser.Core.Commands;
 using PresenterBase.ViewModel;
 
+namespace BrowserApp;
+
 internal class MainViewModel : ViewModelBase
 {
     public ICommand AddTabCommand { get; }
