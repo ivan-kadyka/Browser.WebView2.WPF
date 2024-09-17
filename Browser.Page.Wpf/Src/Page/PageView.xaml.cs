@@ -2,6 +2,9 @@
 using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Wpf;
 using PresenterBase.View;
+
+namespace Browser.Page.Wpf.Page;
+
 internal partial class PageView : UserControlView
 {
     private readonly WebView2 _webView;

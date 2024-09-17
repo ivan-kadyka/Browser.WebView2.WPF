@@ -1,13 +1,13 @@
-﻿<view:UserControlView x:Class="PageView"
+﻿<view:UserControlView x:Class="Browser.Page.Wpf.Page.PageView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:view="clr-namespace:PresenterBase.View;assembly=PresenterBase"
-             xmlns:global="clr-namespace:"
+             xmlns:page="clr-namespace:Browser.Page.Wpf.Page"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
-             d:DataContext="{d:DesignInstance global:PageViewModel}" x:ClassModifier="internal">
+             d:DataContext="{d:DesignInstance page:PageViewModel}" x:ClassModifier="internal">
     <Grid>
         <ContentControl Grid.Row="0" x:Name="WebView" />
     </Grid>

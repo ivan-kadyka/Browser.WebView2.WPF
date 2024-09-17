@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Src\Page\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Browser\Browser.Abstractions\Browser.Abstractions.csproj" />
       <ProjectReference Include="..\Infra\PresenterBase\PresenterBase.csproj" />
     </ItemGroup>

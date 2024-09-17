@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Browser.Page.Wpf.Page;
+using Microsoft.Extensions.DependencyInjection;
 using PresenterBase.Presenter;
 
 namespace Browser.Page.Wpf.Module;

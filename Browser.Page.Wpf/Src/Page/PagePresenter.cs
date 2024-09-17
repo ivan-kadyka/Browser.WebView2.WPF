@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Browser.Abstractions.Navigation;
 using PresenterBase.Presenter;
 
+namespace Browser.Page.Wpf.Page;
+
 internal class PagePresenter : Presenter
 {
     private readonly IBrowserPathRouter _browserPathRouter;
