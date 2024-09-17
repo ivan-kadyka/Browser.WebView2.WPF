@@ -1,28 +1,33 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Web.WebView2.Wpf;
+using Browser.Abstractions.Page;
 using PresenterBase.View;
 
 namespace Browser.Page.Wpf.Presenters;
 
 internal partial class PageView : UserControlView
 {
-    private readonly WebView2 _webView;
-    public PageView()
+    private readonly IBrowserPage _page;
+    private TaskCompletionSource<bool> _tcs = new();
+    public PageView(IBrowserPage page)
     {
+        _page = page;
         InitializeComponent();
         
-        _webView= new WebView2();
-        WebView.Content = _webView;
+        WebView.Content = page.Content;
     }
+
+    protected override async void OnInitialized(EventArgs e)
+    {
+        base.OnInitialized(e);
     
+        _tcs.TrySetResult(true);
+    }
+
     protected override async Task OnShow(CancellationToken token = default)
     {
-        await _webView.EnsureCoreWebView2Async(null);
-    }
-    
-    public void Navigate(string url)
-    {
-        _webView.CoreWebView2.Navigate("https://"+ url);
+        await _tcs.Task;
+        await _page.Load(token);
     }
 }

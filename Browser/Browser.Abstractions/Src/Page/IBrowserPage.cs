@@ -10,4 +10,6 @@ public interface IBrowserPage : IBrowserRouter
     string Title { get; }
     
     object Content { get; }
+    
+    Task Load(CancellationToken token = default);
 }

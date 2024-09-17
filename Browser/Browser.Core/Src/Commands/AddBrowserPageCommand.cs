@@ -19,7 +19,7 @@ public class AddBrowserPageCommand : CommandBase<INavigateOptions>
     {
         if (parameter == null)
         {
-            parameter = new UrlNavigateOptions("");
+            parameter = new UrlNavigateOptions("google.com");
         }
         
         var page = _browserPageFactory.Create(parameter);

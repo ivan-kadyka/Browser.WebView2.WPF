@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reactive.Disposables;
+using System.Threading;
+using System.Threading.Tasks;
 using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
 using Browser.Messenger;
@@ -44,6 +46,16 @@ internal class BrowserPage : DisposableBase, IBrowserPage
         
         _disposables.Add(_webView);
     }
+    
+    public async Task Load(CancellationToken token = default)
+    {
+        await _webView.EnsureCoreWebView2Async();
+
+        if (!string.IsNullOrWhiteSpace(Path.Value.Address))
+        {
+            _webView.CoreWebView2.Navigate(Path.Value.Address);
+        }
+    }
 
     public void Forward()
     {
@@ -73,6 +85,7 @@ internal class BrowserPage : DisposableBase, IBrowserPage
     public void Push(INavigateOptions options)
     {
         _history.Do(options);
+        _webView.CoreWebView2.Navigate(options.Address);
     }
 
     public void Replace(INavigateOptions options)

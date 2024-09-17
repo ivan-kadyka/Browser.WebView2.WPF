@@ -2,7 +2,6 @@
 using Browser.Abstractions;
 using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
-using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
 using Reactive.Extensions.Observable;
 
@@ -30,7 +29,7 @@ public class Browser : DisposableBase, IBrowser
     private readonly ObservableValue<IBrowserPage> _currentPageSubject;
     private IBrowserPage ActivePage => _currentPageSubject.Value;
     
-    public Browser(IMessenger messenger, IBrowserPageFactory browserPageFactory)
+    public Browser(IBrowserPageFactory browserPageFactory)
     {
         var navigationOptions = new UrlNavigateOptions("duckduckgo.com");
         var page = browserPageFactory.Create(navigationOptions);

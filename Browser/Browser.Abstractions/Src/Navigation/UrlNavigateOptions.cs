@@ -6,6 +6,10 @@ public class UrlNavigateOptions : INavigateOptions
     
     public UrlNavigateOptions(string address)
     {
-        Address = address;
+        // TODO: check if it is a valid url
+        if (address.StartsWith("http"))
+            Address = address;
+        else
+            Address = "https://"+address;
     }
 }
