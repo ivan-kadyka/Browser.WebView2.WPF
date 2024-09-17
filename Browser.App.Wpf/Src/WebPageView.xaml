@@ -9,12 +9,9 @@
              Loaded="Window_Loaded">
     <Grid>
         <DockPanel LastChildFill="True">
-            <Button Click="Button_Click" 
-                    DockPanel.Dock="Top"
-                    Content="+"></Button>
+           
 
-            <Grid x:Name="TabArea"
-                  DockPanel.Dock="Bottom">
+            <Grid x:Name="TabArea" DockPanel.Dock="Bottom">
 
                 <TabControl x:Name="tabControl1" ItemsSource="{Binding Path= WebView2Tabs, Mode=OneWay, 
             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"

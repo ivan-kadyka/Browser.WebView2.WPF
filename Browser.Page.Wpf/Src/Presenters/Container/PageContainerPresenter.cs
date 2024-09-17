@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reactive.Disposables;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using Browser.Abstractions;
 using Browser.Abstractions.Page;
 using Disposable;
@@ -14,18 +16,8 @@ namespace Browser.Page.Wpf.Presenters.Container;
 
 public class PageContainerPresenter : DisposableBase, IPresenter, INotifyPropertyChanged
 {
-    public object Content
-    {
-        get
-        {
-            return _content;
-        }
-        private set
-        {
-            _content = value;
-            OnPropertyChanged();
-        }
-    }
+    public object Content { get; }
+     
 
     private readonly IBrowser _browser;
     private IPresenter _currentPagePresenter;
@@ -33,12 +25,19 @@ public class PageContainerPresenter : DisposableBase, IPresenter, INotifyPropert
     private readonly CompositeDisposable _disposables = new();
     
     private readonly Dictionary<string, IPresenter> _presenters = new();
-    private object _content;
+   // private object _content;
     
     public PageContainerPresenter(IBrowser browser)
     {
         _browser = browser;
+        
+        var viewModel = new PageContainerViewModel(browser);
+        var view = new PageContainerView();
+        
+        Content = view;
+        view.DataContext = viewModel;
 
+        /*
         var currentPage = browser.CurrentPage.Value;
         
         _currentPagePresenter = CreatePagePresenter(currentPage);
@@ -49,6 +48,7 @@ public class PageContainerPresenter : DisposableBase, IPresenter, INotifyPropert
         _disposables.Add(browser.PageRemoved.Subscribe(OnPageRemoved));
         
         _disposables.Add(browser.CurrentPage.Subscribe(OnCurrentPageChanged));
+        */
     }
     
 
@@ -68,30 +68,33 @@ public class PageContainerPresenter : DisposableBase, IPresenter, INotifyPropert
     
     private async void OnCurrentPageChanged(IBrowserPage page)
     {
-        if (_presenters.TryGetValue(page.Id, out var presenter))
+        if (_presenters.TryGetValue(page.Id, out var newPresenter))
         {
-            if (_currentPagePresenter == presenter)
+            if (_currentPagePresenter == newPresenter)
                 return;
             
-            await _currentPagePresenter.Stop();
+            var prevPresenter = _currentPagePresenter;
             
-            _currentPagePresenter = presenter;
-            OnPropertyChanged(nameof(Content));
+            await prevPresenter.Stop();
             
-           // await Task.Yield();
+            _currentPagePresenter = newPresenter;
             
-            await presenter.Start();
+           // Content = _currentPagePresenter.Content;
+            
+            await Task.Yield();
+            
+            await newPresenter.Start();
         }
     }
    
     public async Task Start(CancellationToken token = default)
     {
-        await _currentPagePresenter.Start(token);
+      //  await _currentPagePresenter.Start(token);
     }
 
     public async Task Stop(CancellationToken token = default)
     {
-        await _currentPagePresenter.Stop(token);
+      //  await _currentPagePresenter.Stop(token);
     }
 
     private IPresenter CreatePagePresenter(IBrowserPage page)

@@ -10,5 +10,6 @@
              d:DataContext="{d:DesignInstance page:PageViewModel}" x:ClassModifier="internal">
     <Grid>
         <ContentControl Grid.Row="0" x:Name="WebView" />
+      
     </Grid>
 </view:UserControlView>

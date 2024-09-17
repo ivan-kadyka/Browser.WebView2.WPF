@@ -7,6 +7,7 @@ using Browser.Abstractions.Page;
 using Browser.Messenger;
 using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
+using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 using Reactive.Extensions.Observable;
 
@@ -45,8 +46,20 @@ internal class BrowserPage : DisposableBase, IBrowserPage
         }));
         
         _disposables.Add(_webView);
+        
+        _webView.CoreWebView2InitializationCompleted += WebViewOnCoreWebView2InitializationCompleted;
     }
-    
+
+    private void WebViewOnCoreWebView2InitializationCompleted(object? sender, CoreWebView2InitializationCompletedEventArgs e)
+    {
+        _webView.CoreWebView2.NewWindowRequested += CoreWebView2OnNewWindowRequested;
+    }
+
+    private void CoreWebView2OnNewWindowRequested(object? sender, CoreWebView2NewWindowRequestedEventArgs e)
+    {
+        
+    }
+
     public async Task Load(CancellationToken token = default)
     {
         await _webView.EnsureCoreWebView2Async();
@@ -98,6 +111,8 @@ internal class BrowserPage : DisposableBase, IBrowserPage
         if (disposing)
         {
             _disposables.Dispose();
+            _webView.CoreWebView2InitializationCompleted -= WebViewOnCoreWebView2InitializationCompleted;
+            _webView.CoreWebView2.NewWindowRequested -= CoreWebView2OnNewWindowRequested;
         }
     }
 }
