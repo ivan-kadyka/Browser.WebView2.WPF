@@ -2,5 +2,4 @@
 
 public interface IContent
 {
-    object DataContext { get; set; }
 }

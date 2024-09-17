@@ -1,20 +1,25 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Web.WebView2.Wpf;
 using PresenterBase.View;
 internal partial class PageView : UserControlView
 {
+    private readonly WebView2 _webView;
     public PageView()
     {
         InitializeComponent();
+        
+        _webView= new WebView2();
+        WebView.Content = _webView;
     }
     
     protected override async Task OnShow(CancellationToken token = default)
     {
-        await WebView.EnsureCoreWebView2Async(null);
+        await _webView.EnsureCoreWebView2Async(null);
     }
     
     public void Navigate(string url)
     {
-         WebView.CoreWebView2.Navigate("https://"+ url);
+        _webView.CoreWebView2.Navigate("https://"+ url);
     }
 }

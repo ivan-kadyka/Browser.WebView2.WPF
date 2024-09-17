@@ -1,5 +1,5 @@
 ﻿using System;
-using Browser.Core;
+using Browser.Abstractions;
 using PresenterBase.ViewModel;
 
 namespace TopPanel.TabsPanel;

@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Browser.Commands;
-using Browser.Core;
+using Browser.Abstractions;
 using CommunityToolkit.Mvvm.Input;
 
 namespace TopPanel.TabsPanel;

@@ -1,4 +1,4 @@
-﻿using Browser.Core;
+﻿using Browser.Abstractions;
 
 namespace Browser.Commands;
 

@@ -1,6 +1,7 @@
 ﻿using System.Reactive.Disposables;
-using Browser.Core;
-using Browser.Core.Navigation;
+using Browser.Abstractions;
+using Browser.Abstractions.Content;
+using Browser.Abstractions.Navigation;
 using Browser.Messages;
 using Browser.Stack;
 using CommunityToolkit.Mvvm.Messaging;
@@ -16,6 +17,8 @@ internal class BrowserPage : DisposableBase, IBrowserPage
 
     public string Title { get; }
     
+    public IContent Content { get; }
+
     public IObservableValue<INavigateOptions> Path  => _history.Current;
 
     private readonly UndoRedoStack<INavigateOptions> _history;

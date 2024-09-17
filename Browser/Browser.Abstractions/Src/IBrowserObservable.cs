@@ -1,6 +1,6 @@
 ﻿using Reactive.Extensions.Observable;
 
-namespace Browser.Core;
+namespace Browser.Abstractions;
 
 public interface IBrowserObservable
 {

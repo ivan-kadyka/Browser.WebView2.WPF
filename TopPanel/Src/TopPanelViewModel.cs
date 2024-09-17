@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using Browser.Core.Navigation;
+using Browser.Abstractions.Navigation;
 using Browser.Messages;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;

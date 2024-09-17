@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Browser.Core.Navigation;
+using Browser.Abstractions.Navigation;
 using PresenterBase.Presenter;
 
 internal class PagePresenter : Presenter

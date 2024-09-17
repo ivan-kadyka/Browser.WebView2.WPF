@@ -1,6 +1,6 @@
 ﻿using System.Reactive.Subjects;
-using Browser.Core;
-using Browser.Core.Navigation;
+using Browser.Abstractions;
+using Browser.Abstractions.Navigation;
 using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
 using Reactive.Extensions;

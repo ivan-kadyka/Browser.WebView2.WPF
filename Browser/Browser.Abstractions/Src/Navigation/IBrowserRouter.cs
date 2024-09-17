@@ -1,4 +1,4 @@
-﻿namespace Browser.Core.Navigation;
+﻿namespace Browser.Abstractions.Navigation;
 
 public interface IBrowserRouter : IBrowserPathRouter
 {

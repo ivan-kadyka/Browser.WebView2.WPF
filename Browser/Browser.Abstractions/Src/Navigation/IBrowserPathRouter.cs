@@ -1,6 +1,6 @@
 ﻿using Reactive.Extensions.Observable;
 
-namespace Browser.Core.Navigation;
+namespace Browser.Abstractions.Navigation;
 
 public interface IBrowserPathRouter
 {

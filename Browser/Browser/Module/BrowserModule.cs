@@ -1,6 +1,6 @@
 ﻿using Browser.Commands;
-using Browser.Core;
-using Browser.Core.Navigation;
+using Browser.Abstractions;
+using Browser.Abstractions.Navigation;
 using Browser.Messages.Module;
 using Microsoft.Extensions.DependencyInjection;
 

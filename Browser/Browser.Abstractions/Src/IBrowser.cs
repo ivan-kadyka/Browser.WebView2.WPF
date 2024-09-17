@@ -1,6 +1,6 @@
-﻿using Browser.Core.Navigation;
+﻿using Browser.Abstractions.Navigation;
 
-namespace Browser.Core;
+namespace Browser.Abstractions;
 
 public interface IBrowser : IBrowserRouter, IBrowserObservable
 {

@@ -9,7 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Browser.Messages\Browser.Messages.csproj" />
       <ProjectReference Include="..\..\Infra\Disposable\Disposable.csproj" />
-      <ProjectReference Include="..\Browser.Core\Browser.Core.csproj" />
+      <ProjectReference Include="..\Browser.Abstractions\Browser.Abstractions.csproj" />
     </ItemGroup>
 
     <ItemGroup>

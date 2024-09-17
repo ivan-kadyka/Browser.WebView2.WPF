@@ -10,6 +10,6 @@
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance global:PageViewModel}" x:ClassModifier="internal">
     <Grid>
-        <wpf:WebView2 Name="WebView" />
+        <ContentControl Grid.Row="0" x:Name="WebView" />
     </Grid>
 </view:UserControlView>

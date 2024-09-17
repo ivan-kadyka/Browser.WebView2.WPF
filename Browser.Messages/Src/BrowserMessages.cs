@@ -1,4 +1,4 @@
-﻿using Browser.Core.Navigation;
+﻿using Browser.Abstractions.Navigation;
 
 namespace Browser.Messages;
 
