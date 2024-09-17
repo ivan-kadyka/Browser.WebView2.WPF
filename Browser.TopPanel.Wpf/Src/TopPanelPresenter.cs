@@ -1,4 +1,4 @@
-﻿using Browser.Messages;
+﻿using Browser.Messenger;
 using CommunityToolkit.Mvvm.Messaging;
 using PresenterBase.Presenter;
 using Browser.TopPanel.Wpf;

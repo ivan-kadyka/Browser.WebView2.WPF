@@ -3,7 +3,7 @@ using Browser.Abstractions;
 using Browser.Abstractions.Content;
 using Browser.Abstractions.Navigation;
 using Browser.Core.Stack;
-using Browser.Messages;
+using Browser.Messenger;
 using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
 using Reactive.Extensions.Observable;

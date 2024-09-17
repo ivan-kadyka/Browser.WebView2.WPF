@@ -1,7 +1,7 @@
 ﻿using Browser.Abstractions;
 using Browser.Abstractions.Navigation;
 using Browser.Core.Commands;
-using Browser.Messages.Module;
+using Browser.Messenger.Module;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Browser.Core.Module;

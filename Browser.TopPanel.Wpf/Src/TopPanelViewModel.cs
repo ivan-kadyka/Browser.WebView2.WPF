@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 using Browser.Abstractions.Navigation;
-using Browser.Messages;
+using Browser.Messenger;
 using Browser.TopPanel.Wpf.TabsPanel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;

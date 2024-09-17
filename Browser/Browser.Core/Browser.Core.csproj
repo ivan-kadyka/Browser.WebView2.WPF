@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Browser.Messages\Browser.Messages.csproj" />
+      <ProjectReference Include="..\..\Browser.Messenger\Browser.Messenger.csproj" />
       <ProjectReference Include="..\..\Infra\Disposable\Disposable.csproj" />
       <ProjectReference Include="..\Browser.Abstractions\Browser.Abstractions.csproj" />
     </ItemGroup>

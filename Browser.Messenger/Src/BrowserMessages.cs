@@ -1,6 +1,6 @@
 ﻿using Browser.Abstractions.Navigation;
 
-namespace Browser.Messages;
+namespace Browser.Messenger;
 
 public class BrowserForwardMessage
 {

@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser.Core", "Browser\Bro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable", "Infra\Disposable\Disposable.csproj", "{8E10ADBD-F5BA-43CB-9EBD-D413BF353761}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser.Messages", "Browser.Messages\Browser.Messages.csproj", "{112FF13E-4B89-45BE-ACE1-4A755802FF1E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser.Messenger", "Browser.Messenger\Browser.Messenger.csproj", "{112FF13E-4B89-45BE-ACE1-4A755802FF1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser.Core.Wpf", "Browser.Core.Wpf\Browser.Core.Wpf.csproj", "{56E00A1A-1218-4240-BCDD-FFEBF6684F5B}"
 EndProject

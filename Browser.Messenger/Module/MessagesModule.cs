@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Browser.Messages.Module;
+namespace Browser.Messenger.Module;
 
 public static class MessagesModule
 {
