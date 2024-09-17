@@ -19,25 +19,32 @@ internal class BrowserPage : DisposableBase, IBrowserPage
     private readonly IMessenger _messenger;
     public string Id { get; }
 
-    public string Title { get; }
-    
+    public string Title
+    {
+        get
+        {
+            return _webView.Source.Host;
+        }
+    }
+
     public object Content => _webView;
 
-    public IObservableValue<INavigateOptions> Path  => _history.Current;
+    public IObservableValue<INavigateOptions> Path  => _source;
 
     private readonly UndoRedoStack<INavigateOptions> _history;
     
     private readonly CompositeDisposable _disposables = new();
+    private readonly ObservableValue<INavigateOptions> _source;
     
     public BrowserPage(
         IWebView2 webView,
         IMessenger messenger, INavigateOptions options)
     {
         Id = Guid.NewGuid().ToString();
-        Title = options.Address;
 
         _webView = webView;
         _messenger = messenger;
+        _source = new ObservableValue<INavigateOptions>(options);
         _history = new UndoRedoStack<INavigateOptions>(options);
         
         _disposables.Add(_history.Current.Subscribe(it =>
@@ -48,6 +55,13 @@ internal class BrowserPage : DisposableBase, IBrowserPage
         _disposables.Add(_webView);
         
         _webView.CoreWebView2InitializationCompleted += WebViewOnCoreWebView2InitializationCompleted;
+        _webView.SourceChanged += WebViewOnSourceChanged;
+    }
+
+    private void WebViewOnSourceChanged(object? sender, CoreWebView2SourceChangedEventArgs e)
+    {
+        var uri = _webView.Source;
+        _source.OnNext(new UrlNavigateOptions(uri.ToString()));
     }
 
     private void WebViewOnCoreWebView2InitializationCompleted(object? sender, CoreWebView2InitializationCompletedEventArgs e)
@@ -110,6 +124,7 @@ internal class BrowserPage : DisposableBase, IBrowserPage
             _disposables.Dispose();
             _webView.CoreWebView2InitializationCompleted -= WebViewOnCoreWebView2InitializationCompleted;
             _webView.CoreWebView2.NewWindowRequested -= CoreWebView2OnNewWindowRequested;
+            _webView.SourceChanged -= WebViewOnSourceChanged;
         }
     }
 }

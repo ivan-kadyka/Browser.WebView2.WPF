@@ -1,5 +1,5 @@
 ﻿using System;
-using Browser.Abstractions;
+using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
 using PresenterBase.ViewModel;
 
@@ -23,10 +23,10 @@ public class PageTabItemViewModel : ViewModelBase
     public PageTabItemViewModel(IBrowserPage page)
     {
         _page = page;
-        _page.Path.Subscribe(new Action<object>(it => { OnPropertyChanged(); }));
+        _page.Path.Subscribe(OnPathChanged);
     }
 
-    private void OnPropertyChanged()
+    private void OnPathChanged(INavigateOptions options)
     {
         OnPropertyChanged(nameof(Header));
     }
