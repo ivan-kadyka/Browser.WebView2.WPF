@@ -13,6 +13,7 @@ namespace Browser.TopPanel.Wpf.TabsPanel;
 internal class TabsPanelViewModel : ViewModelBase
 {
     private readonly RemoveBrowserPageCommand _removeBrowserPageCommand;
+    private readonly SelectBrowserPageCommand _selectBrowserPageCommand;
     public ObservableCollection<PageTabItemViewModel> Tabs => _tabs;
 
     private PageTabItemViewModel _selectedPageTab;
@@ -21,7 +22,11 @@ internal class TabsPanelViewModel : ViewModelBase
         get => _selectedPageTab;
         set
         {
+            if (value == _selectedPageTab)
+                return;
+            
             _selectedPageTab = value;
+            _selectBrowserPageCommand.Execute(value.Id);
             OnPropertyChanged();
         }
     }
@@ -33,10 +38,12 @@ internal class TabsPanelViewModel : ViewModelBase
 
     public TabsPanelViewModel(IBrowserObservable browserObservable,
         AddBrowserPageCommand addBrowserPageCommand,
-        RemoveBrowserPageCommand removeBrowserPageCommand)
+        RemoveBrowserPageCommand removeBrowserPageCommand,
+        SelectBrowserPageCommand selectBrowserPageCommand)
     {
         _removeBrowserPageCommand = removeBrowserPageCommand;
-        
+        _selectBrowserPageCommand = selectBrowserPageCommand;
+
         _tabs = new ObservableCollection<PageTabItemViewModel>(
             browserObservable.Pages.Select(it => new PageTabItemViewModel(it)));
         
