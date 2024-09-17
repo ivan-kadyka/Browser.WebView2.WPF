@@ -1,6 +1,6 @@
 ﻿using Browser.Core.Module;
+using Browser.Page.Wpf.Module;
 using Microsoft.Extensions.DependencyInjection;
-using PageTabs.Module;
 using PresenterBase.Presenter;
 using Browser.TopPanel.Wpf.Module;
 
@@ -12,7 +12,7 @@ public static class AppModule
     {
         services.AddBrowserServices()
             .AddTopPanelServices()
-            .AddPageTabsServices();
+            .AddBrowserPageServices();
         
         services.AddTransient<MainViewModel>();
         services.AddTransient<MainWindow>();
@@ -21,7 +21,7 @@ public static class AppModule
             c.GetRequiredService<MainWindow>(),
             c.GetRequiredService<MainViewModel>(),
             c.GetRequiredKeyedService<IPresenter>(TopPanelModule.PresenterName),
-            c.GetRequiredKeyedService<IPresenter>(PageTabsModule.PresenterName)));
+            c.GetRequiredKeyedService<IPresenter>(BrowserPageModule.PresenterName)));
 
         return services;
     }

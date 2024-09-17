@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PresenterBase.Presenter;
 
-namespace PageTabs.Module;
+namespace Browser.Page.Wpf.Module;
 
-public static class PageTabsModule
+public static class BrowserPageModule
 {
-    public const string PresenterName = "PageTabsPresenter";
+    public const string PresenterName = "BrowserPagePresenter";
     
-    public static IServiceCollection AddPageTabsServices(this IServiceCollection services)
+    public static IServiceCollection AddBrowserPageServices(this IServiceCollection services)
     {
         services.AddTransient<PageView>();
         services.AddTransient<PageViewModel>();
