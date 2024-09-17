@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactive.Extensions", "Infr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser.Abstractions", "Browser\Browser.Abstractions\Browser.Abstractions.csproj", "{BB2EAFF1-F3E3-43EB-A7EE-1FDAC0158CED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser", "Browser\Browser\Browser.csproj", "{1C0E49A4-0DC2-4A7B-BA6E-CEF42BA92EA0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser.Core", "Browser\Browser.Core\Browser.Core.csproj", "{1C0E49A4-0DC2-4A7B-BA6E-CEF42BA92EA0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable", "Infra\Disposable\Disposable.csproj", "{8E10ADBD-F5BA-43CB-9EBD-D413BF353761}"
 EndProject

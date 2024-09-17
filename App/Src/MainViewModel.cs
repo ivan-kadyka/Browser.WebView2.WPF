@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using Browser.Commands;
+using Browser.Core.Commands;
 using PresenterBase.ViewModel;
 
 internal class MainViewModel : ViewModelBase

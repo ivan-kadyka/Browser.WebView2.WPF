@@ -2,7 +2,7 @@
 using Browser.Abstractions.Navigation;
 using CommunityToolkit.Mvvm.Messaging;
 
-namespace Browser.Commands;
+namespace Browser.Core.Commands;
 
 public class AddBrowserPageCommand : CommandBase<INavigateOptions>
 {

@@ -6,7 +6,7 @@ using Disposable;
 using Reactive.Extensions;
 using Reactive.Extensions.Observable;
 
-namespace Browser;
+namespace Browser.Core;
 
 public class Browser : DisposableBase, IBrowser
 {

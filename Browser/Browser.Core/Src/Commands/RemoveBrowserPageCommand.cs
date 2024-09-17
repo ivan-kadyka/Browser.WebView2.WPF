@@ -1,6 +1,6 @@
 ﻿using Browser.Abstractions;
 
-namespace Browser.Commands;
+namespace Browser.Core.Commands;
 
 public class RemoveBrowserPageCommand : CommandBase<string>
 {

@@ -1,10 +1,10 @@
-﻿using Browser.Commands;
-using Browser.Abstractions;
+﻿using Browser.Abstractions;
 using Browser.Abstractions.Navigation;
+using Browser.Core.Commands;
 using Browser.Messages.Module;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Browser.Module;
+namespace Browser.Core.Module;
 
 public static class BrowserModule
 {

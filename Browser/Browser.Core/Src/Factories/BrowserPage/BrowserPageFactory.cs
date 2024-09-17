@@ -1,7 +1,7 @@
 ﻿using Browser.Abstractions;
 using Browser.Abstractions.Navigation;
 
-namespace Browser.Factories.BrowserPage;
+namespace Browser.Core.Factories.BrowserPage;
 
 public class BrowserPageFactory : IBrowserPageFactory
 {

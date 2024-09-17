@@ -3,8 +3,8 @@ using PresenterBase.ViewModel;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using Browser.Commands;
 using Browser.Abstractions;
+using Browser.Core.Commands;
 using CommunityToolkit.Mvvm.Input;
 
 namespace TopPanel.TabsPanel;

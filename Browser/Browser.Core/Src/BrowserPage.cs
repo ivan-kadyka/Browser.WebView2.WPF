@@ -2,13 +2,13 @@
 using Browser.Abstractions;
 using Browser.Abstractions.Content;
 using Browser.Abstractions.Navigation;
+using Browser.Core.Stack;
 using Browser.Messages;
-using Browser.Stack;
 using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
 using Reactive.Extensions.Observable;
 
-namespace Browser;
+namespace Browser.Core;
 
 internal class BrowserPage : DisposableBase, IBrowserPage
 {

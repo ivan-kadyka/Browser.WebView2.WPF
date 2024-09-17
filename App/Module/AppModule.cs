@@ -1,4 +1,4 @@
-﻿using Browser.Module;
+﻿using Browser.Core.Module;
 using Microsoft.Extensions.DependencyInjection;
 using PageTabs.Module;
 using PresenterBase.Presenter;

@@ -1,7 +1,7 @@
 ﻿using Reactive.Extensions;
 using Reactive.Extensions.Observable;
 
-namespace Browser.Stack;
+namespace Browser.Core.Stack;
 
 using System.Collections.Generic;
 

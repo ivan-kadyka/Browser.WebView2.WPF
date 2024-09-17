@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 
-namespace Browser.Commands;
+namespace Browser.Core.Commands;
 
 public abstract class CommandBase<T> : IRelayCommand<T>
 {
