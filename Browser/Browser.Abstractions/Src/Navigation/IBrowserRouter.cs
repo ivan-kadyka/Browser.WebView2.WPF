@@ -19,9 +19,6 @@ public interface IBrowserRouter : IBrowserPathRouter
     
     
     void Push(INavigateOptions options);
-    
-    
-    void Replace(INavigateOptions options);
 }
 
 public static class BrowserRouterExtensions

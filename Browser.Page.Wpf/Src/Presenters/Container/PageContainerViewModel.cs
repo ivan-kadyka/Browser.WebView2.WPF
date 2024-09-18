@@ -6,10 +6,8 @@ using PresenterBase.ViewModel;
 
 namespace Browser.Page.Wpf.Presenters.Container;
 
-public class PageContainerViewModel : ViewModelBase
+public class PageContainerViewModel : ViewModelBase, IDisposable
 {
-    private readonly IBrowser _browser;
-
     public object WebContent
     {
         get => _content;
@@ -31,31 +29,32 @@ public class PageContainerViewModel : ViewModelBase
     
     public PageContainerViewModel(IBrowser browser)
     {
-        _browser = browser;
-        var currentPage = browser.CurrentPage.Value;
+        _content =  browser.CurrentPage.Value;
         
-        
-        AddTab(currentPage);
-        
-        _disposables.Add(browser.PageAdded.Subscribe(OnPageAdded));
+       // _disposables.Add(browser.PageAdded.Subscribe(OnPageAdded));
         _disposables.Add(browser.CurrentPage.Subscribe(OnCurrentPageChanged));
     }
     
-    private void OnPageAdded(IBrowserPage page)
-    {
-        AddTab(page);
-    }
 
-    private void OnCurrentPageChanged(IBrowserPage page)
+
+    private async void OnCurrentPageChanged(IBrowserPage page)
     {
         WebContent = page.Content;
+        await page.Load();
     }
 
 
+    /*
     private async void AddTab(IBrowserPage page)
     {
         WebContent = page.Content;
         
         await page.Load();
+    }
+    */
+
+    public void Dispose()
+    {
+        _disposables.Dispose();
     }
 }

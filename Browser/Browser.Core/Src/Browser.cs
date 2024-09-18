@@ -92,11 +92,6 @@ public class Browser : DisposableBase, IBrowser
         ActivePage.Push(options);
     }
 
-    public void Replace(INavigateOptions options)
-    {
-        ActivePage.Replace(options);
-    }
-
     public Task AddPage(IBrowserPage page)
     {
        _pages.Add(page);

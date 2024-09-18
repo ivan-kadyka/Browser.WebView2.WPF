@@ -43,8 +43,6 @@ internal class BrowserPage : DisposableBase, IBrowserPage
         _webView.Source = _uriSource.Value;
         
         _disposables.Add(_webView);
-        
-        _webView.CoreWebView2InitializationCompleted += WebViewOnCoreWebView2InitializationCompleted;
         _webView.SourceChanged += WebViewOnSourceChanged;
         
         _webView.NavigationStarting += OnNavigationStarting;
@@ -66,11 +64,6 @@ internal class BrowserPage : DisposableBase, IBrowserPage
     {
         var uri = _webView.Source;
         _uriSource.OnNext(uri);
-    }
-
-    private void WebViewOnCoreWebView2InitializationCompleted(object? sender, CoreWebView2InitializationCompletedEventArgs e)
-    {
-     
     }
 
     public async Task Load(CancellationToken token = default)
@@ -118,16 +111,10 @@ internal class BrowserPage : DisposableBase, IBrowserPage
         _webView.CoreWebView2.Navigate(options.Address);
     }
 
-    public void Replace(INavigateOptions options)
-    {
-       // _history.Redo(options.Address);
-    }
-
     protected override void Dispose(bool disposing)
     {
         if (disposing)
         {
-            _webView.CoreWebView2InitializationCompleted -= WebViewOnCoreWebView2InitializationCompleted;
             _webView.SourceChanged -= WebViewOnSourceChanged;
             
             _webView.NavigationStarting -= OnNavigationStarting;
