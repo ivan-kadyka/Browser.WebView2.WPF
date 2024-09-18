@@ -30,28 +30,15 @@ public class PageContainerViewModel : ViewModelBase, IDisposable
     public PageContainerViewModel(IBrowser browser)
     {
         _content =  browser.CurrentPage.Value;
-        
-       // _disposables.Add(browser.PageAdded.Subscribe(OnPageAdded));
         _disposables.Add(browser.CurrentPage.Subscribe(OnCurrentPageChanged));
     }
     
-
 
     private async void OnCurrentPageChanged(IBrowserPage page)
     {
         WebContent = page.Content;
         await page.Load();
     }
-
-
-    /*
-    private async void AddTab(IBrowserPage page)
-    {
-        WebContent = page.Content;
-        
-        await page.Load();
-    }
-    */
 
     public void Dispose()
     {
