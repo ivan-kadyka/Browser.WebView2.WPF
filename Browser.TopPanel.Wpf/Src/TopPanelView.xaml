@@ -7,28 +7,11 @@
              xmlns:textBox="clr-namespace:ControlExt.TextBox;assembly=ControlExt"
              xmlns:topPanel="clr-namespace:Browser.TopPanel.Wpf"
              xmlns:tabsPanel="clr-namespace:Browser.TopPanel.Wpf.TabsPanel"
-             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+             xmlns:navigationPanel="clr-namespace:Browser.TopPanel.Wpf.NavigationPanel"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" d:DesignSource="TopPanelViewModel"
              d:DataContext="{d:DesignInstance topPanel:TopPanelViewModel, IsDesignTimeCreatable=True}"
              x:ClassModifier="internal">
-    <UserControl.Resources>
-        <Style x:Key="IconButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="30" />
-            <Setter Property="Height" Value="30" />
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="Padding" Value="8" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Background" Value="Transparent" />
-            <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Foreground" Value="Gray"/>
-                    <Setter Property="Opacity" Value="0.5"/>
-                    <Setter Property="Cursor" Value="Arrow"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Resources>
     <Grid Background="#F9F9F9" HorizontalAlignment="Stretch">
         <StackPanel Orientation="Vertical">
             <tabsPanel:TabsPanelView DataContext="{Binding TabsPanelViewModel}" />
@@ -37,17 +20,7 @@
                     <ColumnDefinition Width="Auto"/> 
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal">
-                    <Button Style="{StaticResource IconButtonStyle}" Command="{Binding BackCommand}">
-                        <svgc:SvgViewbox Source="pack://application:,,,/Browser.TopPanel.Wpf;component/Images/arrow-left.svg"/>
-                    </Button>
-                    <Button Style="{StaticResource IconButtonStyle}" Command="{Binding ForwardCommand}">
-                        <svgc:SvgViewbox Source="pack://application:,,,/Browser.TopPanel.Wpf;component/Images/arrow-right.svg"/>
-                    </Button>
-                    <Button Style="{StaticResource IconButtonStyle}" Command="{Binding ReloadCommand}">
-                        <svgc:SvgViewbox Source="pack://application:,,,/Browser.TopPanel.Wpf;component/Images/rotate-cw.svg"/>
-                    </Button>
-                </StackPanel>
+                <navigationPanel:NavigationPanelView Grid.Column="0" DataContext="{Binding NavigationPanelViewModel}" />
                 <TextBox Height="30" VerticalAlignment="Bottom" TextAlignment="Left" Margin="5"
                          Padding="0 5 0 0" Grid.Column="1"
                          Text="{Binding SearchAddress, UpdateSourceTrigger=PropertyChanged}"

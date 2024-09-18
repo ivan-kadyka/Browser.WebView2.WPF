@@ -15,15 +15,16 @@ internal class TopPanelPresenter : Presenter
         _viewModel = viewModel;
         _messenger = messenger;
         
-        _messenger.Register<BrowserForwardMessage>(viewModel);
-        _messenger.Register<BrowserBackMessage>(viewModel);
-        _messenger.Register<BrowserReloadPageMessage>(viewModel);
+        var navigationViewModel = viewModel.NavigationPanelViewModel;
         
-        _messenger.Register<BrowserActivePageChangedMessage>(viewModel);
-        _messenger.Register<BrowserSearchAddressChangedMessage>(viewModel);
+        _messenger.Register<BrowserForwardMessage>(navigationViewModel);
+        _messenger.Register<BrowserBackMessage>(navigationViewModel);
+        _messenger.Register<BrowserReloadPageMessage>(navigationViewModel);
+        _messenger.Register<BrowserActivePageChangedMessage>(navigationViewModel);
+        _messenger.Register<NavigationStartingMessage>(navigationViewModel);
+        _messenger.Register<NavigationCompletedMessage>(navigationViewModel);
         
-        _messenger.Register<NavigationStartingMessage>(viewModel);
-        _messenger.Register<NavigationCompletedMessage>(viewModel);
+        _messenger.Register(viewModel);
     }
 
     protected override void Dispose(bool disposing)
@@ -33,6 +34,7 @@ internal class TopPanelPresenter : Presenter
         if (disposing)
         {
             _messenger.UnregisterAll(_viewModel);
+            _messenger.UnregisterAll(_viewModel.NavigationPanelViewModel);
         }
     }
 }

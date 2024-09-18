@@ -56,8 +56,7 @@ internal class TabsPanelViewModel : ViewModelBase
         AddTabCommand = addBrowserPageCommand;
         RemoveTabCommand = new RelayCommand<PageTabItemViewModel>(CloseTab);
         
-        if (_tabs.Count > 0)
-            _selectedPageTab = Tabs[0];
+        _selectedPageTab = _tabs.FirstOrDefault();
     }
 
     private void OnAddNewPage(IBrowserPage page)

@@ -1,4 +1,5 @@
-﻿using Browser.TopPanel.Wpf.TabsPanel;
+﻿using Browser.TopPanel.Wpf.NavigationPanel;
+using Browser.TopPanel.Wpf.TabsPanel;
 using Microsoft.Extensions.DependencyInjection;
 using PresenterBase.Presenter;
 
@@ -15,6 +16,7 @@ public static class TopPanelModule
         services.AddKeyedSingleton<IPresenter, TopPanelPresenter>(PresenterName);
         
         services.AddTransient<TabsPanelViewModel>();
+        services.AddTransient<NavigationPanelViewModel>();
         
         return services;
     }
