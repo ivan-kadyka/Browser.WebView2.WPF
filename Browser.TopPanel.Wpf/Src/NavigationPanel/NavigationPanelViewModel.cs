@@ -12,17 +12,34 @@ namespace Browser.TopPanel.Wpf.NavigationPanel;
 internal class NavigationPanelViewModel : ViewModelBase,   
     IRecipient<BrowserForwardMessage>,
     IRecipient<BrowserBackMessage>,
-    IRecipient<BrowserReloadPageMessage>,
     IRecipient<NavigationStartingMessage>,
     IRecipient<NavigationCompletedMessage>,
     IRecipient<BrowserActivePageChangedMessage>
 {
     public ICommand BackCommand => _backCommand;
     public ICommand ForwardCommand => _forwardCommand;
+    
     public ICommand ReloadCommand  {get;}
+    
+    public string ReloadIconSource => _isNavigation  ? CrossIcon  : RotateIcon;
     
     private readonly RelayCommand _backCommand;
     private readonly RelayCommand _forwardCommand;
+
+    private bool _isNavigation;
+
+    private bool IsNavigation
+    {
+        set
+        {
+            _isNavigation = value;
+           OnPropertyChanged(nameof(ReloadIconSource));
+        }
+    }
+    
+    private const string ImagePath = "pack://application:,,,/Browser.TopPanel.Wpf;component/Images/";
+    private const string RotateIcon = ImagePath + "rotate-cw.svg";
+    private const string CrossIcon = ImagePath + "cross-icon.svg";
     
     public NavigationPanelViewModel(IBrowserRouter browserRouter,
         ReloadBrowserPageCommand reloadCommand)
@@ -30,11 +47,6 @@ internal class NavigationPanelViewModel : ViewModelBase,
         ReloadCommand = reloadCommand;
         _backCommand = new RelayCommand(browserRouter.Back, ()=> browserRouter.CanBack);
         _forwardCommand = new RelayCommand(browserRouter.Forward, ()=> browserRouter.CanForward);
-    }
-    
-    public void Receive(BrowserReloadPageMessage message)
-    {
-        // _reloadCommand.NotifyCanExecuteChanged();
     }
 
     private void NavigationControlsNotify()
@@ -45,11 +57,13 @@ internal class NavigationPanelViewModel : ViewModelBase,
     
     public void Receive(NavigationStartingMessage message)
     {
+        IsNavigation = true;
         NavigationControlsNotify();
     }
 
     public void Receive(NavigationCompletedMessage message)
     {
+        IsNavigation = false;
         NavigationControlsNotify();
     }
 

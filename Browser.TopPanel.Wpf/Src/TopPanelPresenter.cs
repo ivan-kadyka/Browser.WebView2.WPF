@@ -19,7 +19,6 @@ internal class TopPanelPresenter : Presenter
         
         _messenger.Register<BrowserForwardMessage>(navigationViewModel);
         _messenger.Register<BrowserBackMessage>(navigationViewModel);
-        _messenger.Register<BrowserReloadPageMessage>(navigationViewModel);
         _messenger.Register<BrowserActivePageChangedMessage>(navigationViewModel);
         _messenger.Register<NavigationStartingMessage>(navigationViewModel);
         _messenger.Register<NavigationCompletedMessage>(navigationViewModel);
