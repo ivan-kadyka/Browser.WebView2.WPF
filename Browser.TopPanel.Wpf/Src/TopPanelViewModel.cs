@@ -2,6 +2,7 @@
 using Browser.Abstractions.Navigation;
 using Browser.Core.Commands;
 using Browser.Messenger;
+using Browser.Messenger.Navigation;
 using Browser.TopPanel.Wpf.TabsPanel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -12,8 +13,11 @@ namespace Browser.TopPanel.Wpf;
 internal class TopPanelViewModel : ViewModelBase,
     IRecipient<BrowserForwardMessage>,
     IRecipient<BrowserBackMessage>,
-    IRecipient<BrowserRefreshMessage>,
-    IRecipient<NavigationPathChangedMessage>
+    IRecipient<BrowserReloadPageMessage>,
+    IRecipient<BrowserSearchAddressChangedMessage>,
+    IRecipient<NavigationStartingMessage>,
+    IRecipient<NavigationCompletedMessage>,
+    IRecipient<BrowserActivePageChangedMessage>
 {
     public TabsPanelViewModel TabsPanelViewModel { get; }
     
@@ -72,13 +76,34 @@ internal class TopPanelViewModel : ViewModelBase,
         _backCommand.NotifyCanExecuteChanged();
     }
 
-    public void Receive(BrowserRefreshMessage message)
+    public void Receive(BrowserReloadPageMessage message)
     {
        // _reloadCommand.NotifyCanExecuteChanged();
     }
 
-    public void Receive(NavigationPathChangedMessage message)
+    private void NavigationControlsNotify()
+    {
+        _forwardCommand.NotifyCanExecuteChanged();
+        _backCommand.NotifyCanExecuteChanged();
+    }
+
+    public void Receive(BrowserSearchAddressChangedMessage message)
     {
         SearchAddress = message.Address;
+    }
+
+    public void Receive(NavigationStartingMessage message)
+    {
+        NavigationControlsNotify();
+    }
+
+    public void Receive(NavigationCompletedMessage message)
+    {
+        NavigationControlsNotify();
+    }
+
+    public void Receive(BrowserActivePageChangedMessage message)
+    {
+        NavigationControlsNotify();
     }
 }

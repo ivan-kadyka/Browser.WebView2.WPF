@@ -1,28 +1,35 @@
-﻿using Browser.Abstractions.Navigation;
-
-namespace Browser.Messenger;
+﻿namespace Browser.Messenger;
 
 public class BrowserForwardMessage
 {
-    
 }
 
 public class BrowserBackMessage
 {
-    
 }
 
-public class BrowserRefreshMessage
+public class BrowserReloadPageMessage
 {
-    
 }
 
-public class NavigationPathChangedMessage
+public class BrowserActivePageChangedMessage
+{
+    public string PageId { get; }
+    
+    public BrowserActivePageChangedMessage(string pageId)
+    {
+        PageId = pageId;
+    }
+}
+
+
+
+public class BrowserSearchAddressChangedMessage
 {
     public string Address { get; }
 
-    public NavigationPathChangedMessage(INavigateOptions options)
+    public BrowserSearchAddressChangedMessage(string address)
     {
-        Address = options.Address;
+        Address = address;
     }
 }

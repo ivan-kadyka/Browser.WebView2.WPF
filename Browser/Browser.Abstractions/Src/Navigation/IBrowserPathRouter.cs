@@ -4,5 +4,5 @@ namespace Browser.Abstractions.Navigation;
 
 public interface IBrowserPathRouter
 {
-    IObservableValue<INavigateOptions> Path { get; }
+    IObservableValue<Uri> Path { get; }
 }

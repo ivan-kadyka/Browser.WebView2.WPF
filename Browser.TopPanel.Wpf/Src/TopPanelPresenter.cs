@@ -1,4 +1,5 @@
 ﻿using Browser.Messenger;
+using Browser.Messenger.Navigation;
 using CommunityToolkit.Mvvm.Messaging;
 using PresenterBase.Presenter;
 
@@ -16,8 +17,13 @@ internal class TopPanelPresenter : Presenter
         
         _messenger.Register<BrowserForwardMessage>(viewModel);
         _messenger.Register<BrowserBackMessage>(viewModel);
-        _messenger.Register<BrowserRefreshMessage>(viewModel);
-        _messenger.Register<NavigationPathChangedMessage>(viewModel);
+        _messenger.Register<BrowserReloadPageMessage>(viewModel);
+        
+        _messenger.Register<BrowserActivePageChangedMessage>(viewModel);
+        _messenger.Register<BrowserSearchAddressChangedMessage>(viewModel);
+        
+        _messenger.Register<NavigationStartingMessage>(viewModel);
+        _messenger.Register<NavigationCompletedMessage>(viewModel);
     }
 
     protected override void Dispose(bool disposing)

@@ -1,5 +1,4 @@
 ﻿using System;
-using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
 using PresenterBase.ViewModel;
 
@@ -26,7 +25,7 @@ public class PageTabItemViewModel : ViewModelBase
         _page.Path.Subscribe(OnPathChanged);
     }
 
-    private void OnPathChanged(INavigateOptions options)
+    private void OnPathChanged(Uri source)
     {
         OnPropertyChanged(nameof(Header));
     }

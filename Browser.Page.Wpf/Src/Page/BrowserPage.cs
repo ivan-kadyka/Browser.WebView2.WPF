@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
 using Browser.Messenger;
+using Browser.Messenger.Navigation;
 using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
 using Microsoft.Web.WebView2.Core;
@@ -23,12 +24,10 @@ internal class BrowserPage : DisposableBase, IBrowserPage
 
     public object Content => _webView;
 
-    public IObservableValue<INavigateOptions> Path  => _source;
-
-    private readonly UndoRedoStack<INavigateOptions> _history;
+    public IObservableValue<Uri> Path  => _uriSource;
     
     private readonly CompositeDisposable _disposables = new();
-    private readonly ObservableValue<INavigateOptions> _source;
+    private readonly ObservableValue<Uri> _uriSource;
     
     public BrowserPage(
         PageId id,
@@ -36,27 +35,37 @@ internal class BrowserPage : DisposableBase, IBrowserPage
         IMessenger messenger, INavigateOptions options)
     {
         Id = id;
-
+        
         _webView = webView;
         _messenger = messenger;
-        _source = new ObservableValue<INavigateOptions>(options);
-        _history = new UndoRedoStack<INavigateOptions>(options);
         
-        _disposables.Add(_history.Current.Subscribe(it =>
-        {
-            _messenger.Send(new NavigationPathChangedMessage(it));
-        }));
+        _uriSource = new ObservableValue<Uri>(new Uri(options.Address));
+        _webView.Source = _uriSource.Value;
         
         _disposables.Add(_webView);
         
         _webView.CoreWebView2InitializationCompleted += WebViewOnCoreWebView2InitializationCompleted;
         _webView.SourceChanged += WebViewOnSourceChanged;
+        
+        _webView.NavigationStarting += OnNavigationStarting;
+        _webView.NavigationCompleted += OnNavigationCompleted;
+    }
+
+    private void OnNavigationStarting(object? sender, CoreWebView2NavigationStartingEventArgs e)
+    {
+        _messenger.Send(new NavigationStartingMessage());
+    }
+
+
+    private void OnNavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
+    {
+        _messenger.Send(new NavigationCompletedMessage());
     }
 
     private void WebViewOnSourceChanged(object? sender, CoreWebView2SourceChangedEventArgs e)
     {
         var uri = _webView.Source;
-        _source.OnNext(new UrlNavigateOptions(uri.ToString()));
+        _uriSource.OnNext(uri);
     }
 
     private void WebViewOnCoreWebView2InitializationCompleted(object? sender, CoreWebView2InitializationCompletedEventArgs e)
@@ -66,8 +75,6 @@ internal class BrowserPage : DisposableBase, IBrowserPage
 
     public async Task Load(CancellationToken token = default)
     {
-        _webView.Source = new Uri(Path.Value.Address);
-        
         await _webView.EnsureCoreWebView2Async();
     }
 
@@ -80,32 +87,34 @@ internal class BrowserPage : DisposableBase, IBrowserPage
 
     public void Forward()
     {
-        if (_history.CanRedo)
+        if (_webView.CanGoForward)
         {
-            _history.Redo();
+            _webView.GoForward();
             _messenger.Send(new BrowserForwardMessage());
         }
     }
 
-    public bool CanForward => _history.CanRedo;
+    public bool CanForward => _webView.CanGoForward;
 
     public void Back()
     {
-        _history.Undo();
-        _messenger.Send(new BrowserBackMessage());
+        if (_webView.CanGoBack)
+        {
+            _webView.GoBack();
+            _messenger.Send(new BrowserBackMessage());
+        }
     }
 
-    public bool CanBack => _history.CanUndo;
+    public bool CanBack => _webView.CanGoBack;
 
     public void Refresh()
     {
     }
 
-    public bool CanRefresh => !string.IsNullOrWhiteSpace(_history.Current.Value.Address);
+    public bool CanRefresh => _webView.Source != null && !string.IsNullOrWhiteSpace(_webView.Source.Host);
 
     public void Push(INavigateOptions options)
     {
-        _history.Do(options);
         _webView.CoreWebView2.Navigate(options.Address);
     }
 
@@ -120,6 +129,9 @@ internal class BrowserPage : DisposableBase, IBrowserPage
         {
             _webView.CoreWebView2InitializationCompleted -= WebViewOnCoreWebView2InitializationCompleted;
             _webView.SourceChanged -= WebViewOnSourceChanged;
+            
+            _webView.NavigationStarting -= OnNavigationStarting;
+            _webView.NavigationCompleted -= OnNavigationCompleted;
             
             _disposables.Dispose();
         }
