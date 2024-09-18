@@ -1,8 +1,9 @@
 ﻿using Browser.Abstractions;
+using Browser.Abstractions.Page;
 
 namespace Browser.Core.Commands;
 
-public class RemoveBrowserPageCommand : CommandBase<string>
+public class RemoveBrowserPageCommand : CommandBase<PageId>
 {
     private readonly IBrowser _browser;
 
@@ -11,7 +12,7 @@ public class RemoveBrowserPageCommand : CommandBase<string>
         _browser = browser;
     }
     
-    protected override void OnExecute(string? pageId)
+    protected override void OnExecute(PageId? pageId)
     {
         if (pageId == null)
         {

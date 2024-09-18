@@ -7,7 +7,7 @@ namespace Browser.TopPanel.Wpf.TabsPanel;
 
 public class PageTabItemViewModel : ViewModelBase
 {
-    public string Id => _page.Id;
+    public PageId Id => _page.Id;
     
     public string Header
     {

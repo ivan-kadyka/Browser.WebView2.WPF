@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using Browser.Abstractions.Navigation;
+using Browser.Core.Commands;
 using Browser.Messenger;
 using Browser.TopPanel.Wpf.TabsPanel;
 using CommunityToolkit.Mvvm.Input;
@@ -29,15 +30,18 @@ internal class TopPanelViewModel : ViewModelBase,
     
     public ICommand BackCommand => _backCommand;
     public ICommand ForwardCommand => _forwardCommand;
-    public ICommand RefreshCommand => _refreshCommand;
+    public ICommand ReloadCommand  {get;}
     
     private readonly RelayCommand _backCommand;
     private readonly RelayCommand _forwardCommand;
-    private readonly RelayCommand _refreshCommand;
 
-    public TopPanelViewModel(IBrowserRouter browserRouter, TabsPanelViewModel tabsPanelViewModel)
+    public TopPanelViewModel(
+        IBrowserRouter browserRouter,
+        TabsPanelViewModel tabsPanelViewModel,
+        ReloadBrowserPageCommand reloadCommand)
     {
         TabsPanelViewModel = tabsPanelViewModel;
+        ReloadCommand = reloadCommand;
         
         _searchAddress = string.Empty;
         _browserRouter = browserRouter;
@@ -46,7 +50,6 @@ internal class TopPanelViewModel : ViewModelBase,
         
         _backCommand = new RelayCommand(_browserRouter.Back, ()=> browserRouter.CanBack);
         _forwardCommand = new RelayCommand(_browserRouter.Forward, ()=> browserRouter.CanForward);
-        _refreshCommand = new RelayCommand(_browserRouter.Refresh, ()=>browserRouter.CanRefresh);
     }
 
     private void OnSearch()
@@ -55,7 +58,6 @@ internal class TopPanelViewModel : ViewModelBase,
         
         _backCommand.NotifyCanExecuteChanged();
         _forwardCommand.NotifyCanExecuteChanged();
-        _refreshCommand.NotifyCanExecuteChanged();
     }
 
     public void Receive(BrowserForwardMessage message)
@@ -72,7 +74,7 @@ internal class TopPanelViewModel : ViewModelBase,
 
     public void Receive(BrowserRefreshMessage message)
     {
-        _refreshCommand.NotifyCanExecuteChanged();
+       // _reloadCommand.NotifyCanExecuteChanged();
     }
 
     public void Receive(NavigationPathChangedMessage message)

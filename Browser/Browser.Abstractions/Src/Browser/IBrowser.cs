@@ -10,5 +10,8 @@ public interface IBrowser : IBrowserRouter, IBrowserObservable
     Task RemovePage(IBrowserPage page);
     
     
+    Task ReloadPage(PageId? pageId = default);
+    
+    
     void SetCurrentPage(IBrowserPage page);
 }

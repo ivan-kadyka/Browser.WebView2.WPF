@@ -19,6 +19,7 @@ public static class BrowserModule
        services.AddTransient<AddBrowserPageCommand>();
        services.AddTransient<RemoveBrowserPageCommand>();
        services.AddTransient<SelectBrowserPageCommand>();
+       services.AddTransient<ReloadBrowserPageCommand>();
        
        services.AddMessagesServices();
        

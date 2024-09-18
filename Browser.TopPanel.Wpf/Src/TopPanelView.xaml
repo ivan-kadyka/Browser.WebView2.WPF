@@ -44,7 +44,7 @@
                     <Button Style="{StaticResource IconButtonStyle}" Command="{Binding ForwardCommand}">
                         <svgc:SvgViewbox Source="pack://application:,,,/Browser.TopPanel.Wpf;component/Images/arrow-right.svg"/>
                     </Button>
-                    <Button Style="{StaticResource IconButtonStyle}" Command="{Binding RefreshCommand}">
+                    <Button Style="{StaticResource IconButtonStyle}" Command="{Binding ReloadCommand}">
                         <svgc:SvgViewbox Source="pack://application:,,,/Browser.TopPanel.Wpf;component/Images/rotate-cw.svg"/>
                     </Button>
                 </StackPanel>

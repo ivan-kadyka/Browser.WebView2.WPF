@@ -94,6 +94,21 @@ public class Browser : DisposableBase, IBrowser
         return Task.CompletedTask;
     }
 
+    public async Task ReloadPage(PageId? pageId = default)
+    {
+        if (pageId == null)
+        {
+            pageId = CurrentPage.Value.Id;
+        }
+        
+        var page = _pages.FirstOrDefault(it => it.Id == pageId);
+        
+        if (page != null)
+        {
+          await  page.Reload();
+        }
+    }
+
     public void SetCurrentPage(IBrowserPage page)
     {
         _currentPageSubject.OnNext(page);

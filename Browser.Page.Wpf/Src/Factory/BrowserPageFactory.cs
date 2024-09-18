@@ -19,8 +19,9 @@ internal class BrowserPageFactory : IBrowserPageFactory
     public IBrowserPage Create(INavigateOptions options)
     {
         var webView =  _webViewFactory.Create();
+        var id = PageId.New();
         
-        var page = new BrowserPage(webView, _messenger, options);
+        var page = new BrowserPage(id, webView, _messenger, options);
         
         return page;
     }

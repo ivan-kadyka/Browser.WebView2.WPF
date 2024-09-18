@@ -17,15 +17,9 @@ internal class BrowserPage : DisposableBase, IBrowserPage
 {
     private readonly IWebView2 _webView;
     private readonly IMessenger _messenger;
-    public string Id { get; }
+    public PageId Id { get; }
 
-    public string Title
-    {
-        get
-        {
-            return _webView.Source.Host;
-        }
-    }
+    public string Title => _webView.Source.Host;
 
     public object Content => _webView;
 
@@ -37,10 +31,11 @@ internal class BrowserPage : DisposableBase, IBrowserPage
     private readonly ObservableValue<INavigateOptions> _source;
     
     public BrowserPage(
+        PageId id,
         IWebView2 webView,
         IMessenger messenger, INavigateOptions options)
     {
-        Id = Guid.NewGuid().ToString();
+        Id = id;
 
         _webView = webView;
         _messenger = messenger;
@@ -66,12 +61,7 @@ internal class BrowserPage : DisposableBase, IBrowserPage
 
     private void WebViewOnCoreWebView2InitializationCompleted(object? sender, CoreWebView2InitializationCompletedEventArgs e)
     {
-        _webView.CoreWebView2.NewWindowRequested += CoreWebView2OnNewWindowRequested;
-    }
-
-    private void CoreWebView2OnNewWindowRequested(object? sender, CoreWebView2NewWindowRequestedEventArgs e)
-    {
-        
+     
     }
 
     public async Task Load(CancellationToken token = default)
@@ -79,6 +69,13 @@ internal class BrowserPage : DisposableBase, IBrowserPage
         _webView.Source = new Uri(Path.Value.Address);
         
         await _webView.EnsureCoreWebView2Async();
+    }
+
+    public Task Reload(CancellationToken token = default)
+    { 
+        _webView.Reload();
+        
+       return Task.CompletedTask;
     }
 
     public void Forward()
@@ -121,10 +118,10 @@ internal class BrowserPage : DisposableBase, IBrowserPage
     {
         if (disposing)
         {
-            _disposables.Dispose();
             _webView.CoreWebView2InitializationCompleted -= WebViewOnCoreWebView2InitializationCompleted;
-            _webView.CoreWebView2.NewWindowRequested -= CoreWebView2OnNewWindowRequested;
             _webView.SourceChanged -= WebViewOnSourceChanged;
+            
+            _disposables.Dispose();
         }
     }
 }
