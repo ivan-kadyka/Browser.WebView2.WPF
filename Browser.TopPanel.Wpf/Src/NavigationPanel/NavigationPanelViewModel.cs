@@ -9,7 +9,7 @@ using PresenterBase.ViewModel;
 
 namespace Browser.TopPanel.Wpf.NavigationPanel;
 
-public class NavigationPanelViewModel : ViewModelBase,   
+internal class NavigationPanelViewModel : ViewModelBase,   
     IRecipient<BrowserForwardMessage>,
     IRecipient<BrowserBackMessage>,
     IRecipient<BrowserReloadPageMessage>,
@@ -60,13 +60,11 @@ public class NavigationPanelViewModel : ViewModelBase,
     
     public void Receive(BrowserForwardMessage message)
     {
-        _forwardCommand.NotifyCanExecuteChanged();
-        _backCommand.NotifyCanExecuteChanged();
+        NavigationControlsNotify();
     }
 
     public void Receive(BrowserBackMessage message)
     {
-        _forwardCommand.NotifyCanExecuteChanged();
-        _backCommand.NotifyCanExecuteChanged();
+        NavigationControlsNotify();
     }
 }

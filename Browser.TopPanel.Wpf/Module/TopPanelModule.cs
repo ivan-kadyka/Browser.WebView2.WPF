@@ -1,4 +1,5 @@
 ﻿using Browser.TopPanel.Wpf.NavigationPanel;
+using Browser.TopPanel.Wpf.SearchBar;
 using Browser.TopPanel.Wpf.TabsPanel;
 using Microsoft.Extensions.DependencyInjection;
 using PresenterBase.Presenter;
@@ -17,6 +18,7 @@ public static class TopPanelModule
         
         services.AddTransient<TabsPanelViewModel>();
         services.AddTransient<NavigationPanelViewModel>();
+        services.AddTransient<SearchBarViewModel>();
         
         return services;
     }

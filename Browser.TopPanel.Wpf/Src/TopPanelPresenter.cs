@@ -24,7 +24,7 @@ internal class TopPanelPresenter : Presenter
         _messenger.Register<NavigationStartingMessage>(navigationViewModel);
         _messenger.Register<NavigationCompletedMessage>(navigationViewModel);
         
-        _messenger.Register(viewModel);
+        _messenger.Register(viewModel.SearchBarViewModel);
     }
 
     protected override void Dispose(bool disposing)
@@ -33,7 +33,7 @@ internal class TopPanelPresenter : Presenter
         
         if (disposing)
         {
-            _messenger.UnregisterAll(_viewModel);
+            _messenger.UnregisterAll(_viewModel.SearchBarViewModel);
             _messenger.UnregisterAll(_viewModel.NavigationPanelViewModel);
         }
     }

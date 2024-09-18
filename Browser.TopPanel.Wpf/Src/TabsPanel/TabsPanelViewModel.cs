@@ -16,7 +16,6 @@ internal class TabsPanelViewModel : ViewModelBase
     public ICommand RemoveTabCommand { get; }
     
     public ObservableCollection<PageTabItemViewModel> Tabs => _tabs;
-
    
     public PageTabItemViewModel SelectedPageTab
     {
@@ -48,6 +47,7 @@ internal class TabsPanelViewModel : ViewModelBase
 
         _tabs = new ObservableCollection<PageTabItemViewModel>(
             browserObservable.Pages.Select(it => new PageTabItemViewModel(it)));
+        _selectedPageTab = _tabs.First();
         
         browserObservable.PageAdded.Subscribe(OnAddNewPage);
         browserObservable.PageRemoved.Subscribe(OnRemovePage);
@@ -56,7 +56,7 @@ internal class TabsPanelViewModel : ViewModelBase
         AddTabCommand = addBrowserPageCommand;
         RemoveTabCommand = new RelayCommand<PageTabItemViewModel>(CloseTab);
         
-        _selectedPageTab = _tabs.FirstOrDefault();
+      
     }
 
     private void OnAddNewPage(IBrowserPage page)
