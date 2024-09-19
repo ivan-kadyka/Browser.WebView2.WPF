@@ -8,7 +8,7 @@ public class BrowserBackMessage
 {
 }
 
-public class BrowserReloadPageMessage
+public class BrowserReloadMessage
 {
 }
 

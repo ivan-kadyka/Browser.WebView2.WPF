@@ -2,7 +2,7 @@
 
 namespace PresenterBase.ViewModel;
 
-public interface IViewModel : INotifyPropertyChanged
+public interface IViewModel : INotifyPropertyChanged, INotifyPropertyChanging
 {
     
 }

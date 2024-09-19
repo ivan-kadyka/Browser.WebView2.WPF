@@ -3,13 +3,14 @@ using Browser.Abstractions.Navigation;
 using Browser.Core.Commands;
 using Browser.Messenger;
 using Browser.Messenger.Navigation;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using PresenterBase.ViewModel;
 
 namespace Browser.TopPanel.Wpf.NavigationPanel;
 
-internal class NavigationPanelViewModel : ViewModelBase,   
+internal class NavigationPanelViewModel : ObservableRecipient, IViewModel,
     IRecipient<BrowserForwardMessage>,
     IRecipient<BrowserBackMessage>,
     IRecipient<NavigationStartingMessage>,
@@ -42,7 +43,9 @@ internal class NavigationPanelViewModel : ViewModelBase,
     private const string CrossIcon = ImagePath + "cross-icon.svg";
     
     public NavigationPanelViewModel(IBrowserRouter browserRouter,
-        ReloadBrowserPageCommand reloadCommand)
+        IMessenger messenger,
+        ReloadBrowserPageCommand reloadCommand) 
+        : base(messenger)
     {
         ReloadCommand = reloadCommand;
         _backCommand = new RelayCommand(browserRouter.Back, ()=> browserRouter.CanBack);

@@ -15,6 +15,7 @@ public abstract class Presenter : DisposableBase, IPresenter
     protected IView View { get; }
 
     private readonly CompositeDisposable _disposables = new();
+    private readonly CancellationTokenSource _cancellationTokenSource = new();
 
     protected Presenter(IView view, IViewModel viewModel)
     {
@@ -26,15 +27,19 @@ public abstract class Presenter : DisposableBase, IPresenter
     
     public async Task Start(CancellationToken token = default)
     {
-        await View.Show(token);
-        await OnStarted(token);
+        var linkedToken = GetLinkedToken(token);
+        
+        await View.Show(linkedToken);
+        await OnStarted(linkedToken);
     }
     
     
     public async Task Stop(CancellationToken token = default)
     {
-        await View.Hide(token);
-        await OnStopped(token);
+        var linkedToken = GetLinkedToken(token);
+        
+        await View.Hide(linkedToken);
+        await OnStopped(linkedToken);
     }
     
     
@@ -48,6 +53,11 @@ public abstract class Presenter : DisposableBase, IPresenter
         return Task.CompletedTask;
     }
     
+    private CancellationToken GetLinkedToken(CancellationToken token)
+    {
+        return CancellationTokenSource.CreateLinkedTokenSource(token, _cancellationTokenSource.Token).Token;
+    }
+    
     protected void AddDisposable(IDisposable disposable)
     {
         _disposables.Add(disposable);
@@ -57,6 +67,8 @@ public abstract class Presenter : DisposableBase, IPresenter
     {
         if (disposing)
         {
+            _cancellationTokenSource.Cancel();
+            
             _disposables.Dispose();
         }
     }
