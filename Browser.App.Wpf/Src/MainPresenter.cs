@@ -8,17 +8,24 @@ internal class MainPresenter : Presenter
 {
     private readonly IPresenter _topPanelPresenter;
     private readonly IPresenter _pagePresenter;
+    
+    public override object Content => _view;
+    
+    private readonly MainWindow _view;
 
-    public MainPresenter(MainWindow view,
+    public MainPresenter(
         MainViewModel viewModel,
         IPresenter topPanelPresenter,
-        IPresenter pagePresenter) : base(view, viewModel)
+        IPresenter pagePresenter)
     {
+        _view = new MainWindow();
+        
         _topPanelPresenter = topPanelPresenter;
         _pagePresenter = pagePresenter;
 
-        view.TopPanel.Content = topPanelPresenter.Content;
-        view.Page.Content = pagePresenter.Content;
+        _view.DataContext = viewModel;
+        _view.TopPanel.Content = topPanelPresenter.Content;
+        _view.Page.Content = pagePresenter.Content;
     }
     
     protected override async Task OnStarted(CancellationToken token = default)
@@ -27,6 +34,8 @@ internal class MainPresenter : Presenter
         
         await _topPanelPresenter.Start(token);
         await _pagePresenter.Start(token);
+        
+        _view.Show();
     }
 
     protected override async Task OnStopped(CancellationToken token = default)

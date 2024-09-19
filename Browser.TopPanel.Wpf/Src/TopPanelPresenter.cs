@@ -6,11 +6,16 @@ namespace Browser.TopPanel.Wpf;
 
 internal class TopPanelPresenter : Presenter
 {
+    public override object Content => _view;
+    
     private readonly TopPanelViewModel _viewModel;
+    private readonly TopPanelView _view;
 
-    public TopPanelPresenter(TopPanelViewModel viewModel) : base(new TopPanelView(), viewModel)
+    public TopPanelPresenter(TopPanelViewModel viewModel)
     {
+        _view = new TopPanelView();
         _viewModel = viewModel;
+        _view.DataContext = _viewModel;
     }
 
     protected override async Task OnStarted(CancellationToken token = default)

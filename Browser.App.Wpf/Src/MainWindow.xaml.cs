@@ -1,11 +1,9 @@
-﻿using PresenterBase.View;
-
-namespace BrowserApp
+﻿namespace BrowserApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    internal partial class MainWindow : WindowView
+    internal partial class MainWindow
     {
         public MainWindow()
         {

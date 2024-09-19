@@ -3,33 +3,19 @@ using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
 using Disposable;
-using PresenterBase.View;
-using PresenterBase.ViewModel;
 
 namespace PresenterBase.Presenter;
 
 public abstract class Presenter : DisposableBase, IPresenter
 {
-    public object Content { get; }
-    
-    protected IView View { get; }
+    public abstract object Content { get; }
 
     private readonly CompositeDisposable _disposables = new();
     private readonly CancellationTokenSource _cancellationTokenSource = new();
-
-    protected Presenter(IView view, IViewModel viewModel)
-    {
-        View = view;
-        Content = view;
-        view.DataContext = viewModel;
-    }
-    
     
     public async Task Start(CancellationToken token = default)
     {
         var linkedToken = GetLinkedToken(token);
-        
-        await View.Show(linkedToken);
         await OnStarted(linkedToken);
     }
     
@@ -37,8 +23,6 @@ public abstract class Presenter : DisposableBase, IPresenter
     public async Task Stop(CancellationToken token = default)
     {
         var linkedToken = GetLinkedToken(token);
-        
-        await View.Hide(linkedToken);
         await OnStopped(linkedToken);
     }
     

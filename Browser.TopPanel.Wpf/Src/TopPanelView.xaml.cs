@@ -1,8 +1,6 @@
-﻿using PresenterBase.View;
+﻿namespace Browser.TopPanel.Wpf;
 
-namespace Browser.TopPanel.Wpf;
-
-internal partial class TopPanelView : UserControlView
+internal partial class TopPanelView
 {
     public TopPanelView()
     {
