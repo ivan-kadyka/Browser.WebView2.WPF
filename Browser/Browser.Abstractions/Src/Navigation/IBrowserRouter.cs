@@ -1,6 +1,6 @@
 ﻿namespace Browser.Abstractions.Navigation;
 
-public interface IBrowserRouter : IBrowserPathRouter
+public interface IBrowserRouter : IPathObservable
 {
     void Forward();
     

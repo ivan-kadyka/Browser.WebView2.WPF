@@ -1,4 +1,6 @@
 ﻿using Browser.Abstractions.Page;
+using Browser.Abstractions.Page.Factory;
+using Browser.Abstractions.Settings;
 using Browser.Page.Wpf.Page;
 using CommunityToolkit.Mvvm.Messaging;
 

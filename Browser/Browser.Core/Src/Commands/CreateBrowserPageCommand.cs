@@ -1,5 +1,6 @@
 ﻿using Browser.Abstractions;
 using Browser.Abstractions.Page;
+using Browser.Abstractions.Page.Factory;
 
 namespace Browser.Core.Commands;
 

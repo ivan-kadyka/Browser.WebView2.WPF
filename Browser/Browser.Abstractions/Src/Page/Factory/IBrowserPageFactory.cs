@@ -1,4 +1,4 @@
-﻿namespace Browser.Abstractions.Page;
+﻿namespace Browser.Abstractions.Page.Factory;
 
 public interface IBrowserPageFactory
 {

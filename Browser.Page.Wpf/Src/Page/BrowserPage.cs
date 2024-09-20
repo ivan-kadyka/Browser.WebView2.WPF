@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
+using Browser.Abstractions.Settings;
 using Browser.Messenger;
 using Browser.Messenger.Navigation;
 using CommunityToolkit.Mvvm.Messaging;
@@ -25,7 +26,7 @@ internal class BrowserPage : DisposableBase, IBrowserPage
 
     public object Content => _webView;
 
-    public IObservableValue<Uri> Path  => _uriSource;
+    public IObservableValue<Uri> Source  => _uriSource;
     
     private readonly CompositeDisposable _disposables = new();
     private readonly ObservableValue<Uri> _uriSource;

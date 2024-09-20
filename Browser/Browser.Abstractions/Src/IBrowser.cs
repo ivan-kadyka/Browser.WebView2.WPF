@@ -1,5 +1,6 @@
 ﻿using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
+using Browser.Abstractions.Page.Factory;
 
 namespace Browser.Abstractions;
 

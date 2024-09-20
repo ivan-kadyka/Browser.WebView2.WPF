@@ -1,4 +1,5 @@
 ﻿using Browser.Abstractions.Page;
+using Browser.Abstractions.Page.Factory;
 using Browser.Page.Wpf.Factory;
 using Browser.Page.Wpf.Presenters.Container;
 using Microsoft.Extensions.DependencyInjection;

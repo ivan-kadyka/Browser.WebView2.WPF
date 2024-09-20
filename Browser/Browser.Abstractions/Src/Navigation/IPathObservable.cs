@@ -2,7 +2,7 @@
 
 namespace Browser.Abstractions.Navigation;
 
-public interface IBrowserPathRouter
+public interface IPathObservable
 {
-    IObservableValue<Uri> Path { get; }
+    IObservableValue<Uri> Source { get; }
 }

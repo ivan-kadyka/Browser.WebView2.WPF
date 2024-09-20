@@ -1,4 +1,4 @@
-﻿using Browser.Abstractions.Page;
+﻿using Browser.Abstractions.Page.Factory;
 using Microsoft.Web.WebView2.Wpf;
 
 namespace Browser.Page.Wpf.Factory;

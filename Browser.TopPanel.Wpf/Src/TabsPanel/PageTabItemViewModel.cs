@@ -22,7 +22,7 @@ public class PageTabItemViewModel : ViewModelBase
     public PageTabItemViewModel(IPage page)
     {
         _page = page;
-        _page.Path.Subscribe(OnPathChanged);
+        _page.Source.Subscribe(OnPathChanged);
     }
 
     private void OnPathChanged(Uri source)

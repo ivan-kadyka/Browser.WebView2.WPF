@@ -1,4 +1,6 @@
-﻿namespace Browser.Abstractions.Page;
+﻿using Browser.Abstractions.Page.Factory;
+
+namespace Browser.Abstractions.Settings;
 
 public interface IBrowserSettings
 {

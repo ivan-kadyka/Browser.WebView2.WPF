@@ -4,6 +4,7 @@ using System.Reactive.Subjects;
 using Browser.Abstractions;
 using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
+using Browser.Abstractions.Page.Factory;
 using Browser.Messenger;
 using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
@@ -33,8 +34,8 @@ public class Browser : DisposableBase, IBrowser
     private readonly ObservableValue<IBrowserPage> _currentPageSubject;
     private IBrowserPage ActivePage => _currentPageSubject.Value;
     
-    public IObservableValue<Uri> Path => _pathObservable;
-    private readonly ObservableValue<Uri> _pathObservable;
+    public IObservableValue<Uri> Source => _sourceObservable;
+    private readonly ObservableValue<Uri> _sourceObservable;
     
     private readonly CompositeDisposable _disposables = new();
     
@@ -45,7 +46,7 @@ public class Browser : DisposableBase, IBrowser
         
         var homePage = CreateHomePage();
 
-        _pathObservable = new ObservableValue<Uri>(homePage.Path.Value);
+        _sourceObservable = new ObservableValue<Uri>(homePage.Source.Value);
         _currentPageSubject = new ObservableValue<IBrowserPage>(homePage);
 
         SubscribeEvents();    
@@ -54,11 +55,11 @@ public class Browser : DisposableBase, IBrowser
     private void SubscribeEvents()
     {
         _disposables.Add(_currentPageSubject
-            .Select(browserPage => browserPage.Path)
+            .Select(browserPage => browserPage.Source)
             .Switch()                  
-            .Subscribe(uri => _pathObservable.OnNext(uri)));
+            .Subscribe(uri => _sourceObservable.OnNext(uri)));
         
-        _disposables.Add(_pathObservable.Subscribe(it =>
+        _disposables.Add(_sourceObservable.Subscribe(it =>
         {
             _messenger.Send(new BrowserSearchAddressChangedMessage(it.ToString()));
         }));

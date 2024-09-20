@@ -2,7 +2,7 @@
 
 namespace Browser.Abstractions.Page;
 
-public interface IPage : IBrowserPathRouter
+public interface IPage : IPathObservable
 {
     PageId Id { get; }
     

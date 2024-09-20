@@ -1,6 +1,6 @@
 ﻿using Browser.Abstractions;
 using Browser.Abstractions.Navigation;
-using Browser.Abstractions.Page;
+using Browser.Abstractions.Settings;
 using Browser.Core.Commands;
 using Browser.Core.Settings;
 using Browser.Messenger.Module;
@@ -14,7 +14,7 @@ public static class BrowserModule
     {
        services.AddSingleton<IBrowser, Browser>();
        services.AddSingleton<IBrowserRouter>(sp => sp.GetRequiredService<IBrowser>());
-       services.AddSingleton<IBrowserPathRouter>(sp => sp.GetRequiredService<IBrowser>());
+       services.AddSingleton<IPathObservable>(sp => sp.GetRequiredService<IBrowser>());
        services.AddSingleton<IBrowserObservable>(sp => sp.GetRequiredService<IBrowser>());
        
        // Commands
@@ -23,10 +23,10 @@ public static class BrowserModule
        services.AddTransient<SelectBrowserPageCommand>();
        services.AddTransient<ReloadBrowserPageCommand>();
        
-       
        // Settings
        services.AddSingleton<IBrowserSettings, BrowserSettings>();
        
+       // Messenger
        services.AddMessagesServices();
        
        return services;
