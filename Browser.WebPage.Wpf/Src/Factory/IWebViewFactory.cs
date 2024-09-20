@@ -1,7 +1,7 @@
 ﻿using Browser.Abstractions.Page.Factory;
 using Microsoft.Web.WebView2.Wpf;
 
-namespace Browser.Page.Wpf.Factory;
+namespace Browser.WebPage.Wpf.Factory;
 
 internal interface IWebViewFactory
 {

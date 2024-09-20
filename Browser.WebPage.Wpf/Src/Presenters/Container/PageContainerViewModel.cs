@@ -4,7 +4,7 @@ using Browser.Abstractions;
 using Browser.Abstractions.Page;
 using PresenterBase.ViewModel;
 
-namespace Browser.Page.Wpf.Presenters.Container;
+namespace Browser.WebPage.Wpf.Presenters.Container;
 
 public class PageContainerViewModel : ViewModelBase, IDisposable
 {

@@ -1,4 +1,4 @@
-﻿namespace Browser.Page.Wpf.Presenters.Container;
+﻿namespace Browser.WebPage.Wpf.Presenters.Container;
 
 public partial class PageContainerView
 {

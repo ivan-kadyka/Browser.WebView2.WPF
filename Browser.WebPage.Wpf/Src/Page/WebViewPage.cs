@@ -14,7 +14,7 @@ using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 using Reactive.Extensions.Observable;
 
-namespace Browser.Page.Wpf.Page;
+namespace Browser.WebPage.Wpf.Page;
 
 internal class WebViewPage : DisposableBase, IBrowserPage
 {

@@ -1,5 +1,5 @@
 ﻿using Browser.Core.Module;
-using Browser.Page.Wpf.Module;
+using Browser.WebPage.Wpf.Module;
 using Microsoft.Extensions.DependencyInjection;
 using PresenterBase.Presenter;
 using Browser.TopPanel.Wpf.Module;

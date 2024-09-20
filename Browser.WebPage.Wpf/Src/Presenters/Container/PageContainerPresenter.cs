@@ -4,7 +4,7 @@ using System.Windows;
 using Browser.Abstractions;
 using PresenterBase.Presenter;
 
-namespace Browser.Page.Wpf.Presenters.Container;
+namespace Browser.WebPage.Wpf.Presenters.Container;
 
 internal class PageContainerPresenter : Presenter
 {

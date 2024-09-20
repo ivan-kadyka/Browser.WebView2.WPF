@@ -2,11 +2,11 @@
 using Browser.Abstractions.Page.Factory;
 using Browser.Abstractions.Settings;
 using Browser.Core.Pages;
-using Browser.Page.Wpf.Page;
+using Browser.WebPage.Wpf.Page;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 
-namespace Browser.Page.Wpf.Factory;
+namespace Browser.WebPage.Wpf.Factory;
 
 internal class BrowserPageFactory : IBrowserPageFactory
 {

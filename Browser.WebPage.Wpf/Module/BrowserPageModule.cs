@@ -1,11 +1,11 @@
 ﻿using Browser.Abstractions.Page;
 using Browser.Abstractions.Page.Factory;
-using Browser.Page.Wpf.Factory;
-using Browser.Page.Wpf.Presenters.Container;
+using Browser.WebPage.Wpf.Factory;
+using Browser.WebPage.Wpf.Presenters.Container;
 using Microsoft.Extensions.DependencyInjection;
 using PresenterBase.Presenter;
 
-namespace Browser.Page.Wpf.Module;
+namespace Browser.WebPage.Wpf.Module;
 
 public static class BrowserPageModule
 {
