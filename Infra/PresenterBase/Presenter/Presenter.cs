@@ -6,6 +6,8 @@ namespace PresenterBase.Presenter;
 public abstract class Presenter : DisposableBase, IPresenter
 {
     public abstract object Content { get; }
+    
+    protected CancellationToken Token => _cancellationTokenSource.Token;
 
     private readonly CompositeDisposable _disposables = new();
     private readonly CancellationTokenSource _cancellationTokenSource = new();

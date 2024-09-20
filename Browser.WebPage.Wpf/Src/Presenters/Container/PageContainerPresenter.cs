@@ -1,4 +1,6 @@
-﻿using Browser.Abstractions;
+﻿using System;
+using Browser.Abstractions;
+using Browser.Abstractions.Page;
 using PresenterBase.Presenter;
 
 namespace Browser.WebPage.Wpf.Presenters.Container;
@@ -13,10 +15,16 @@ internal class PageContainerPresenter : Presenter
     public PageContainerPresenter(IBrowser browser)
     {
         _browser = browser;
-        _viewModel = new PageContainerViewModel(browser);
-        
-        _view = new PageContainerView();
-        _view.DataContext = _viewModel;
+        _viewModel = new PageContainerViewModel(browser.CurrentPage.Value);
+        _view = new PageContainerView { DataContext = _viewModel };
+
+        AddDisposable(browser.CurrentPage.Subscribe(OnCurrentPageChanged));
+    }
+    
+    private async void OnCurrentPageChanged(IPage page)
+    {
+        _viewModel.WebContent = page.Content;
+        await _browser.LoadPage(page.Id, Token);
     }
 }
 

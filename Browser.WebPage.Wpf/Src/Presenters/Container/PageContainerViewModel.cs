@@ -1,17 +1,14 @@
-﻿using System;
-using System.Reactive.Disposables;
-using Browser.Abstractions;
-using Browser.Abstractions.Page;
+﻿using Browser.Abstractions.Page;
 using PresenterBase.ViewModel;
 
 namespace Browser.WebPage.Wpf.Presenters.Container;
 
-public class PageContainerViewModel : ViewModelBase, IDisposable
+public class PageContainerViewModel : ViewModelBase
 {
     public object WebContent
     {
         get => _content;
-        private set
+        set
         {
             if (_content == value)
                 return;
@@ -24,25 +21,8 @@ public class PageContainerViewModel : ViewModelBase, IDisposable
     
     private object _content;
     
-    
-    private readonly CompositeDisposable _disposables = new();
-    private readonly IBrowser _browser;
-    
-    public PageContainerViewModel(IBrowser browser)
+    public PageContainerViewModel(IPage page)
     {
-        _browser = browser;
-        _content =  browser.CurrentPage.Value;
-        _disposables.Add(browser.CurrentPage.Subscribe(OnCurrentPageChanged));
-    }
-
-    private async void OnCurrentPageChanged(IPage page)
-    {
-        WebContent = page.Content;
-        await _browser.LoadPage(page.Id);
-    }
-
-    public void Dispose()
-    {
-        _disposables.Dispose();
+        _content =  page.Content;
     }
 }
