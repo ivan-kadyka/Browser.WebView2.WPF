@@ -3,9 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Browser.Messenger.Module;
 
-public static class MessagesModule
+public static class BrowserMessengerModule
 {
-    public static IServiceCollection AddMessagesServices(this IServiceCollection services)
+    public static IServiceCollection AddBrowserMessengerModule(this IServiceCollection services)
     {
         services.AddSingleton<IMessenger, StrongReferenceMessenger>();
         

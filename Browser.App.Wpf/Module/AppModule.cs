@@ -10,7 +10,7 @@ public static class AppModule
 {
     public static IServiceCollection AddAppServices(this IServiceCollection services)
     {
-        services.AddBrowserServices()
+        services.AddBrowserModule()
             .AddTopPanelServices()
             .AddBrowserPageServices();
         

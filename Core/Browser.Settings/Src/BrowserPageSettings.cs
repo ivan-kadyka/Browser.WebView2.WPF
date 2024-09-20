@@ -1,10 +1,9 @@
-﻿using Browser.Abstractions.Page;
-using Browser.Abstractions.Page.Factory;
+﻿using Browser.Abstractions.Page.Factory;
 using Browser.Abstractions.Settings;
 
-namespace Browser.Core.Settings;
+namespace Browser.Settings;
 
-public class BrowserPageSettings : IBrowserPageSettings
+internal class BrowserPageSettings : IBrowserPageSettings
 {
     public Uri Source { get; }
     

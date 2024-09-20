@@ -1,9 +1,8 @@
 ﻿using Browser.Abstractions;
 using Browser.Abstractions.Navigation;
-using Browser.Abstractions.Settings;
 using Browser.Core.Commands;
-using Browser.Core.Settings;
 using Browser.Messenger.Module;
+using Browser.Settings.Module;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -11,7 +10,7 @@ namespace Browser.Core.Module;
 
 public static class BrowserModule
 {
-    public static IServiceCollection AddBrowserServices(this IServiceCollection services)
+    public static IServiceCollection AddBrowserModule(this IServiceCollection services)
     {
        services.AddSingleton<IBrowser, Browser>();
        services.AddSingleton<INavigationRouter>(sp => sp.GetRequiredService<IBrowser>());
@@ -24,14 +23,10 @@ public static class BrowserModule
        services.AddTransient<SelectBrowserPageCommand>();
        services.AddTransient<ReloadBrowserPageCommand>();
        
-       // Settings
-       services.AddSingleton<IBrowserSettings, BrowserSettings>();
-       
-       // Messenger
-       services.AddMessagesServices();
-       
-       // Logger
-       services.AddLogging(builder => builder.AddConsole());
+       // Modules
+       services.AddBrowserSettingsModule()
+       .AddBrowserMessengerModule()
+       .AddLogging(builder => builder.AddConsole());
        
        return services;
     }

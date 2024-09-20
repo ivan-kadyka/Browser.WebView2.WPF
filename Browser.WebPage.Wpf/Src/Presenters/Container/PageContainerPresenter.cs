@@ -1,7 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using Browser.Abstractions;
+﻿using Browser.Abstractions;
 using PresenterBase.Presenter;
 
 namespace Browser.WebPage.Wpf.Presenters.Container;
@@ -20,13 +17,6 @@ internal class PageContainerPresenter : Presenter
         
         _view = new PageContainerView();
         _view.DataContext = _viewModel;
-    }
-    
-    override protected async Task OnStarted(CancellationToken token = default)
-    {
-        await base.OnStarted(token);
-        
-        _view.Visibility = Visibility.Visible;
     }
 }
 

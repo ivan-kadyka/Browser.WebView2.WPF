@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Browser.Messenger\Browser.Messenger.csproj" />
+      <ProjectReference Include="..\..\Core\Browser.Settings\Browser.Settings.csproj" />
       <ProjectReference Include="..\..\Infra\Disposable\Disposable.csproj" />
       <ProjectReference Include="..\Browser.Abstractions\Browser.Abstractions.csproj" />
     </ItemGroup>
