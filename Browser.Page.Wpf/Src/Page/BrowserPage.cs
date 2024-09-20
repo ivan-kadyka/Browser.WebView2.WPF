@@ -9,6 +9,7 @@ using Browser.Messenger;
 using Browser.Messenger.Navigation;
 using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
+using Microsoft.Extensions.Logging;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 using Reactive.Extensions.Observable;
@@ -17,9 +18,6 @@ namespace Browser.Page.Wpf.Page;
 
 internal class BrowserPage : DisposableBase, IBrowserPage
 {
-    private readonly IWebView2 _webView;
-    private readonly IMessenger _messenger;
-    private readonly IBrowserPageSettings _settings;
     public PageId Id { get; }
 
     public string Title => _webView.Source.Host;
@@ -28,6 +26,11 @@ internal class BrowserPage : DisposableBase, IBrowserPage
 
     public IObservableValue<Uri> Source  => _uriSource;
     
+    private readonly IWebView2 _webView;
+    private readonly IMessenger _messenger;
+    private readonly IBrowserPageSettings _settings;
+    private readonly ILogger _logger;
+    
     private readonly CompositeDisposable _disposables = new();
     private readonly ObservableValue<Uri> _uriSource;
     
@@ -35,13 +38,15 @@ internal class BrowserPage : DisposableBase, IBrowserPage
         PageId id,
         IWebView2 webView,
         IMessenger messenger,
-        IBrowserPageSettings settings)
+        IBrowserPageSettings settings,
+        ILogger logger)
     {
         Id = id;
         
         _webView = webView;
         _messenger = messenger;
         _settings = settings;
+        _logger = logger;
 
         _uriSource = new ObservableValue<Uri>(_settings.Source);
         _webView.Source = _uriSource.Value;
@@ -51,6 +56,8 @@ internal class BrowserPage : DisposableBase, IBrowserPage
         
         _webView.NavigationStarting += OnNavigationStarting;
         _webView.NavigationCompleted += OnNavigationCompleted;
+        
+        _logger.LogInformation($"Page created, source: {_settings.Source}");
     }
 
     private void OnNavigationStarting(object? sender, CoreWebView2NavigationStartingEventArgs e)
@@ -61,6 +68,7 @@ internal class BrowserPage : DisposableBase, IBrowserPage
 
     private void OnNavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
+        _logger.LogTrace($"Navigation completed, navigationId: {e.NavigationId}, source: {_webView.Source}, isSuccess: {e.IsSuccess}");
         _messenger.Send(new NavigationCompletedMessage());
     }
 
@@ -72,7 +80,15 @@ internal class BrowserPage : DisposableBase, IBrowserPage
 
     public async Task Load(CancellationToken token = default)
     {
-        await _webView.EnsureCoreWebView2Async();
+        try
+        {
+            await _webView.EnsureCoreWebView2Async();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Load page failed, pageId: {Id}, pageTitle: {_settings.Source}");
+            throw;
+        }
     }
 
     public Task Reload(CancellationToken token = default)
@@ -125,6 +141,8 @@ internal class BrowserPage : DisposableBase, IBrowserPage
             _webView.NavigationCompleted -= OnNavigationCompleted;
             
             _disposables.Dispose();
+            
+            _logger.LogInformation("Page disposed");
         }
     }
 }

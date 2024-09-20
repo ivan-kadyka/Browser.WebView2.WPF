@@ -5,6 +5,7 @@ using Browser.Core.Commands;
 using Browser.Core.Settings;
 using Browser.Messenger.Module;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Browser.Core.Module;
 
@@ -28,6 +29,9 @@ public static class BrowserModule
        
        // Messenger
        services.AddMessagesServices();
+       
+       // Logger
+       services.AddLogging(builder => builder.AddConsole());
        
        return services;
     }

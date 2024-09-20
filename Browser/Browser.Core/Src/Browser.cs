@@ -8,6 +8,7 @@ using Browser.Abstractions.Page.Factory;
 using Browser.Messenger;
 using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
+using Microsoft.Extensions.Logging;
 using Reactive.Extensions.Observable;
 
 namespace Browser.Core;
@@ -16,6 +17,7 @@ public class Browser : DisposableBase, IBrowser
 {
     private readonly IMessenger _messenger;
     private readonly IBrowserPageFactory _browserPageFactory;
+    private readonly ILogger<IBrowser> _logger;
     public IObservableValue<IPage> CurrentPage => _currentPageSubject;
 
     public bool CanForward => ActivePage.CanForward;
@@ -39,11 +41,12 @@ public class Browser : DisposableBase, IBrowser
     
     private readonly CompositeDisposable _disposables = new();
     
-    public Browser(IMessenger messenger, IBrowserPageFactory browserPageFactory)
+    public Browser(IMessenger messenger, IBrowserPageFactory browserPageFactory, ILogger<IBrowser> logger)
     {
         _messenger = messenger;
         _browserPageFactory = browserPageFactory;
-        
+        _logger = logger;
+
         var homePage = CreateHomePage();
 
         _sourceObservable = new ObservableValue<Uri>(homePage.Source.Value);
@@ -190,11 +193,10 @@ public class Browser : DisposableBase, IBrowser
         }
         catch (OperationCanceledException)
         {
-
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            //  logger.LogError(ex, "Reload page failed");
+            _logger.LogError(ex, $"Reload page failed, pageId: {page.Id}, pageTitle: {page.Source.Value}");
         }
     }
     
