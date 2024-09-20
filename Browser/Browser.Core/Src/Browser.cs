@@ -14,6 +14,7 @@ namespace Browser.Core;
 public class Browser : DisposableBase, IBrowser
 {
     private readonly IMessenger _messenger;
+    private readonly IBrowserPageFactory _browserPageFactory;
     public IObservableValue<IPage> CurrentPage => _currentPageSubject;
 
     public bool CanForward => ActivePage.CanForward;
@@ -40,14 +41,12 @@ public class Browser : DisposableBase, IBrowser
     public Browser(IMessenger messenger, IBrowserPageFactory browserPageFactory)
     {
         _messenger = messenger;
+        _browserPageFactory = browserPageFactory;
         
-        var navigationOptions = new UrlNavigateOptions("duckduckgo.com");
-        var page = browserPageFactory.Create(navigationOptions);
-        
-        _pages.Add(page);
+        var homePage = CreateHomePage();
 
-        _pathObservable = new ObservableValue<Uri>(new Uri(navigationOptions.Address));
-        _currentPageSubject = new ObservableValue<IBrowserPage>(page);
+        _pathObservable = new ObservableValue<Uri>(homePage.Path.Value);
+        _currentPageSubject = new ObservableValue<IBrowserPage>(homePage);
 
         SubscribeEvents();    
     }
@@ -92,15 +91,42 @@ public class Browser : DisposableBase, IBrowser
         ActivePage.Push(options);
     }
 
-    public Task AddPage(IBrowserPage page)
+    public Task<IPage> CreatePage(IPageCreateOptions? options, CancellationToken token = default)
     {
-       _pages.Add(page);
-       _pageAdded.OnNext(page);
-       SetCurrentPage(page);
-       
-       return Task.CompletedTask;
+        if (options == null)
+            options = GetDefaultPageCreateOptions();
+        
+        var page = CreatePageInternal(options);
+        
+        return Task.FromResult<IPage>(page);
     }
     
+    private IBrowserPage CreatePageInternal(IPageCreateOptions options)
+    {
+        var page = _browserPageFactory.Create(options);
+        
+        _pages.Add(page);
+        _pageAdded.OnNext(page);
+        SetCurrentPage(page);
+        
+        return page;
+    }
+    
+    private IPageCreateOptions GetDefaultPageCreateOptions()
+    {
+        return new PageCreateOptions("https://google.com");
+    }
+
+    private IBrowserPage CreateHomePage()
+    {
+        var createOptions = new PageCreateOptions("https://duckduckgo.com");
+        
+        var page = _browserPageFactory.Create(createOptions);
+        _pages.Add(page);
+        
+        return page;
+    }
+
     public Task RemovePage(PageId pageId)
     {
         var page = _pages.FirstOrDefault(it => it.Id == pageId);
@@ -124,8 +150,8 @@ public class Browser : DisposableBase, IBrowser
 
         if (isRemoved)
         {
-            _pageRemoved.OnNext(page);
             page.Dispose();
+            _pageRemoved.OnNext(page);
             
             var lastPage = _pages.LastOrDefault();
             

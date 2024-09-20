@@ -15,7 +15,7 @@
     <Grid>
         <ct:ChromeTabControl ItemsSource="{Binding Tabs}"
                              SelectedItem="{Binding SelectedPageTab}"
-                             AddTabCommand="{Binding AddTabCommand}"
+                             AddTabCommand="{Binding CreateTabCommand}"
                              CloseTabCommand="{Binding RemoveTabCommand}"
                              MinimumTabWidth="140"
                              PinnedTabWidth="50"

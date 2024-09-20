@@ -5,7 +5,7 @@ namespace Browser.Abstractions;
 
 public interface IBrowser : IBrowserRouter, IBrowserObservable
 {
-    Task AddPage(IBrowserPage page);
+    Task<IPage> CreatePage(IPageCreateOptions? options, CancellationToken token = default);
     
     Task RemovePage(PageId pageId);
     

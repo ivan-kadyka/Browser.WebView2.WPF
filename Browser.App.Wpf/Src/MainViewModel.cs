@@ -6,16 +6,16 @@ namespace BrowserApp;
 
 internal class MainViewModel : ViewModelBase
 {
-    public ICommand AddTabCommand { get; }
+    public ICommand CreateTabCommand { get; }
     public ICommand CloseTabCommand { get; }
     
     public ICommand ReloadTabCommand { get; }
 
-    public MainViewModel(AddBrowserPageCommand addBrowserPageCommand,
+    public MainViewModel(CreateBrowserPageCommand createBrowserPageCommand,
         RemoveBrowserPageCommand removeBrowserPageCommand,
         ReloadBrowserPageCommand reloadBrowserPageCommand)
     {
-        AddTabCommand = addBrowserPageCommand;
+        CreateTabCommand = createBrowserPageCommand;
         CloseTabCommand = removeBrowserPageCommand;
         ReloadTabCommand = reloadBrowserPageCommand;
     }

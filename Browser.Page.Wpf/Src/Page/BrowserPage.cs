@@ -18,6 +18,7 @@ internal class BrowserPage : DisposableBase, IBrowserPage
 {
     private readonly IWebView2 _webView;
     private readonly IMessenger _messenger;
+    private readonly IBrowserPageSettings _settings;
     public PageId Id { get; }
 
     public string Title => _webView.Source.Host;
@@ -32,14 +33,16 @@ internal class BrowserPage : DisposableBase, IBrowserPage
     public BrowserPage(
         PageId id,
         IWebView2 webView,
-        IMessenger messenger, INavigateOptions options)
+        IMessenger messenger,
+        IBrowserPageSettings settings)
     {
         Id = id;
         
         _webView = webView;
         _messenger = messenger;
-        
-        _uriSource = new ObservableValue<Uri>(new Uri(options.Address));
+        _settings = settings;
+
+        _uriSource = new ObservableValue<Uri>(_settings.Source);
         _webView.Source = _uriSource.Value;
         
         _disposables.Add(_webView);
