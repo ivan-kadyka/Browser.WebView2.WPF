@@ -18,22 +18,22 @@ internal class SearchBarViewModel : ObservableRecipient, IRecipient<BrowserSearc
         set => SetProperty(ref _searchAddress, value);
     }
     
-    private readonly IBrowserRouter _browserRouter;
+    private readonly INavigationRouter _navigationRouter;
     private string _searchAddress;
     
     
-    public SearchBarViewModel(IBrowserRouter browserRouter, IMessenger messenger)
+    public SearchBarViewModel(INavigationRouter navigationRouter, IMessenger messenger)
         : base(messenger)
     {
         _searchAddress = string.Empty;
-        _browserRouter = browserRouter;
+        _navigationRouter = navigationRouter;
         
         SearchCommand = new RelayCommand(OnSearch);
     }
     
     private void OnSearch()
     {
-        _browserRouter.Navigate(SearchAddress);
+        _navigationRouter.Navigate(SearchAddress);
     }
     
 

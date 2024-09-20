@@ -42,14 +42,14 @@ internal class NavigationPanelViewModel : ObservableRecipient, IViewModel,
     private const string RotateIcon = ImagePath + "rotate-cw.svg";
     private const string CrossIcon = ImagePath + "cross-icon.svg";
     
-    public NavigationPanelViewModel(IBrowserRouter browserRouter,
+    public NavigationPanelViewModel(INavigationRouter navigationRouter,
         IMessenger messenger,
         ReloadBrowserPageCommand reloadCommand) 
         : base(messenger)
     {
         ReloadCommand = reloadCommand;
-        _backCommand = new RelayCommand(browserRouter.Back, ()=> browserRouter.CanBack);
-        _forwardCommand = new RelayCommand(browserRouter.Forward, ()=> browserRouter.CanForward);
+        _backCommand = new RelayCommand(navigationRouter.Back, ()=> navigationRouter.CanBack);
+        _forwardCommand = new RelayCommand(navigationRouter.Forward, ()=> navigationRouter.CanForward);
     }
 
     private void NavigationControlsNotify()

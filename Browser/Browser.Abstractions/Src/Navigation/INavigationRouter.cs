@@ -1,6 +1,6 @@
 ﻿namespace Browser.Abstractions.Navigation;
 
-public interface IBrowserRouter : IPathObservable
+public interface INavigationRouter : IPathObservable
 {
     void Forward();
     
@@ -21,9 +21,9 @@ public interface IBrowserRouter : IPathObservable
     void Push(INavigateOptions options);
 }
 
-public static class BrowserRouterExtensions
+public static class NavigationRouterExtensions
 {
-    public static void Navigate(this IBrowserRouter router, string address)
+    public static void Navigate(this INavigationRouter router, string address)
     {
         router.Push(new UrlNavigateOptions(address));
     }

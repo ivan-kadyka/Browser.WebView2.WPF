@@ -16,7 +16,7 @@ using Reactive.Extensions.Observable;
 
 namespace Browser.Page.Wpf.Page;
 
-internal class BrowserPage : DisposableBase, IBrowserPage
+internal class WebViewPage : DisposableBase, IBrowserPage
 {
     public PageId Id { get; }
 
@@ -34,7 +34,7 @@ internal class BrowserPage : DisposableBase, IBrowserPage
     private readonly CompositeDisposable _disposables = new();
     private readonly ObservableValue<Uri> _uriSource;
     
-    public BrowserPage(
+    public WebViewPage(
         PageId id,
         IWebView2 webView,
         IMessenger messenger,

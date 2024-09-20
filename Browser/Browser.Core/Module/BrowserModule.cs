@@ -14,7 +14,7 @@ public static class BrowserModule
     public static IServiceCollection AddBrowserServices(this IServiceCollection services)
     {
        services.AddSingleton<IBrowser, Browser>();
-       services.AddSingleton<IBrowserRouter>(sp => sp.GetRequiredService<IBrowser>());
+       services.AddSingleton<INavigationRouter>(sp => sp.GetRequiredService<IBrowser>());
        services.AddSingleton<IPathObservable>(sp => sp.GetRequiredService<IBrowser>());
        services.AddSingleton<IBrowserObservable>(sp => sp.GetRequiredService<IBrowser>());
        

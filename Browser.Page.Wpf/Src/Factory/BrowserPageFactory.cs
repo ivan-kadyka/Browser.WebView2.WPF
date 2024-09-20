@@ -33,7 +33,7 @@ internal class BrowserPageFactory : IBrowserPageFactory
         var id = PageId.New();
         
         var logger = _loggerFactory.CreateLogger($"WebPage[{id}]");
-        var page = new BrowserPage(id, webView, _messenger, settings, logger);
+        var page = new WebViewPage(id, webView, _messenger, settings, logger);
         
         return page;
     }

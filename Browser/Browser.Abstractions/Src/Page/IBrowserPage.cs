@@ -2,7 +2,7 @@
 
 namespace Browser.Abstractions.Page;
 
-public interface IBrowserPage : IPage, IBrowserRouter, IDisposable
+public interface IBrowserPage : IPage, INavigationRouter, IDisposable
 {
     Task Load(CancellationToken token = default);
     
