@@ -1,6 +1,7 @@
 ﻿using Browser.Abstractions.Page;
 using Browser.Abstractions.Page.Factory;
 using Browser.Abstractions.Settings;
+using Browser.Core.Pages;
 using Browser.Page.Wpf.Page;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
@@ -28,13 +29,15 @@ internal class BrowserPageFactory : IBrowserPageFactory
     
     public IBrowserPage Create(IPageCreateOptions options)
     {
-        var settings = _browserSettings.CreatePage(options);
-        var webView =  _webViewFactory.Create(options);
         var id = PageId.New();
         
         var logger = _loggerFactory.CreateLogger($"WebPage[{id}]");
-        var page = new WebViewPage(id, webView, _messenger, settings, logger);
+        var settings = _browserSettings.CreatePage(options);
         
+        var webView =  _webViewFactory.Create(options);
+        var webViewPage = new WebViewPage(id, webView, _messenger, settings, logger);
+        
+        var page = new ExceptionDecoratorPage(webViewPage, logger);
         return page;
     }
 }

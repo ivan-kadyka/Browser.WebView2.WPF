@@ -23,6 +23,12 @@ internal class WebViewPage : DisposableBase, IBrowserPage
     public string Title => _webView.Source.Host;
 
     public object Content => _webView;
+    
+    public bool CanForward => _webView.CanGoForward;
+
+    public bool CanBack => _webView.CanGoBack;
+    
+    public bool CanRefresh => _webView.Source != null && !string.IsNullOrWhiteSpace(_webView.Source.Host);
 
     public IObservableValue<Uri> Source  => _uriSource;
     
@@ -64,8 +70,7 @@ internal class WebViewPage : DisposableBase, IBrowserPage
     {
         _messenger.Send(new NavigationStartingMessage());
     }
-
-
+    
     private void OnNavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
         _logger.LogTrace($"Navigation completed, navigationId: {e.NavigationId}, source: {_webView.Source}, isSuccess: {e.IsSuccess}");
@@ -80,15 +85,7 @@ internal class WebViewPage : DisposableBase, IBrowserPage
 
     public async Task Load(CancellationToken token = default)
     {
-        try
-        {
-            await _webView.EnsureCoreWebView2Async();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, $"Load page failed, pageId: {Id}, pageTitle: {_settings.Source}");
-            throw;
-        }
+        await _webView.EnsureCoreWebView2Async();
     }
 
     public Task Reload(CancellationToken token = default)
@@ -106,9 +103,7 @@ internal class WebViewPage : DisposableBase, IBrowserPage
             _messenger.Send(new BrowserForwardMessage());
         }
     }
-
-    public bool CanForward => _webView.CanGoForward;
-
+    
     public void Back()
     {
         if (_webView.CanGoBack)
@@ -117,14 +112,11 @@ internal class WebViewPage : DisposableBase, IBrowserPage
             _messenger.Send(new BrowserBackMessage());
         }
     }
-
-    public bool CanBack => _webView.CanGoBack;
-
-    public void Refresh()
+    
+    public async void Refresh()
     {
+        await Reload();
     }
-
-    public bool CanRefresh => _webView.Source != null && !string.IsNullOrWhiteSpace(_webView.Source.Host);
 
     public void Push(INavigateOptions options)
     {
