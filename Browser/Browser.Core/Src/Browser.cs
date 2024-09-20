@@ -14,15 +14,15 @@ namespace Browser.Core;
 public class Browser : DisposableBase, IBrowser
 {
     private readonly IMessenger _messenger;
-    public IObservableValue<IBrowserPage> CurrentPage => _currentPageSubject;
+    public IObservableValue<IPage> CurrentPage => _currentPageSubject;
 
     public bool CanForward => ActivePage.CanForward;
     
     public bool CanBack => ActivePage.CanBack;
 
-    public IObservable<IBrowserPage> PageAdded => _pageAdded;
-    public IObservable<IBrowserPage> PageRemoved => _pageRemoved;
-    public IReadOnlyList<IBrowserPage> Pages => _pages;
+    public IObservable<IPage> PageAdded => _pageAdded;
+    public IObservable<IPage> PageRemoved => _pageRemoved;
+    public IReadOnlyList<IPage> Pages => _pages;
     
     private readonly Subject<IBrowserPage> _pageAdded = new();
     private readonly Subject<IBrowserPage> _pageRemoved = new();
@@ -100,14 +100,32 @@ public class Browser : DisposableBase, IBrowser
        
        return Task.CompletedTask;
     }
+    
+    public Task RemovePage(PageId pageId)
+    {
+        var page = _pages.FirstOrDefault(it => it.Id == pageId);
+        
+        return page != null ? RemovePage(page) : Task.CompletedTask;
+    }
 
-    public Task RemovePage(IBrowserPage page)
+    public async Task LoadPage(PageId? pageId = default, CancellationToken token = default)
+    {
+        var page = _pages.FirstOrDefault(it => it.Id == pageId);
+        
+        if (page != null)
+        {
+            await page.Load(token);
+        }
+    }
+
+    private Task RemovePage(IBrowserPage page)
     {
         var isRemoved = _pages.Remove(page);
 
         if (isRemoved)
         {
             _pageRemoved.OnNext(page);
+            page.Dispose();
             
             var lastPage = _pages.LastOrDefault();
             
@@ -120,7 +138,7 @@ public class Browser : DisposableBase, IBrowser
         return Task.CompletedTask;
     }
 
-    public async Task ReloadPage(PageId? pageId = default)
+    public async Task ReloadPage(PageId? pageId = default, CancellationToken token = default)
     {
         if (pageId == null)
         {
@@ -131,11 +149,37 @@ public class Browser : DisposableBase, IBrowser
         
         if (page != null)
         {
-          await  page.Reload();
+          await ReloadPage(page, token);
+        }
+    }
+    
+    private async Task ReloadPage(IBrowserPage page, CancellationToken token = default)
+    {
+        try
+        {
+            await page.Reload(token);
+        }
+        catch (OperationCanceledException)
+        {
+
+        }
+        catch (Exception)
+        {
+            //  logger.LogError(ex, "Reload page failed");
+        }
+    }
+    
+    public void SetCurrentPage(PageId pageId)
+    {
+        var page = _pages.FirstOrDefault(it => it.Id == pageId);
+        
+        if (page != null)
+        {
+            SetCurrentPage(page);
         }
     }
 
-    public void SetCurrentPage(IBrowserPage page)
+    private void SetCurrentPage(IBrowserPage page)
     {
         _currentPageSubject.OnNext(page);
     }

@@ -22,6 +22,6 @@ public class RemoveBrowserPageCommand : CommandBase<PageId>
         var page = _browser.Pages.FirstOrDefault(it => it.Id == pageId);
         
         if (page != null)
-            _browser.RemovePage(page);
+            _browser.RemovePage(page.Id);
     }
 }

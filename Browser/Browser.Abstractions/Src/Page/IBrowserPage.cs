@@ -2,14 +2,8 @@
 
 namespace Browser.Abstractions.Page;
 
-public interface IBrowserPage : IBrowserRouter
+public interface IBrowserPage : IPage, IBrowserRouter, IDisposable
 {
-    PageId Id { get; }
-    
-    string Title { get; }
-    
-    object Content { get; }
-    
     Task Load(CancellationToken token = default);
     
     Task Reload(CancellationToken token = default);

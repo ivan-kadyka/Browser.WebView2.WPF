@@ -17,9 +17,9 @@ public class PageTabItemViewModel : ViewModelBase
         }
     }
     
-    private readonly IBrowserPage _page;
+    private readonly IPage _page;
     
-    public PageTabItemViewModel(IBrowserPage page)
+    public PageTabItemViewModel(IPage page)
     {
         _page = page;
         _page.Path.Subscribe(OnPathChanged);

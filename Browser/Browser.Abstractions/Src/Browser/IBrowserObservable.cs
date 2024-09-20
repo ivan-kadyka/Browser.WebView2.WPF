@@ -5,11 +5,11 @@ namespace Browser.Abstractions;
 
 public interface IBrowserObservable
 {
-    IObservable<IBrowserPage> PageAdded { get; }
+    IObservable<IPage> PageAdded { get; }
     
-    IObservable<IBrowserPage> PageRemoved { get; }
+    IObservable<IPage> PageRemoved { get; }
     
-    IReadOnlyList<IBrowserPage> Pages { get; }
+    IReadOnlyList<IPage> Pages { get; }
     
-    IObservableValue<IBrowserPage> CurrentPage { get; }
+    IObservableValue<IPage> CurrentPage { get; }
 }

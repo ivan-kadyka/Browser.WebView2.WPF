@@ -20,6 +20,6 @@ public class SelectBrowserPageCommand : CommandBase<PageId>
         var page = _browser.Pages.FirstOrDefault(it => it.Id == pageId);
         
         if (page != null)
-            _browser.SetCurrentPage(page);
+            _browser.SetCurrentPage(page.Id);
     }
 }

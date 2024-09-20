@@ -7,11 +7,11 @@ public interface IBrowser : IBrowserRouter, IBrowserObservable
 {
     Task AddPage(IBrowserPage page);
     
-    Task RemovePage(IBrowserPage page);
+    Task RemovePage(PageId pageId);
     
+    Task LoadPage(PageId? pageId = default, CancellationToken token = default);
     
-    Task ReloadPage(PageId? pageId = default);
+    Task ReloadPage(PageId? pageId = default, CancellationToken token = default);
     
-    
-    void SetCurrentPage(IBrowserPage page);
+    void SetCurrentPage(PageId pageId);
 }

@@ -55,17 +55,15 @@ internal class TabsPanelViewModel : ViewModelBase
         
         AddTabCommand = addBrowserPageCommand;
         RemoveTabCommand = new RelayCommand<PageTabItemViewModel>(CloseTab);
-        
-      
     }
 
-    private void OnAddNewPage(IBrowserPage page)
+    private void OnAddNewPage(IPage page)
     {
         var tabItem = new PageTabItemViewModel(page);
         Tabs.Add(tabItem);
     }
     
-    private void OnRemovePage(IBrowserPage page)
+    private void OnRemovePage(IPage page)
     {
         var tabItem = Tabs.FirstOrDefault(it => it.Id == page.Id);
 
@@ -75,7 +73,7 @@ internal class TabsPanelViewModel : ViewModelBase
         }
     }
     
-    private void OnActivePageChanged(IBrowserPage? page)
+    private void OnActivePageChanged(IPage? page)
     {
         if (page == null)
             return;

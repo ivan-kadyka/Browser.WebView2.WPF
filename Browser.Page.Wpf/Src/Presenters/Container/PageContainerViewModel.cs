@@ -26,18 +26,19 @@ public class PageContainerViewModel : ViewModelBase, IDisposable
     
     
     private readonly CompositeDisposable _disposables = new();
+    private readonly IBrowser _browser;
     
     public PageContainerViewModel(IBrowser browser)
     {
+        _browser = browser;
         _content =  browser.CurrentPage.Value;
         _disposables.Add(browser.CurrentPage.Subscribe(OnCurrentPageChanged));
     }
-    
 
-    private async void OnCurrentPageChanged(IBrowserPage page)
+    private async void OnCurrentPageChanged(IPage page)
     {
         WebContent = page.Content;
-        await page.Load();
+        await _browser.LoadPage(page.Id);
     }
 
     public void Dispose()
