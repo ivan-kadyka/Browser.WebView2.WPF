@@ -1,7 +1,7 @@
 ﻿using Browser.Abstractions.Page.Factory;
 using Browser.Abstractions.Settings;
 
-namespace Browser.Settings;
+namespace Browser.Settings.Page;
 
 internal class BrowserPageSettings : IBrowserPageSettings
 {
