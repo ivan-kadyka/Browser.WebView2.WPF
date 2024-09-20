@@ -13,9 +13,9 @@ public interface INavigationRouter : IPathObservable
     bool CanBack { get; }
     
     
-    void Refresh();
+    void Reload();
     
-    bool CanRefresh { get; }
+    bool CanReload { get; }
     
     
     void Push(INavigateOptions options);
@@ -25,6 +25,6 @@ public static class NavigationRouterExtensions
 {
     public static void Navigate(this INavigationRouter router, string address)
     {
-        router.Push(new UrlNavigateOptions(address));
+        router.Push(new NavigateOptions(address));
     }
 }

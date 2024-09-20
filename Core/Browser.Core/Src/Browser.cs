@@ -6,6 +6,7 @@ using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
 using Browser.Abstractions.Page.Factory;
 using Browser.Messenger;
+using Browser.Settings.Abstractions;
 using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
 using Microsoft.Extensions.Logging;
@@ -17,6 +18,7 @@ public class Browser : DisposableBase, IBrowser
 {
     private readonly IMessenger _messenger;
     private readonly IBrowserPageFactory _browserPageFactory;
+    private readonly IBrowserSettings _settings;
     private readonly ILogger<IBrowser> _logger;
     public IObservableValue<IPage> CurrentPage => _currentPageSubject;
 
@@ -41,10 +43,15 @@ public class Browser : DisposableBase, IBrowser
     
     private readonly CompositeDisposable _disposables = new();
     
-    public Browser(IMessenger messenger, IBrowserPageFactory browserPageFactory, ILogger<IBrowser> logger)
+    public Browser(
+        IMessenger messenger,
+        IBrowserPageFactory browserPageFactory,
+        IBrowserSettings settings,
+        ILogger<IBrowser> logger)
     {
         _messenger = messenger;
         _browserPageFactory = browserPageFactory;
+        _settings = settings;
         _logger = logger;
 
         var homePage = CreateHomePage();
@@ -83,12 +90,12 @@ public class Browser : DisposableBase, IBrowser
         ActivePage.Back();
     }
 
-    public void Refresh()
+    public void Reload()
     {
-        ActivePage.Refresh();
+        ActivePage.Reload();
     }
 
-    public bool CanRefresh => ActivePage.CanRefresh;
+    public bool CanReload => ActivePage.CanReload;
 
     public void Push(INavigateOptions options)
     {
@@ -120,12 +127,14 @@ public class Browser : DisposableBase, IBrowser
     
     private IPageCreateOptions GetDefaultPageCreateOptions()
     {
-        return new PageCreateOptions("https://google.com");
+        var source = _settings.General.HomeAddress;
+        return new PageCreateOptions(source);
     }
 
     private IBrowserPage CreateHomePage()
     {
-        var createOptions = new PageCreateOptions("https://duckduckgo.com");
+        var source = _settings.General.HomeAddress;
+        var createOptions = new PageCreateOptions(source);
         
         var page = _browserPageFactory.Create(createOptions);
         _pages.Add(page);

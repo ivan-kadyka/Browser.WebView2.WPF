@@ -1,12 +1,13 @@
 ﻿using Browser.Abstractions.Exceptions;
 using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
+using Disposable;
 using Microsoft.Extensions.Logging;
 using Reactive.Extensions.Observable;
 
 namespace Browser.Core.Pages;
 
-public class ExceptionDecoratorPage : IBrowserPage
+public class ExceptionDecoratorPage : DisposableBase, IBrowserPage
 {
     public IObservableValue<Uri> Source => _page.Source;
     public PageId Id => _page.Id;
@@ -17,7 +18,7 @@ public class ExceptionDecoratorPage : IBrowserPage
     
     public bool CanBack => _page.CanBack;
     
-    public bool CanRefresh => _page.CanRefresh;
+    public bool CanReload => _page.CanReload;
     
     
     private readonly IBrowserPage _page;
@@ -39,9 +40,9 @@ public class ExceptionDecoratorPage : IBrowserPage
     }
 
    
-    public void Refresh()
+    public void Reload()
     {
-        WrapException(_page.Refresh, ()=> (PageError.Reload, "Page reload error"));
+        WrapException(_page.Reload, ()=> (PageError.Reload, "Page reload error"));
     }
 
 
@@ -102,9 +103,12 @@ public class ExceptionDecoratorPage : IBrowserPage
         _logger.LogError(ex, message);
         throw new BrowserPageException(errorType, message, ex);
     }
-    
-    public void Dispose()
+
+    protected override void Dispose(bool disposing)
     {
-        _page.Dispose();
+        if (disposing)
+        {
+            _page.Dispose();
+        }
     }
 }

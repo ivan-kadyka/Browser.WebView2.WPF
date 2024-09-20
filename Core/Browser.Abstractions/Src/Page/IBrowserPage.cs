@@ -6,5 +6,5 @@ public interface IBrowserPage : IPage, INavigationRouter, IDisposable
 {
     Task Load(CancellationToken token = default);
     
-    Task Reload(CancellationToken token = default);
+    Task Reload(CancellationToken token);
 }

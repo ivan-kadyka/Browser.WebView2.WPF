@@ -7,6 +7,7 @@ using Browser.Abstractions.Page;
 using Browser.Abstractions.Settings;
 using Browser.Messenger;
 using Browser.Messenger.Navigation;
+using Browser.WebPage.Wpf.Utils;
 using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
 using Microsoft.Extensions.Logging;
@@ -28,7 +29,7 @@ internal class WebViewPage : DisposableBase, IBrowserPage
 
     public bool CanBack => _webView.CanGoBack;
     
-    public bool CanRefresh => _webView.Source != null && !string.IsNullOrWhiteSpace(_webView.Source.Host);
+    public bool CanReload => _webView.Source != null && !string.IsNullOrWhiteSpace(_webView.Source.Host);
 
     public IObservableValue<Uri> Source  => _uriSource;
     
@@ -39,6 +40,8 @@ internal class WebViewPage : DisposableBase, IBrowserPage
     
     private readonly CompositeDisposable _disposables = new();
     private readonly ObservableValue<Uri> _uriSource;
+    
+    private readonly CancellationTokenSource _cancellationTokenSource = new();
     
     public WebViewPage(
         PageId id,
@@ -74,7 +77,7 @@ internal class WebViewPage : DisposableBase, IBrowserPage
     private void OnNavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
         _logger.LogTrace($"Navigation completed, navigationId: {e.NavigationId}, source: {_webView.Source}, isSuccess: {e.IsSuccess}");
-        _messenger.Send(new NavigationCompletedMessage());
+        _messenger.Send(new NavigationCompletedMessage(e.IsSuccess));
     }
 
     private void WebViewOnSourceChanged(object? sender, CoreWebView2SourceChangedEventArgs e)
@@ -88,7 +91,7 @@ internal class WebViewPage : DisposableBase, IBrowserPage
         await _webView.EnsureCoreWebView2Async();
     }
 
-    public Task Reload(CancellationToken token = default)
+    public Task Reload(CancellationToken token)
     { 
         _webView.Reload();
         
@@ -113,14 +116,22 @@ internal class WebViewPage : DisposableBase, IBrowserPage
         }
     }
     
-    public async void Refresh()
+    public async void Reload()
     {
-        await Reload();
+        var token = _cancellationTokenSource.Token;
+        await Reload(token);
     }
 
     public void Push(INavigateOptions options)
     {
-        _webView.CoreWebView2.Navigate(options.Address);
+        var uri = UriConverter.ToUri(options.Address);
+        _webView.CoreWebView2.Navigate(uri.ToString());
+    }
+    
+    private Uri CreateUri(string address)
+    {
+        var uri = new Uri(address);
+        return uri;
     }
 
     protected override void Dispose(bool disposing)
@@ -131,6 +142,8 @@ internal class WebViewPage : DisposableBase, IBrowserPage
             
             _webView.NavigationStarting -= OnNavigationStarting;
             _webView.NavigationCompleted -= OnNavigationCompleted;
+            
+            _cancellationTokenSource.Cancel();
             
             _disposables.Dispose();
             
