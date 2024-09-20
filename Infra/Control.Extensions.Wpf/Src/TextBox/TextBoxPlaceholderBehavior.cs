@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace ControlExt.TextBox;
+namespace Control.Extensions.Wpf.TextBox;
 
 public static class TextBoxPlaceholderBehavior
 {

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Browser.TopPanel.Wpf.SearchBar"
-             xmlns:textBox="clr-namespace:ControlExt.TextBox;assembly=ControlExt"
+             xmlns:textBox="clr-namespace:Control.Extensions.Wpf.TextBox;assembly=Control.Extensions.Wpf"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance local:SearchBarViewModel, IsDesignTimeCreatable=True}">

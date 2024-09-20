@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{D4BE78D7
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresenterBase", "Infra\PresenterBase\PresenterBase.csproj", "{125E2EAF-CFA6-42AA-8C2E-3C901D05367F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlExt", "Infra\ControlExt\ControlExt.csproj", "{B96DE007-83E0-4E33-806D-71E153D38CCF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Control.Extensions.Wpf", "Infra\Control.Extensions.Wpf\Control.Extensions.Wpf.csproj", "{B96DE007-83E0-4E33-806D-71E153D38CCF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactive.Extensions", "Infra\Reactive.Extensions\Reactive.Extensions.csproj", "{B2857F33-B561-4233-9240-56C427976EAB}"
 EndProject

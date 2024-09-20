@@ -4,7 +4,6 @@ using Browser.Messenger;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using PresenterBase.ViewModel;
 
 namespace Browser.TopPanel.Wpf.SearchBar;
 
