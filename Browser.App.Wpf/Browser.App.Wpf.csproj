@@ -10,6 +10,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Browser.WebPage.Wpf\Browser.WebPage.Wpf.csproj" />
       <ProjectReference Include="..\Browser\Browser.Core\Browser.Core.csproj" />
+      <ProjectReference Include="..\Core\Browser.Core\Browser.Core.csproj" />
       <ProjectReference Include="..\Infra\PresenterBase\PresenterBase.csproj" />
       <ProjectReference Include="..\Browser.TopPanel.Wpf\Browser.TopPanel.Wpf.csproj" />
     </ItemGroup>
