@@ -3,4 +3,6 @@
 public interface IPageCreateOptions
 {
     Uri Source { get; }
+    
+    bool SetActive { get; }
 }

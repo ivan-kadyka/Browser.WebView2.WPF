@@ -107,7 +107,9 @@ public class Browser : DisposableBase, IBrowser
         
         _pages.Add(page);
         _pageAdded.OnNext(page);
-        SetCurrentPage(page);
+        
+        if (options.SetActive)
+            SetCurrentPage(page);
         
         return page;
     }

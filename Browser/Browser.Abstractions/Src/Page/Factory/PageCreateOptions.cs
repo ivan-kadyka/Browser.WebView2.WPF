@@ -4,12 +4,15 @@ public class PageCreateOptions : IPageCreateOptions
 {
     public Uri Source { get; }
     
-    public PageCreateOptions(Uri source)
+    public bool SetActive { get; }
+
+    public PageCreateOptions(Uri source, bool setActive = true)
     {
         Source = source;
     }
     
-    public PageCreateOptions(string source) : this(new Uri(source))
+    public PageCreateOptions(string source,  bool setActive = true) 
+        : this(new Uri(source), setActive)
     {
     }
 }
