@@ -27,7 +27,9 @@ internal class UriConverter
         }
         else
         {
-            return new Uri(_browserSettings.General.SearchAddress + address);
+            var formattedAddress = address.Replace(" ", "+");
+            formattedAddress = string.Format(_browserSettings.General.SearchAddress, formattedAddress);
+            return new Uri(formattedAddress);
         }
     }
 }

@@ -13,7 +13,7 @@ public static class BrowserSettingsModule
         var inMemoryAppSettings = new Dictionary<string, string>
         {
             { "BrowserSettings:General:HomeAddress", "https://duckduckgo.com" },
-            { "BrowserSettings:General:SearchAddress", "https://html.duckduckgo.com/html/?q=" }
+            { "BrowserSettings:General:SearchAddress", "https://duckduckgo.com/?q={0}&ia=web" }
         };
         
         var configuration = new ConfigurationBuilder()

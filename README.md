@@ -1,7 +1,8 @@
 # Browser WebView2 WPF
 
 > The current project use [**WebView2**](https://learn.microsoft.com/en-us/microsoft-edge/webview2/) to render web pages in WPF application.
-![image](docs/images/browser_preview.png)
+![image](docs/images/browser_preview_1.png)
+![image](docs/images/browser_preview_2.png)
 
 
 ## Project Structure
