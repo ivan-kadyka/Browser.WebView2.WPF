@@ -7,7 +7,7 @@ namespace BrowserApp
 {
     public partial class App
     {
-        private IPresenter _mainPresenter;
+        private IPresenter? _mainPresenter;
 
         private readonly ServiceProvider _serviceProvider;
         
