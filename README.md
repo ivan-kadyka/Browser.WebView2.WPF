@@ -1,15 +1,21 @@
 # Browser WebView2 WPF
 
-> The current project use [**WebView2**](https://learn.microsoft.com/en-us/microsoft-edge/webview2/) to render web pages in WPF application.
-![image](docs/images/browser_preview_1.png)
-![image](docs/images/browser_preview_2.png)
+> The current WPF application designed by using MVVM,MVP patterns,
+> [**WebView2**](https://learn.microsoft.com/en-us/microsoft-edge/webview2/) to render web pages, 
+> [Rx.NET](https://github.com/dotnet/reactive) to handle asynchronous operations,
+> and Microsoft.Extensions to provide dependency injection, logging, and configuration management.
+>
+<div style="display: flex;">
+  <img src="docs/images/browser_preview_1.png" style="width: 50%;" />
+  <img src="docs/images/browser_preview_2.png" style="width: 50%;" />
+</div>
 
+---
 
 ## Project Structure
 
----
-The project is organized into several key folder groups, each serving a distinct purpose within the overall architecture:
-- `Wpf`: Contains the WPF application project with postfix `Wpf`.
+The project is organized into several key groups, each serving a distinct purpose within the overall architecture:
+- `WPF`: Contains the WPF application project with postfix `Wpf`.
 - `Core`: Contains the core browser logic projects with prefix `Browser`, divided into isolated domains for clarity and maintainability.
     - _Browser.Core_
     - _Browser.Abstractions_
@@ -20,16 +26,15 @@ The project is organized into several key folder groups, each serving a distinct
     - [xUnit](https://xunit.net//) unit testing framework.
     - Utilizes the [NSubstitute](https://nsubstitute.github.io/help/getting-started/) library for mocking dependencies in tests.
 
-### Project Structure Overview
-![image](docs/images/project_structure.png)
+<img src="docs/images/project_structure.png" width="50%" />
+
 
 ---
 
-## Application structure
+## Browser application structure
 
 Simplified browser application structure
 
----
 ```mermaid
   stateDiagram-v2
     Browser.App.Wpf --> Browser.Page.Wpf
@@ -41,10 +46,10 @@ Simplified browser application structure
     Browser.Core --> Browser.Abstractions
     Browser.Core --> Browser.Messenger
 ```
-
+---
 ###  Browser.Abstractions
 
----
+
 `IBrowser` provides access to global browser access
 
 ```csharp
