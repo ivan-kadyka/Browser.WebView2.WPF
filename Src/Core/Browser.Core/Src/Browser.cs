@@ -127,14 +127,15 @@ public class Browser : DisposableBase, IBrowser
     
     private IPageCreateOptions GetDefaultPageCreateOptions()
     {
-        var source = _settings.General.HomeAddress;
-        return new PageCreateOptions(source);
+        var sourceUri = new Uri("about:blank"); 
+        return new PageCreateOptions(sourceUri);
     }
 
     private IBrowserPage CreateHomePage()
     {
         var source = _settings.General.HomeAddress;
-        var createOptions = new PageCreateOptions(source);
+        var sourceUri = new Uri(source);
+        var createOptions = new PageCreateOptions(sourceUri);
         
         var page = _browserPageFactory.Create(createOptions);
         _pages.Add(page);

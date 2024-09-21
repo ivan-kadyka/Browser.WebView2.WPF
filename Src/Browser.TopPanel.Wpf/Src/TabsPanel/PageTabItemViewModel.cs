@@ -13,6 +13,9 @@ public class PageTabItemViewModel : ViewModelBase
         get
         {
             var header = string.IsNullOrWhiteSpace(_page.Title) ? "New Tab" : _page.Title;
+
+            header = header.TrimStart("www.".ToCharArray());
+            
             return header;
         }
     }

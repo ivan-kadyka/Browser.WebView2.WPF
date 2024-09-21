@@ -11,9 +11,4 @@ public class PageCreateOptions : IPageCreateOptions
         Source = source;
         SetActive = setActive;
     }
-    
-    public PageCreateOptions(string source,  bool setActive = true) 
-        : this(new Uri(source), setActive)
-    {
-    }
 }

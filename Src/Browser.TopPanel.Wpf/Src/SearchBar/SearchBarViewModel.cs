@@ -13,7 +13,7 @@ internal class SearchBarViewModel : ObservableRecipient, IRecipient<BrowserSearc
 
     public string SearchAddress
     {
-        get => _searchAddress;
+        get => _searchAddress == "about:blank" ? "" : _searchAddress;
         set => SetProperty(ref _searchAddress, value);
     }
     

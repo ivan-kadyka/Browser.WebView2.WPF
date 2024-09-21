@@ -21,8 +21,6 @@ internal class WebViewPage : DisposableBase, IBrowserPage
 {
     public PageId Id { get; }
 
-    public string Title => _webView.Source.Host;
-
     public object Content => _webView;
     
     public bool CanForward => _webView.CanGoForward;
@@ -32,6 +30,8 @@ internal class WebViewPage : DisposableBase, IBrowserPage
     public bool CanReload => _webView.Source != null && !string.IsNullOrWhiteSpace(_webView.Source.Host);
 
     public IObservableValue<Uri> Source  => _uriSource;
+    
+    public string Title => _webView.Source.Host;
     
     private readonly IWebView2 _webView;
     private readonly IMessenger _messenger;
