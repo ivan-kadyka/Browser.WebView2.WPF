@@ -127,12 +127,6 @@ internal class WebViewPage : DisposableBase, IBrowserPage
         var uri = UriConverter.ToUri(options.Address);
         _webView.CoreWebView2.Navigate(uri.ToString());
     }
-    
-    private Uri CreateUri(string address)
-    {
-        var uri = new Uri(address);
-        return uri;
-    }
 
     protected override void Dispose(bool disposing)
     {

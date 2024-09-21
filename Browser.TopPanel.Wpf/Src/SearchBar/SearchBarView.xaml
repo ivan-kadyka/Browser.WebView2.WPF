@@ -4,18 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Browser.TopPanel.Wpf.SearchBar"
-             xmlns:textBox="clr-namespace:Control.Extensions.Wpf.TextBox;assembly=Control.Extensions.Wpf"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance local:SearchBarViewModel, IsDesignTimeCreatable=True}">
     <Grid>
-        <TextBox Height="30" VerticalAlignment="Bottom" TextAlignment="Left" Margin="5"
-                 Padding="0 5 0 0"
-                 Text="{Binding SearchAddress, UpdateSourceTrigger=PropertyChanged}"
-                 textBox:TextBoxPlaceholderBehavior.Placeholder="Search or enter address...">
-            <TextBox.InputBindings>
+        <ui:TextBox Height="40" VerticalAlignment="Bottom" TextAlignment="Left" Margin="5"
+                 Text="{Binding SearchAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 PlaceholderText="Enter address..."
+                >
+            <ui:TextBox.InputBindings>
                 <KeyBinding Command="{Binding Path=SearchCommand}" Key="Enter" />
-            </TextBox.InputBindings>
-        </TextBox>
+            </ui:TextBox.InputBindings>
+        </ui:TextBox>
     </Grid>
 </UserControl>

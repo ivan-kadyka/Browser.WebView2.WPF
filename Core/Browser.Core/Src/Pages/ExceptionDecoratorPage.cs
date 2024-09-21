@@ -48,7 +48,11 @@ public class ExceptionDecoratorPage : DisposableBase, IBrowserPage
 
     public void Push(INavigateOptions options)
     {
-        WrapException(()=> _page.Push(options), ()=> (PageError.Reload, "Page push options"));
+        WrapException(()=> _page.Push(options), ()=>
+        {
+            var message = "Page push options: " + options.Address;
+            return (PageError.Reload, message);
+        });
     }
 
     public async Task Load(CancellationToken token = default)

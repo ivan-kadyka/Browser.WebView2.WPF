@@ -1,36 +1,28 @@
-﻿<Window x:Class="BrowserApp.MainWindow"
-                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:browserApp="clr-namespace:BrowserApp"
-                 WindowState="Maximized"
-                 mc:Ignorable="d"
-                 Title="Browser.Wpf"
-                 d:DataContext="{d:DesignInstance browserApp:MainViewModel, IsDesignTimeCreatable=True}"
-                 x:ClassModifier="internal"
-                >
-    <Window.Resources>
-        <Style TargetType="Window">
-            <Setter Property="WindowChrome.WindowChrome">
-                <Setter.Value>
-                    <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
-    <Window.InputBindings>
+﻿<ui:FluentWindow x:Class="BrowserApp.MainWindow"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+              xmlns:browserApp="clr-namespace:BrowserApp"
+              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+              WindowState="Maximized"
+              mc:Ignorable="d"
+              Title="Browser.Wpf"
+              d:DataContext="{d:DesignInstance browserApp:MainViewModel, IsDesignTimeCreatable=True}"
+              x:ClassModifier="internal"
+>
+    <ui:FluentWindow.InputBindings>
         <KeyBinding Command="{Binding CreateTabCommand}" Key="T" Modifiers="Control"/>
         <KeyBinding Command="{Binding CloseTabCommand}" Key="W" Modifiers="Control"/>
         <KeyBinding Command="{Binding ReloadTabCommand}" Key="R" Modifiers="Control"/>
-    </Window.InputBindings>
+    </ui:FluentWindow.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <ContentControl  Grid.Row="0" x:Name="TopPanel" />
-        <ContentControl Grid.Row="1" x:Name="Page" />
+        <ContentPresenter  Grid.Row="0" x:Name="TopPanel" />
+        <Frame Grid.Row="1" x:Name="Page" />
     </Grid>
-</Window>
+</ui:FluentWindow>
 
