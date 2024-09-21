@@ -1,17 +1,33 @@
 ﻿using System;
+using Browser.Settings.Abstractions;
 
 namespace Browser.WebPage.Wpf.Utils;
 
-internal static class UriConverter
+internal class UriConverter
 {
-    public static Uri ToUri(string address)
+    private readonly IBrowserSettings _browserSettings;
+
+    public UriConverter(IBrowserSettings browserSettings)
     {
+        _browserSettings = browserSettings;
+    }
+    
+    public  Uri ToUri(string address)
+    {
+        string currentAddress = address;
+       
         if (!address.StartsWith("http://") && !address.StartsWith("https://"))
         {
-            address = "https://" + address;
+            currentAddress = "https://" + address;
         }
         
-        var uri = new Uri(address);
-        return uri;
+        if (Uri.TryCreate(currentAddress, UriKind.Absolute, out var uri))
+        {
+            return uri;
+        }
+        else
+        {
+            return new Uri(_browserSettings.General.SearchAddress + address);
+        }
     }
 }

@@ -12,7 +12,8 @@ public static class BrowserSettingsModule
         //TODO IK: Move to appsettings.json
         var inMemoryAppSettings = new Dictionary<string, string>
         {
-            { "BrowserSettings:General:HomeAddress", "https://duckduckgo.com" }
+            { "BrowserSettings:General:HomeAddress", "https://duckduckgo.com" },
+            { "BrowserSettings:General:SearchAddress", "https://html.duckduckgo.com/html/?q=" }
         };
         
         var configuration = new ConfigurationBuilder()

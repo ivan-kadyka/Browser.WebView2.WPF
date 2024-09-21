@@ -20,7 +20,6 @@ public class ExceptionDecoratorPage : DisposableBase, IBrowserPage
     
     public bool CanReload => _page.CanReload;
     
-    
     private readonly IBrowserPage _page;
     private readonly ILogger _logger;
 
