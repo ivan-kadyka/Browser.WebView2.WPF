@@ -59,7 +59,7 @@ IBrowser
 /// Defines the core interface for a browser, supporting navigation, page management, and observing browser state changes. 
 /// It provides methods to create, load, reload, and remove pages, as well as manage the current page.
 /// </summary>
-public interface IBrowser : INavigationRouter, IBrowserObservable
+public interface IBrowser : INavigationRouter, IBrowserObservable, IDisposable
 {
     /// <summary>
     /// Creates a new page asynchronously using the provided options.
