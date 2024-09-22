@@ -3,7 +3,7 @@ using Browser.Settings.Abstractions;
 
 namespace Browser.WebPage.Wpf.Utils;
 
-internal class UriConverter
+internal class UriConverter : IUriResolver
 {
     private readonly IBrowserSettings _browserSettings;
 

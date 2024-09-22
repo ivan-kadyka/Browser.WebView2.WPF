@@ -36,7 +36,7 @@ internal class WebViewPage : DisposableBase, IBrowserPage
     private readonly IWebView2 _webView;
     private readonly IMessenger _messenger;
     private readonly IBrowserPageSettings _settings;
-    private readonly UriConverter _uriConverter;
+    private readonly IUriResolver _uriResolver;
     private readonly ILogger _logger;
     
     private readonly CompositeDisposable _disposables = new();
@@ -49,7 +49,7 @@ internal class WebViewPage : DisposableBase, IBrowserPage
         IWebView2 webView,
         IMessenger messenger,
         IBrowserPageSettings settings,
-        UriConverter uriConverter,
+        IUriResolver uriResolver,
         ILogger logger)
     {
         Id = id;
@@ -57,7 +57,7 @@ internal class WebViewPage : DisposableBase, IBrowserPage
         _webView = webView;
         _messenger = messenger;
         _settings = settings;
-        _uriConverter = uriConverter;
+        _uriResolver = uriResolver;
         _logger = logger;
 
         _uriSource = new ObservableValue<Uri>(_settings.Source);
@@ -127,7 +127,7 @@ internal class WebViewPage : DisposableBase, IBrowserPage
 
     public void Push(INavigateOptions options)
     {
-        var uri = _uriConverter.ToUri(options.Address);
+        var uri = _uriResolver.ToUri(options.Address);
         _webView.CoreWebView2.Navigate(uri.ToString());
     }
     
