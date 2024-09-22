@@ -5,9 +5,13 @@
 > [Rx.NET](https://github.com/dotnet/reactive) to handle asynchronous operations,
 > and Microsoft.Extensions to provide dependency injection, logging, and configuration management.
 >
-<div style="display: flex; flex-direction: row">
-  <img src="docs/images/browser_preview_1.png" style="width: 50%;" />
-  <img src="docs/images/browser_preview_2.png" style="width: 50%;" />
+<div style="display: flex; flex-direction: row;">
+  <div style="width: 50%;">
+  <img src="docs/images/browser_preview_1.png" />
+</div>
+  <div style="width: 50%;">
+   <img src="docs/images/browser_preview_2.png" />
+</div>
 </div>
 
  <img src="docs/images/browser_preview_1.png" />
@@ -49,9 +53,10 @@ Simplified browser application structure
     Browser.Core --> Browser.Abstractions
     Browser.Core --> Browser.Messenger
 ```
----
 ###  Browser.Abstractions
 
+IBrowser
+---
 
 `IBrowser` defines the core interface for a browser, supporting navigation, page management, and observing browser state changes.
 
@@ -131,6 +136,61 @@ public interface IBrowserObservable
     IObservableValue<IPage> CurrentPage { get; }
 }
 ```
+
+IBrowserPage
+---
+`IBrowserPage` provides methods to load and reload the page, and manages navigation history.
+```csharp
+/// <summary>
+/// Represents a browser page that supports navigation actions and is disposable. 
+/// It provides methods to load and reload the page, and manages navigation history.
+/// </summary>
+public interface IBrowserPage : IPage, INavigationRouter, IDisposable
+{
+    /// <summary>
+    /// Loads the page asynchronously.
+    /// </summary>
+    /// <param name="token">A cancellation token to cancel the load operation.</param>
+    /// <returns>A task representing the asynchronous load operation.</returns>
+    Task Load(CancellationToken token = default);
+
+    /// <summary>
+    /// Reloads the page asynchronously.
+    /// </summary>
+    /// <param name="token">A cancellation token to cancel the reload operation.</param>
+    /// <returns>A task representing the asynchronous reload operation.</returns>
+    Task Reload(CancellationToken token);
+}
+```
+
+`IPage` represents a page within the browser, containing an identifier, title, and content.
+```csharp
+/// <summary>
+/// Represents a page within the browser, containing an identifier, title, and content. 
+/// It is also an observable path that provides access to the source URI.
+/// </summary>
+public interface IPage : IPathObservable
+{
+    /// <summary>
+    /// Gets the unique identifier for the page.
+    /// </summary>
+    PageId Id { get; }
+
+    /// <summary>
+    /// Gets the title of the page.
+    /// </summary>
+    string Title { get; }
+
+    /// <summary>
+    /// Gets the content of the page.
+    /// </summary>
+    object Content { get; }
+}
+```
+
+
+INavigationRouter
+---
 
 `INavigationRouter` defines the contract for navigation routing, providing methods to navigate forward, backward, reload, and push new navigation options.
 
