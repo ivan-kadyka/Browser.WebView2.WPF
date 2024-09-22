@@ -20,6 +20,11 @@ public interface IBrowserObservable
     IObservable<IPage> PageRemoved { get; }
 
     /// <summary>
+    /// Gets an observable stream that notifies when a page is reloaded.
+    /// </summary>
+    IObservable<IPage> PageReloaded { get; }
+    
+    /// <summary>
     /// Gets a read-only list of all the pages in the browser.
     /// </summary>
     IReadOnlyList<IPage> Pages { get; }

@@ -28,10 +28,12 @@ public class Browser : DisposableBase, IBrowser
 
     public IObservable<IPage> PageAdded => _pageAdded;
     public IObservable<IPage> PageRemoved => _pageRemoved;
+    public IObservable<IPage> PageReloaded => _pageReloaded;
     public IReadOnlyList<IPage> Pages => _pages;
     
     private readonly Subject<IBrowserPage> _pageAdded = new();
     private readonly Subject<IBrowserPage> _pageRemoved = new();
+    private readonly Subject<IBrowserPage> _pageReloaded = new();
     
     private readonly List<IBrowserPage> _pages = new();
 
@@ -200,6 +202,7 @@ public class Browser : DisposableBase, IBrowser
         try
         {
             await page.Reload(token);
+            _pageReloaded.OnNext(page);
         }
         catch (OperationCanceledException)
         {

@@ -11,8 +11,8 @@
 > and [WPF UI](https://github.com/lepoco/wpfui) for user interface.
 >
 <div style="display: flex; flex-direction: row;">
- <img src="docs/images/browser_preview_1.png"   style="width: 47%;"/>
- <img src="docs/images/browser_preview_2.png"  style="width: 52%;"/>
+ <img src="docs/images/browser_preview_1.png"   style="width: 48%;"/>
+ <img src="docs/images/browser_preview_2.png"  style="width: 51%;"/>
 </div>
 
 ## Projects structure
@@ -118,6 +118,11 @@ public interface IBrowserObservable
     /// Gets an observable stream that notifies when a page is removed.
     /// </summary>
     IObservable<IPage> PageRemoved { get; }
+    
+    /// <summary>
+    /// Gets an observable stream that notifies when a page is reloaded.
+    /// </summary>
+    IObservable<IPage> PageReloaded { get; }
 
     /// <summary>
     /// Gets a read-only list of all the pages in the browser.
