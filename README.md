@@ -1,5 +1,4 @@
 # Browser WebView2 WPF
-
 > The current WPF application designed by [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel),
 > [MVP](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) patterns
 > by using [MVVM Toolkit](https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/),
@@ -18,14 +17,14 @@
 ## Projects structure
 
 The project is organized into several key groups, each serving a distinct purpose within the overall architecture:
-- `WPF`: Contains the WPF application project with postfix `Wpf`.
+- `WPF`: Contains the WPF application projects with postfix `Wpf`.
 - `Core`: Contains the core browser logic projects with prefix `Browser`, divided into isolated domains for clarity and maintainability.
     - _Browser.Core_
     - _Browser.Abstractions_
     - _Browser.Messenger_
     - _Browser.Settings_
-- `Infra`: Contains the infrastructure parts of the project, providing foundational services and utilities.
-- `Tests`: Houses unit tests for the project, ensuring reliability and robustness.
+- `Infra`: Contains the infrastructure parts, providing foundational services and utilities.
+- `Tests`: Houses unit tests, ensuring reliability and robustness.
     - [xUnit](https://xunit.net//) unit testing framework.
     - Utilizes the [NSubstitute](https://nsubstitute.github.io/help/getting-started/) library for mocking dependencies in tests.
 
