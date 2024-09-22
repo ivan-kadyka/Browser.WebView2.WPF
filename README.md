@@ -11,16 +11,11 @@
 > and [WPF UI](https://github.com/lepoco/wpfui) for user interface.
 >
 <div style="display: flex; flex-direction: row;">
- <img src="docs/images/browser_preview_1.png"   style="width: 49%;"/>
- <img src="docs/images/browser_preview_2.png"  style="width: 49%;"/>
+ <img src="docs/images/browser_preview_1.png"   style="width: 47%;"/>
+ <img src="docs/images/browser_preview_2.png"  style="width: 52%;"/>
 </div>
 
- <img src="docs/images/browser_preview_1.png" />
- <img src="docs/images/browser_preview_2.png" />
-
----
-
-## Project Structure
+## Projects structure
 
 The project is organized into several key groups, each serving a distinct purpose within the overall architecture:
 - `WPF`: Contains the WPF application project with postfix `Wpf`.
@@ -37,8 +32,6 @@ The project is organized into several key groups, each serving a distinct purpos
 <img src="docs/images/project_structure.png" />
 
 
----
-
 ## Browser application structure
 
 Simplified browser application structure
@@ -54,7 +47,7 @@ Simplified browser application structure
     Browser.Core --> Browser.Abstractions
     Browser.Core --> Browser.Messenger
 ```
-###  Browser.Abstractions
+##  Browser.Abstractions
 
 IBrowser
 ---
@@ -152,6 +145,8 @@ public interface IBrowserPage : IPage, INavigationRouter, IDisposable
     /// Loads the page asynchronously.
     /// </summary>
     /// <param name="token">A cancellation token to cancel the load operation.</param>
+    /// <exception cref="BrowserPageException">Thrown when a page-loading error occurs.</exception>
+    /// <exception cref="OperationCanceledException">Thrown when the load operation is cancelled.</exception>
     /// <returns>A task representing the asynchronous load operation.</returns>
     Task Load(CancellationToken token = default);
 
@@ -159,6 +154,8 @@ public interface IBrowserPage : IPage, INavigationRouter, IDisposable
     /// Reloads the page asynchronously.
     /// </summary>
     /// <param name="token">A cancellation token to cancel the reload operation.</param>
+    /// <exception cref="BrowserPageException">Thrown when a page-reloading error occurs.</exception>
+    /// <exception cref="OperationCanceledException">Thrown when the reload operation is cancelled.</exception>
     /// <returns>A task representing the asynchronous reload operation.</returns>
     Task Reload(CancellationToken token);
 }
@@ -237,6 +234,20 @@ public interface INavigationRouter : IPathObservable
     /// </summary>
     /// <param name="options">Navigation options containing the address or path to navigate to.</param>
     void Push(INavigateOptions options);
+}
+```
+
+`INavigateOptions` represents navigation options for specifying the address or path to navigate.
+```csharp
+/// <summary>
+/// Represents navigation options for specifying the address or path to navigate.
+/// </summary>
+public interface INavigateOptions
+{
+    /// <summary>
+    /// Gets the address or path for navigation.
+    /// </summary>
+    string Address { get; }
 }
 ```
 
