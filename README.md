@@ -1,17 +1,18 @@
 # Browser WebView2 WPF
 
-> The current WPF application designed by using MVVM,MVP patterns,
-> [**WebView2**](https://learn.microsoft.com/en-us/microsoft-edge/webview2/) to render web pages, 
+> The current WPF application designed by [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel),
+> [MVP](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) patterns
+> by using [MVVM Toolkit](https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/),
+> [**WebView2**](https://learn.microsoft.com/en-us/microsoft-edge/webview2/) to render and manage web pages, 
 > [Rx.NET](https://github.com/dotnet/reactive) to handle asynchronous operations,
-> and Microsoft.Extensions to provide dependency injection, logging, and configuration management.
+> Microsoft.Extensions to provide [dependency injection](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection),
+> [logging](https://learn.microsoft.com/en-us/dotnet/core/extensions/logging?tabs=command-line),
+> [configuration management](https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration), 
+> and [WPF UI](https://github.com/lepoco/wpfui) for user interface.
 >
 <div style="display: flex; flex-direction: row;">
-  <div style="width: 50%;">
-  <img src="docs/images/browser_preview_1.png" />
-</div>
-  <div style="width: 50%;">
-   <img src="docs/images/browser_preview_2.png" />
-</div>
+ <img src="docs/images/browser_preview_1.png"   style="width: 49%;"/>
+ <img src="docs/images/browser_preview_2.png"  style="width: 49%;"/>
 </div>
 
  <img src="docs/images/browser_preview_1.png" />
