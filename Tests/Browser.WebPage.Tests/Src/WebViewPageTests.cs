@@ -42,7 +42,7 @@ public class WebViewPageTests : IDisposable
 
         // Assert
         _webView.Received().GoForward();
-     //   _messenger.ReceivedWithAnyArgs().Send(Arg.Any<BrowserForwardMessage>());
+        _messenger.ReceivedWithAnyArgs().Send(new BrowserForwardMessage());
     }
 
     [Fact]
@@ -56,7 +56,7 @@ public class WebViewPageTests : IDisposable
 
         // Assert
         _webView.DidNotReceive().GoForward();
-      //  _messenger.DidNotReceive().Send(Arg.Any<BrowserForwardMessage>());
+        _messenger.DidNotReceiveWithAnyArgs().Send(new BrowserForwardMessage());
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class WebViewPageTests : IDisposable
 
         // Assert
         _webView.Received().GoBack();
-        //_messenger.Received().Send(Arg.Any<BrowserBackMessage>());
+        _messenger.ReceivedWithAnyArgs().Send(new BrowserBackMessage());
     }
 
     [Fact]
@@ -84,7 +84,7 @@ public class WebViewPageTests : IDisposable
 
         // Assert
         _webView.DidNotReceive().GoBack();
-       // _messenger.DidNotReceive().Send(Arg.Any<BrowserBackMessage>());
+        _messenger.DidNotReceiveWithAnyArgs().Send(new BrowserBackMessage());
     }
 
     [Fact]
