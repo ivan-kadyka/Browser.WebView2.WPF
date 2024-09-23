@@ -21,4 +21,8 @@
       <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2739.15" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Src\Utils\" />
+    </ItemGroup>
+
 </Project>

@@ -1,6 +1,7 @@
 ﻿using Browser.Abstractions;
 using Browser.Abstractions.Navigation;
 using Browser.Core.Commands;
+using Browser.Core.UriResolver;
 using Browser.Messenger.Module;
 using Browser.Settings.Module;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,8 @@ public static class BrowserModule
        services.AddSingleton<INavigationRouter>(sp => sp.GetRequiredService<IBrowser>());
        services.AddSingleton<IPathObservable>(sp => sp.GetRequiredService<IBrowser>());
        services.AddSingleton<IBrowserObservable>(sp => sp.GetRequiredService<IBrowser>());
+       
+       services.AddTransient<IUriResolver, BrowserUriResolver>();
        
        // Commands
        services.AddTransient<CreateBrowserPageCommand>();

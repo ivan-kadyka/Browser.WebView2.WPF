@@ -1,8 +1,8 @@
 using Browser.Abstractions.Page;
 using Browser.Abstractions.Settings;
+using Browser.Core.UriResolver;
 using Browser.Messenger;
 using Browser.WebPage.Wpf.Page;
-using Browser.WebPage.Wpf.Utils;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Microsoft.Web.WebView2.Wpf;

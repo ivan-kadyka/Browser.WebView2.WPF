@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
 using Browser.Abstractions.Settings;
+using Browser.Core.UriResolver;
 using Browser.Messenger;
 using Browser.Messenger.Navigation;
-using Browser.WebPage.Wpf.Utils;
 using CommunityToolkit.Mvvm.Messaging;
 using Disposable;
 using Microsoft.Extensions.Logging;
@@ -127,7 +127,7 @@ internal class WebViewPage : DisposableBase, IBrowserPage
 
     public void Push(INavigateOptions options)
     {
-        var uri = _uriResolver.ToUri(options.Address);
+        var uri = _uriResolver.GetUri(options.Address);
         _webView.CoreWebView2.Navigate(uri.ToString());
     }
     

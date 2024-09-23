@@ -1,18 +1,17 @@
-﻿using System;
-using Browser.Settings.Abstractions;
+﻿using Browser.Settings.Abstractions;
 
-namespace Browser.WebPage.Wpf.Utils;
+namespace Browser.Core.UriResolver;
 
-internal class UriConverter : IUriResolver
+internal class BrowserUriResolver : IUriResolver
 {
     private readonly IBrowserSettings _browserSettings;
 
-    public UriConverter(IBrowserSettings browserSettings)
+    public BrowserUriResolver(IBrowserSettings browserSettings)
     {
         _browserSettings = browserSettings;
     }
     
-    public  Uri ToUri(string address)
+    public  Uri GetUri(string address)
     {
         string currentAddress = address;
        
