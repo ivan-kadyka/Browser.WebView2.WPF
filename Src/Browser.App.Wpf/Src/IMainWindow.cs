@@ -2,7 +2,7 @@ using PresenterBase.View;
 
 namespace BrowserApp;
 
-internal interface IMainWindow : IView
+public interface IMainWindow : IView
 {
     void SetTopPanelContent(object content);
     

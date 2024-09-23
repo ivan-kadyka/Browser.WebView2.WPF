@@ -10,7 +10,7 @@ namespace Browser.TopPanel.Wpf.Module;
 public static class TopPanelModule
 {
     public const string PresenterName = "TopPanelPresenter";
-    internal const string ViewName = "TopPanelView";
+    public const string ViewName = "TopPanelView";
     
     public static IServiceCollection AddTopPanelServices(this IServiceCollection services)
     {
