@@ -16,12 +16,7 @@ internal class BrowserUriResolver : IUriResolver
     
     public  Uri GetUri(string address)
     {
-        string currentAddress = address;
-       
-        if (!address.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && !address.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
-        {
-            currentAddress = "https://" + address;
-        }
+        string currentAddress = EnsureScheme(address);
         
         if (Uri.TryCreate(currentAddress, UriKind.Absolute, out var uri))
         {
@@ -35,5 +30,15 @@ internal class BrowserUriResolver : IUriResolver
         var formattedAddress = address.Replace(" ", "+");
         formattedAddress = string.Format(_browserSettings.General.SearchAddress, formattedAddress);
         return new Uri(formattedAddress);
+    }
+    
+    private string EnsureScheme(string address)
+    {
+        if (!address.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
+            !address.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+        {
+            return "https://" + address;
+        }
+        return address;
     }
 }
