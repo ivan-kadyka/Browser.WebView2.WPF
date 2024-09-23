@@ -3,7 +3,7 @@
 > [MVP](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) patterns
 > by using [MVVM Toolkit](https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/),
 > [**WebView2**](https://learn.microsoft.com/en-us/microsoft-edge/webview2/) to render and manage web pages, 
-> [Rx.NET](https://github.com/dotnet/reactive) to handle asynchronous operations,
+> [Rx.NET](https://github.com/dotnet/reactive) & [IMessenger](https://learn.microsoft.com/en-us/dotnet/api/communitytoolkit.mvvm.messaging.imessenger?view=win-comm-toolkit-dotnet-7.0) for events-driven architecture,
 > Microsoft.Extensions to provide [dependency injection](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection),
 > [logging](https://learn.microsoft.com/en-us/dotnet/core/extensions/logging?tabs=command-line),
 > [configuration management](https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration), 
