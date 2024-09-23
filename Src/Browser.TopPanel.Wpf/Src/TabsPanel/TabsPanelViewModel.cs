@@ -22,7 +22,7 @@ internal class TabsPanelViewModel : ViewModelBase
         get => _selectedPageTab;
         set
         {
-            if (value == _selectedPageTab)
+            if (value == _selectedPageTab || value == null)
                 return;
             
             _selectedPageTab = value;
