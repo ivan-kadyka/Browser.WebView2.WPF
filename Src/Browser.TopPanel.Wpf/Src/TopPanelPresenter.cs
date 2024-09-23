@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using PresenterBase.Presenter;
+using PresenterBase.View;
 
 namespace Browser.TopPanel.Wpf;
 
@@ -9,11 +10,11 @@ internal class TopPanelPresenter : Presenter
     public override object Content => _view;
     
     private readonly TopPanelViewModel _viewModel;
-    private readonly TopPanelView _view;
+    private readonly IView _view;
 
-    public TopPanelPresenter(TopPanelViewModel viewModel)
+    public TopPanelPresenter(TopPanelViewModel viewModel, IView view)
     {
-        _view = new TopPanelView();
+        _view = view;
         _viewModel = viewModel;
         _view.DataContext = _viewModel;
     }

@@ -15,9 +15,11 @@ public static class AppModule
             .AddBrowserPageServices();
         
         services.AddTransient<MainViewModel>();
+        services.AddTransient<IMainWindow, MainWindow>();
         
         services.AddSingleton<MainPresenter>(c => new MainPresenter(
             c.GetRequiredService<MainViewModel>(),
+            c.GetRequiredService<IMainWindow>(),
             c.GetRequiredKeyedService<IPresenter>(TopPanelModule.PresenterName),
             c.GetRequiredKeyedService<IPresenter>(BrowserPageModule.PresenterName)));
 

@@ -1,6 +1,8 @@
-﻿namespace Browser.TopPanel.Wpf;
+﻿using PresenterBase.View;
 
-internal partial class TopPanelView
+namespace Browser.TopPanel.Wpf;
+
+internal partial class TopPanelView : IView
 {
     public TopPanelView()
     {

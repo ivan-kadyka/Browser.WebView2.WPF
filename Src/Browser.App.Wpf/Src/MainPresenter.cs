@@ -11,21 +11,22 @@ internal class MainPresenter : Presenter
     
     public override object Content => _view;
     
-    private readonly MainWindow _view;
+    private readonly IMainWindow _view;
 
     public MainPresenter(
         MainViewModel viewModel,
+        IMainWindow view,
         IPresenter topPanelPresenter,
         IPresenter pagePresenter)
     {
-        _view = new MainWindow();
+        _view = view;
         
         _topPanelPresenter = topPanelPresenter;
         _pagePresenter = pagePresenter;
 
         _view.DataContext = viewModel;
-        _view.TopPanel.Content = topPanelPresenter.Content;
-        _view.Page.Content = pagePresenter.Content;
+        _view.SetTopPanelContent(topPanelPresenter.Content);
+        _view.SetPageContent(pagePresenter.Content);
     }
     
     protected override async Task OnStarted(CancellationToken token = default)

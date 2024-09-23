@@ -2,6 +2,7 @@
 using Browser.Abstractions;
 using Browser.Abstractions.Page;
 using PresenterBase.Presenter;
+using PresenterBase.View;
 
 namespace Browser.WebPage.Wpf.Presenters.Container;
 
@@ -9,14 +10,15 @@ internal class PageContainerPresenter : Presenter
 {
     public override object Content => _view;
     
-    private readonly PageContainerView _view;
+    private readonly IView _view;
     private readonly PageContainerViewModel _viewModel;
     private readonly IBrowser _browser;
-    public PageContainerPresenter(IBrowser browser)
+    public PageContainerPresenter(IBrowser browser, IView view)
     {
+        _view = view;
         _browser = browser;
         _viewModel = new PageContainerViewModel(browser.CurrentPage.Value);
-        _view = new PageContainerView { DataContext = _viewModel };
+        _view.DataContext = _viewModel;
 
         AddDisposable(browser.CurrentPage.Subscribe(OnCurrentPageChanged));
     }

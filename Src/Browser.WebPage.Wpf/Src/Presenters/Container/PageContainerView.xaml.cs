@@ -1,6 +1,8 @@
-﻿namespace Browser.WebPage.Wpf.Presenters.Container;
+﻿using PresenterBase.View;
 
-public partial class PageContainerView
+namespace Browser.WebPage.Wpf.Presenters.Container;
+
+public partial class PageContainerView : IView
 {
     public PageContainerView()
     {
