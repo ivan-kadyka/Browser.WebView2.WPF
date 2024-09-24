@@ -61,8 +61,8 @@ jobs:
       # Upload code coverage to Codecov
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v3
-        token: ${{ secrets.CODECOV_TOKEN }}
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage/Cobertura.xml
           fail_ci_if_error: true
           verbose: true
