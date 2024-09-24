@@ -1,4 +1,5 @@
 # Browser WebView2 WPF
+[![Build Browser.WebView2.WPF Application](https://github.com/ivan-kadyka/Browser.WebView2.WPF/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/ivan-kadyka/Browser.WebView2.WPF/actions/workflows/dotnet-desktop.yml)
 > The current WPF application designed by [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel),
 > [MVP](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) patterns
 > by using [MVVM Toolkit](https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/),
@@ -9,6 +10,7 @@
 > [configuration management](https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration), 
 > and [WPF UI](https://github.com/lepoco/wpfui) for user interface.
 >
+
 <div style="display: flex; flex-direction: row;">
  <img src="docs/images/browser_preview_1.png"   style="width: 48%;"/>
  <img src="docs/images/browser_preview_2.png"  style="width: 51%;"/>

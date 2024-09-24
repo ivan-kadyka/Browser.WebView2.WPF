@@ -1,4 +1,4 @@
-name: Build WPF Application
+name: Build Browser.WebView2.WPF Application
 
 on:
   workflow_dispatch:
