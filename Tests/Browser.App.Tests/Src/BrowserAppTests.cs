@@ -28,13 +28,14 @@ public class BrowserAppTests : IDisposable
     }
     
     [Fact]
-    public async Task MainPresenter_Start_ShouldBeSuccess()
+    public async Task MainPresenter_StartStop_ShouldBeSuccess()
     {
         // Arrange
         var mainPresenter = _serviceProvider.GetRequiredService<MainPresenter>();
 
         // Act
         await mainPresenter.Start();
+        await mainPresenter.Stop();
         
         // Assert
         Assert.NotNull(mainPresenter);
