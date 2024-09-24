@@ -22,7 +22,7 @@ jobs:
     - name: Set up .NET Core SDK
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '7.x' # Adjust to your .NET version
+        dotnet-version: '6.x' # Adjust to your .NET version
 
     # Change working directory to 'Src' and restore NuGet packages
     - name: Restore NuGet packages
