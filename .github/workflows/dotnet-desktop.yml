@@ -36,7 +36,7 @@ jobs:
 
     # Optional: Run tests in 'Src'
     - name: Run Tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --configuration Release
       working-directory: Src
 
     # Publish the build artifacts from 'Src'
