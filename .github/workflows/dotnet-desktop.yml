@@ -14,26 +14,28 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
 
     steps:
     # Checkout the repository
     - name: Checkout code
       uses: actions/checkout@v3
       
+      # Set up .NET Core SDK
+    - name: Set up .NET Core SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.x' # Adjust to your .NET version  
+      
     # Cache NuGet packages
     - name: Cache NuGet packages
       uses: actions/cache@v3
       with:
-        path: ~/.nuget/packages
-        key: nuget-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+        path: ${{ github.workspace }}\.nuget\packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
         restore-keys: |
-          nuget-${{ runner.os }}
-
-    # Set up .NET Core SDK
-    - name: Set up .NET Core SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '6.x' # Adjust to your .NET version
+          ${{ runner.os }}-nuget-
 
     # Change working directory to 'Src' and restore NuGet packages
     - name: Restore NuGet packages
