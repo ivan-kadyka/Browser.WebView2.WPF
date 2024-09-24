@@ -18,48 +18,63 @@ jobs:
       NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
 
     steps:
-    # Checkout the repository
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
       
       # Set up .NET Core SDK
-    - name: Set up .NET Core SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '6.x' # Adjust to your .NET version  
+      - name: Set up .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.x'  # Adjust to your .NET version
       
-    # Cache NuGet packages
-    - name: Cache NuGet packages
-      uses: actions/cache@v3
-      with:
-        path: ${{ github.workspace }}\.nuget\packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
-
-    # Change working directory to 'Src' and restore NuGet packages
-    - name: Restore NuGet packages
-      run: dotnet restore
-      working-directory: Src
-
-    # Build the project in 'Src' directory
-    - name: Build the solution
-      run: dotnet build --configuration Release
-      working-directory: Src
-
-    # Optional: Run tests in 'Src'
-    - name: Run Tests
-      run: dotnet test --no-build --verbosity normal --configuration Release
-      working-directory: Src
-
-    # Publish the build artifacts from 'Src'
-    - name: Publish Build Artifacts
-      run: dotnet publish --configuration Release --output ../publish
-      working-directory: Src
-
-    # Upload artifacts (optional)
-    - name: Upload Build Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: PublishedBuild
-        path: ./publish
+      # Cache NuGet packages
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+      
+      # Change working directory to 'Src' and restore NuGet packages
+      - name: Restore NuGet packages
+        run: dotnet restore
+        working-directory: Src
+      
+      # Build the project in 'Src' directory
+      - name: Build the solution
+        run: dotnet build --configuration Release
+        working-directory: Src
+      
+      # Run tests with code coverage collection
+      - name: Run Tests with Code Coverage
+        run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage"
+        working-directory: Src
+      
+      # Generate code coverage report in Cobertura format
+      - name: Generate Code Coverage Report
+        run: |
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          reportgenerator "-reports:Src/**/coverage.cobertura.xml" "-targetdir:coverage" -reporttypes:Cobertura
+        working-directory: Src
+      
+      # Upload code coverage to Codecov
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: Src/**/coverage.cobertura.xml
+          fail_ci_if_error: true
+          verbose: true
+      
+      # Publish the build artifacts from 'Src'
+      - name: Publish Build Artifacts
+        run: dotnet publish --configuration Release --output ../publish
+        working-directory: Src
+      
+      # Upload build artifacts (optional)
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: PublishedBuild
+          path: ./publish
