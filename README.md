@@ -1,6 +1,6 @@
 # Browser WebView2 WPF
-[![Build Browser.WebView2.WPF Application](https://github.com/ivan-kadyka/Browser.WebView2.WPF/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/ivan-kadyka/Browser.WebView2.WPF/actions/workflows/dotnet-desktop.yml) 
-![Tests coverage](https://codecov.io/gh/ivan-kadyka/Browser.WebView2.WPF/branch/feature/TestsCoverage/graph/badge.svg)
+[![Build Browser.WebView2.WPF Application](https://github.com/ivan-kadyka/Browser.WebView2.WPF/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/ivan-kadyka/Browser.WebView2.WPF/actions/workflows/dotnet-desktop.yml)
+[![codecov](https://codecov.io/gh/ivan-kadyka/Browser.WebView2.WPF/graph/badge.svg?token=YI3KPDR2BA)](https://codecov.io/gh/ivan-kadyka/Browser.WebView2.WPF)
 
 > The current WPF application designed by [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel),
 > [MVP](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) patterns
