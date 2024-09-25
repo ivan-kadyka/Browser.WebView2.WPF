@@ -1,4 +1,7 @@
+using Browser.Abstractions;
+using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page.Factory;
+using Browser.Settings.Abstractions;
 using Browser.TopPanel.Wpf.Module;
 using Browser.WebPage.Wpf.Factory;
 using Browser.WebPage.Wpf.Module;
@@ -10,41 +13,49 @@ using PresenterBase.View;
 
 namespace Browser.App.Tests;
 
-public class BrowserAppTests : IDisposable
+public class BrowserAppTests : IClassFixture<AppServiceFixture>
 {
-    private readonly ServiceProvider _serviceProvider;
+    private readonly AppServiceFixture _appService;
 
-    public BrowserAppTests()
+    public BrowserAppTests(AppServiceFixture appService)
     {
-        _serviceProvider = AppServiceProvider.Create(OverrideServices);   
-    }
+        _appService = appService;
     
-    private void OverrideServices(IServiceCollection services)
-    {
-        services.AddSingleton<IWebViewFactory, WebViewFactoryMock>();
-        services.AddTransient<IMainWindow>(c =>  Substitute.For<IMainWindow>());
-        services.AddKeyedTransient<IView>(TopPanelModule.ViewName, (c, _) => Substitute.For<IView>());
-        services.AddKeyedTransient<IView>(BrowserPageModule.ViewName, (c, _) => Substitute.For<IView>());
     }
     
     [Fact]
-    public async Task MainPresenter_StartStop_ShouldBeSuccess()
+    public void Browser_CurrentPage_ShouldBeHomePage()
     {
         // Arrange
-        var mainPresenter = _serviceProvider.GetRequiredService<MainPresenter>();
+        var browser = _appService.GetService<IBrowser>();
+        var settings = _appService.GetService<IBrowserSettings>();
 
         // Act
-        await mainPresenter.Start();
-        await mainPresenter.Stop();
+
         
         // Assert
-        Assert.NotNull(mainPresenter);
+        var homeAddress = settings.General.HomeAddress.Trim('/');
+        var currentPageAddress = browser.CurrentPage.Value.Source.Value.ToString().Trim('/');
+        Assert.Equal(homeAddress, currentPageAddress);
     }
-
-    public void Dispose()
+    
+    /*
+    [Fact]
+    public void Browser_CurrentPage_ShouldBeHomePage_WhenNavigateToHome()
     {
-        _serviceProvider.Dispose();
+        // Arrange
+        var browser = _appService.GetService<IBrowser>();
+        var settings = _appService.GetService<IBrowserSettings>();
+        var newAddress = "example.com";
+
+        // Act
+        browser.Navigate(newAddress);
+        
+        // Assert
+        var currentPageAddress = browser.CurrentPage.Value.Source.Value.ToString().Trim('/');
+        Assert.Equal(newAddress, currentPageAddress);
     }
+    */
 }
 
 internal class WebViewFactoryMock : IWebViewFactory
