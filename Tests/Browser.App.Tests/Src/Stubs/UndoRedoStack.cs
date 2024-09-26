@@ -32,8 +32,9 @@ internal class UndoRedoStack<T>
     public void Do(T newValue)
     {
         undoStack.Push(_current.Value);
+        redoStack.Clear();
         _current.OnNext(newValue);
-        redoStack.Clear();  // Clear redo stack since we have a new action
+      
     }
 
     // Undo the last action
@@ -56,9 +57,9 @@ internal class UndoRedoStack<T>
     {
         if (CanRedo)
         {
-            var current = undoStack.Pop();
+            var current = redoStack.Pop();
             undoStack.Push(current);
-            _current.OnNext(redoStack.Pop());
+            _current.OnNext(current);
         }
         else
         {
