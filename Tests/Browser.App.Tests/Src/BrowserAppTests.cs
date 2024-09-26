@@ -3,11 +3,12 @@ using Browser.Abstractions;
 using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
 using Browser.Abstractions.Page.Factory;
+using Browser.App.Tests.Stubs;
 using Disposable;
 
 namespace Browser.App.Tests;
 
-public class BrowserAppTests : DisposableBase,IClassFixture<AppServiceFixture>
+public class BrowserAppTests : DisposableBase, IClassFixture<AppServiceFixture>
 {
     private readonly AppServiceFixture _appService;
     private readonly CompositeDisposable _disposables = new();
@@ -146,13 +147,15 @@ public class BrowserAppTests : DisposableBase,IClassFixture<AppServiceFixture>
         Assert.Equal(pagesCount, browser.Pages.Count);
     }
     
-    
     [Fact]
-    public async Task ReloadAsync_ExceptionOccurred_ShouldBeHandled()
+    public async Task ReloadAsync_NullExceptionOccurred_ShouldBeHandled()
     {
         // Arrange
         var browser = _appService.GetService<IBrowser>();
         var currentPage = browser.CurrentPage.Value;
+        
+        if (currentPage is WebPageStub webPage)
+            webPage.RaiseException();
 
         // Act
         await browser.ReloadPage();
@@ -163,10 +166,49 @@ public class BrowserAppTests : DisposableBase,IClassFixture<AppServiceFixture>
     
     
     [Fact]
-    public void Reload_ExceptionOccurred_ShouldBeHandled()
+    public async Task ReloadAsync_PageExceptionOccurred_ShouldBeHandled()
     {
         // Arrange
         var browser = _appService.GetService<IBrowser>();
+        var currentPage = browser.CurrentPage.Value;
+        
+        if (currentPage is WebPageStub webPage)
+            webPage.RaisePageException();
+
+        // Act
+        await browser.ReloadPage();
+        
+        // Assert
+        Assert.NotNull(browser);
+    }
+    
+    
+    [Fact]
+    public void Reload_NullExceptionOccurred_ShouldBeHandled()
+    {
+        // Arrange
+        var browser = _appService.GetService<IBrowser>();
+        var currentPage = browser.CurrentPage.Value;
+        
+        if (currentPage is WebPageStub webPage)
+            webPage.RaiseException();
+
+        // Act
+        browser.Reload();
+        
+        // Assert
+        Assert.NotNull(browser);
+    }
+    
+    [Fact]
+    public void Reload_PageExceptionOccurred_ShouldBeHandled()
+    {
+        // Arrange
+        var browser = _appService.GetService<IBrowser>();
+        var currentPage = browser.CurrentPage.Value;
+        
+        if (currentPage is WebPageStub webPage)
+            webPage.RaisePageException();
 
         // Act
         browser.Reload();
