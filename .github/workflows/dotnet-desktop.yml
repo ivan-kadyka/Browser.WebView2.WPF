@@ -68,14 +68,15 @@ jobs:
           fail_ci_if_error: true
           verbose: true
       
-      # Publish the build artifacts from 'Src'
-      - name: Publish Build Artifacts
-        run: dotnet publish --configuration Release --output ../publish
-        working-directory: Src
       
-      # Upload build artifacts (optional)
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: PublishedBuild
-          path: ./publish
+#      # Publish the build artifacts from 'Src'
+#      - name: Publish Build Artifacts
+#        run: dotnet publish --configuration Release --output ../publish
+#        working-directory: Src
+#      
+#      # Upload build artifacts (optional)
+#      - name: Upload Build Artifacts
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: PublishedBuild
+#          path: ./publish
