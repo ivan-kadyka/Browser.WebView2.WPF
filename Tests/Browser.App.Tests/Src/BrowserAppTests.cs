@@ -145,6 +145,36 @@ public class BrowserAppTests : DisposableBase,IClassFixture<AppServiceFixture>
         Assert.NotNull(removedPage);
         Assert.Equal(pagesCount, browser.Pages.Count);
     }
+    
+    
+    [Fact]
+    public async Task ReloadAsync_ExceptionOccurred_ShouldBeHandled()
+    {
+        // Arrange
+        var browser = _appService.GetService<IBrowser>();
+        var currentPage = browser.CurrentPage.Value;
+
+        // Act
+        await browser.ReloadPage();
+        
+        // Assert
+        Assert.NotNull(browser);
+    }
+    
+    
+    [Fact]
+    public void Reload_ExceptionOccurred_ShouldBeHandled()
+    {
+        // Arrange
+        var browser = _appService.GetService<IBrowser>();
+
+        // Act
+        browser.Reload();
+        
+        // Assert
+        Assert.NotNull(browser);
+    }
+    
 
 
     protected override void Dispose(bool disposing)

@@ -1,4 +1,5 @@
 using System.Reactive.Disposables;
+using Browser.Abstractions.Exceptions;
 using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
 using Reactive.Extensions.Observable;
@@ -14,18 +15,21 @@ namespace Browser.App.Tests.Stubs
 {
     internal class WebPageStub : DisposableBase, IBrowserPage
     {
+        public IObservableValue<Uri> Source => _navigationHistory.Current;
+        public PageId Id { get; }
+        public string Title => _navigationHistory.Current.Value.Host;
+        public object Content { get; } = new();
+        
         private readonly IMessenger _messenger;
         private readonly IBrowserPageSettings _settings;
         private readonly IUriResolver _uriResolver;
         private readonly ILogger _logger;
         private readonly UndoRedoStack<Uri> _navigationHistory;
-
-        public IObservableValue<Uri> Source => _navigationHistory.Current;
-        public PageId Id { get; }
-        public string Title => _navigationHistory.Current.Value.Host;
-        public object Content { get; private set; }
         
         private readonly CompositeDisposable _disposables = new();
+        
+        private bool _raiseException;
+        private bool _raisePageException;
         
         public WebPageStub(
             PageId id,
@@ -49,8 +53,7 @@ namespace Browser.App.Tests.Stubs
             
             _disposables.Add(_navigationHistory.Current.Subscribe(uri =>
             {
-                _messenger.Send(new NavigationStartingMessage());
-                _messenger.Send(new NavigationCompletedMessage(true));
+                OnNavigationMessages();
             }));
         }
         
@@ -58,6 +61,16 @@ namespace Browser.App.Tests.Stubs
         public bool CanForward => _navigationHistory.CanRedo;
         public bool CanBack => _navigationHistory.CanUndo;
         public bool CanReload => true;
+        
+        public void RaiseException()
+        {
+            _raiseException = true;
+        }   
+        
+        public void RaisePageException()
+        {
+            _raisePageException = true;
+        }   
 
         public void Forward()
         {
@@ -79,7 +92,19 @@ namespace Browser.App.Tests.Stubs
 
         public void Reload()
         {
-            // Reloading can be a no-op in this stub
+            if (_raiseException)
+            {
+                _raiseException = false;
+                throw new NullReferenceException("Test null reference exception");
+            }
+            
+            if (_raisePageException)
+            {
+                _raisePageException = false;
+                throw new BrowserPageException(PageError.Reload, "Test reload page exception");
+            }
+            
+            OnNavigationMessages();
         }
 
         public void Push(INavigateOptions options)
@@ -90,15 +115,22 @@ namespace Browser.App.Tests.Stubs
 
         public Task Load(CancellationToken token = default)
         {
+            OnNavigationMessages();
             return Task.CompletedTask;
         }
 
         public Task Reload(CancellationToken token)
         {
+            Reload();
             return Task.CompletedTask;
         }
 
 
+        private void OnNavigationMessages()
+        {
+            _messenger.Send(new NavigationStartingMessage());
+            _messenger.Send(new NavigationCompletedMessage(true));
+        }
 
         protected override void Dispose(bool disposing)
         {

@@ -7,8 +7,8 @@ using System.Collections.Generic;
 
 internal class UndoRedoStack<T>
 {
-    private readonly Stack<T> undoStack = new Stack<T>();
-    private readonly Stack<T> redoStack = new Stack<T>();
+    private readonly Stack<T> _undoStack = new();
+    private readonly Stack<T> _redoStack = new();
 
     public IObservableValue<T> Current => _current;
     
@@ -19,31 +19,25 @@ internal class UndoRedoStack<T>
     {
         _current = new ObservableValue<T>(initialValue);
     }
-
-
-
-    // Checks if there are actions to undo
-    public bool CanUndo => undoStack.Count > 0;
-
-    // Checks if there are actions to redo
-    public bool CanRedo => redoStack.Count > 0;
-
-    // Perform an action and save it to the undo stack
+    
+    public bool CanUndo => _undoStack.Count > 0;
+    
+    public bool CanRedo => _redoStack.Count > 0;
+    
     public void Do(T newValue)
     {
-        undoStack.Push(_current.Value);
-        redoStack.Clear();
+        _undoStack.Push(_current.Value);
+        _redoStack.Clear();
         _current.OnNext(newValue);
       
     }
-
-    // Undo the last action
+    
     public void Undo()
     {
         if (CanUndo)
         {
-            redoStack.Push(_current.Value);
-            var currentValue = undoStack.Pop();
+            _redoStack.Push(_current.Value);
+            var currentValue = _undoStack.Pop();
             _current.OnNext(currentValue);
         }
         else
@@ -51,14 +45,13 @@ internal class UndoRedoStack<T>
             throw new InvalidOperationException("No actions to undo.");
         }
     }
-
-    // Redo the last undone action
+    
     public void Redo()
     {
         if (CanRedo)
         {
-            var current = redoStack.Pop();
-            undoStack.Push(current);
+            var current = _redoStack.Pop();
+            _undoStack.Push(current);
             _current.OnNext(current);
         }
         else
