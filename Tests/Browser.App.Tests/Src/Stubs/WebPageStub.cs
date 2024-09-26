@@ -4,6 +4,7 @@ using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
 using Reactive.Extensions.Observable;
 using Browser.Abstractions.Settings;
+using Browser.App.Tests.Utils;
 using Browser.Core.UriResolver;
 using Browser.Messenger;
 using Browser.Messenger.Navigation;
@@ -23,19 +24,20 @@ namespace Browser.App.Tests.Stubs
         private readonly IMessenger _messenger;
         private readonly IBrowserPageSettings _settings;
         private readonly IUriResolver _uriResolver;
+       
         private readonly ILogger _logger;
         private readonly UndoRedoStack<Uri> _navigationHistory;
         
         private readonly CompositeDisposable _disposables = new();
         
-        private bool _raiseException;
-        private bool _raisePageException;
+        private readonly TestExceptionProxy _testExceptionProxy;
         
         public WebPageStub(
             PageId id,
             IMessenger messenger,
             IBrowserPageSettings settings,
             IUriResolver uriResolver,
+            TestExceptionProxy testExceptionProxy,
             ILogger logger)
         {
             Id = id;
@@ -43,6 +45,7 @@ namespace Browser.App.Tests.Stubs
             _messenger = messenger;
             _settings = settings;
             _uriResolver = uriResolver;
+            _testExceptionProxy = testExceptionProxy;
             _logger = logger;
             _messenger = messenger;
             _settings = settings;
@@ -62,15 +65,7 @@ namespace Browser.App.Tests.Stubs
         public bool CanBack => _navigationHistory.CanUndo;
         public bool CanReload => true;
         
-        public void RaiseException()
-        {
-            _raiseException = true;
-        }   
-        
-        public void RaisePageException()
-        {
-            _raisePageException = true;
-        }   
+       
 
         public void Forward()
         {
@@ -92,18 +87,7 @@ namespace Browser.App.Tests.Stubs
 
         public void Reload()
         {
-            if (_raiseException)
-            {
-                _raiseException = false;
-                throw new NullReferenceException("Test null reference exception");
-            }
-            
-            if (_raisePageException)
-            {
-                _raisePageException = false;
-                throw new BrowserPageException(PageError.Reload, "Test reload page exception");
-            }
-            
+            _testExceptionProxy.RaiseIfActivated();
             OnNavigationMessages();
         }
 

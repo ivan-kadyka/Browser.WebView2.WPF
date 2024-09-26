@@ -94,7 +94,19 @@ public class Browser : DisposableBase, IBrowser
 
     public void Reload()
     {
-        ActivePage.Reload();
+        var page = ActivePage;
+        
+        try
+        {
+            page.Reload();
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Reload page failed, pageId: {page.Id}, pageTitle: {page.Source.Value}");
+        }
     }
 
     public bool CanReload => ActivePage.CanReload;

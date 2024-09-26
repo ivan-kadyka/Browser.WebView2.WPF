@@ -1,4 +1,5 @@
 using Browser.Abstractions.Page.Factory;
+using Browser.App.Tests.Utils;
 using Browser.TopPanel.Wpf.Module;
 using Browser.WebPage.Wpf.Factory;
 using Browser.WebPage.Wpf.Module;
@@ -33,6 +34,8 @@ public class AppServiceFixture : IAsyncLifetime
         services.AddTransient<IMainWindow>(c =>  Substitute.For<IMainWindow>());
         services.AddKeyedTransient<IView>(TopPanelModule.ViewName, (c, _) => Substitute.For<IView>());
         services.AddKeyedTransient<IView>(BrowserPageModule.ViewName, (c, _) => Substitute.For<IView>());
+        
+        services.AddSingleton(new TestExceptionProxy());
     }
     
     public T GetService<T>() where T : notnull
