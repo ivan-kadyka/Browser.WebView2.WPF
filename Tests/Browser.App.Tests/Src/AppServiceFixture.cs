@@ -1,9 +1,11 @@
+using Browser.Abstractions.Page.Factory;
 using Browser.TopPanel.Wpf.Module;
 using Browser.WebPage.Wpf.Factory;
 using Browser.WebPage.Wpf.Module;
 using BrowserApp;
 using BrowserApp.Module;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Web.WebView2.Wpf;
 using PresenterBase.View;
 
 namespace Browser.App.Tests;
@@ -27,6 +29,7 @@ public class AppServiceFixture : IAsyncLifetime
     private void OverrideServices(IServiceCollection services)
     {
         services.AddSingleton<IWebViewFactory, WebViewFactoryMock>();
+        services.AddSingleton<IBrowserPageFactory, WebPageFactoryMock>();
         services.AddTransient<IMainWindow>(c =>  Substitute.For<IMainWindow>());
         services.AddKeyedTransient<IView>(TopPanelModule.ViewName, (c, _) => Substitute.For<IView>());
         services.AddKeyedTransient<IView>(BrowserPageModule.ViewName, (c, _) => Substitute.For<IView>());
@@ -41,5 +44,13 @@ public class AppServiceFixture : IAsyncLifetime
     {
        await _mainPresenter.Stop();
        await _serviceProvider.DisposeAsync();
+    }
+}
+
+internal class WebViewFactoryMock : IWebViewFactory
+{
+    public IWebView2 Create(IPageCreateOptions options)
+    {
+        return Substitute.For<IWebView2>();
     }
 }

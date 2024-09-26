@@ -1,21 +1,23 @@
 ﻿using Browser.Abstractions.Page;
 using Browser.Abstractions.Page.Factory;
+using Browser.Abstractions.Settings;
 using Browser.Core.Pages;
 using Browser.Core.UriResolver;
 using Browser.Settings.Abstractions;
 using Browser.WebPage.Wpf.Page;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
+using Microsoft.Web.WebView2.Wpf;
 
 namespace Browser.WebPage.Wpf.Factory;
 
 internal class BrowserPageFactory : IBrowserPageFactory
 {
-    private readonly IWebViewFactory _webViewFactory;
-    private readonly IMessenger _messenger;
-    private readonly IBrowserPageSettingsProvider _pageSettingsProvider;
-    private readonly IUriResolver _uriResolver;
-    private readonly ILoggerFactory _loggerFactory;
+    protected readonly IWebViewFactory _webViewFactory;
+    protected readonly IMessenger _messenger;
+    protected readonly IBrowserPageSettingsProvider _pageSettingsProvider;
+    protected readonly IUriResolver _uriResolver;
+    protected readonly ILoggerFactory _loggerFactory;
 
     public BrowserPageFactory(
         IWebViewFactory webViewFactory,
@@ -39,9 +41,14 @@ internal class BrowserPageFactory : IBrowserPageFactory
         var settings = _pageSettingsProvider.Get(options);
         
         var webView =  _webViewFactory.Create(options);
-        var webViewPage = new WebViewPage(id, webView, _messenger, settings, _uriResolver, logger);
+        var webViewPage = CreatePage(id, webView, settings, logger);
         
         var page = new ExceptionDecoratorPage(webViewPage, logger);
         return page;
+    }
+    
+    protected virtual IBrowserPage CreatePage(PageId id, IWebView2 webView, IBrowserPageSettings settings, ILogger logger)
+    {
+        return new WebViewPage(id, webView, _messenger, settings, _uriResolver, logger);
     }
 }

@@ -1,15 +1,5 @@
 using Browser.Abstractions;
-using Browser.Abstractions.Navigation;
-using Browser.Abstractions.Page.Factory;
 using Browser.Settings.Abstractions;
-using Browser.TopPanel.Wpf.Module;
-using Browser.WebPage.Wpf.Factory;
-using Browser.WebPage.Wpf.Module;
-using BrowserApp;
-using BrowserApp.Module;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Web.WebView2.Wpf;
-using PresenterBase.View;
 
 namespace Browser.App.Tests;
 
@@ -20,7 +10,6 @@ public class BrowserAppTests : IClassFixture<AppServiceFixture>
     public BrowserAppTests(AppServiceFixture appService)
     {
         _appService = appService;
-    
     }
     
     [Fact]
@@ -56,12 +45,4 @@ public class BrowserAppTests : IClassFixture<AppServiceFixture>
         Assert.Equal(newAddress, currentPageAddress);
     }
     */
-}
-
-internal class WebViewFactoryMock : IWebViewFactory
-{
-    public IWebView2 Create(IPageCreateOptions options)
-    {
-        return Substitute.For<IWebView2>();
-    }
 }
