@@ -1,48 +1,52 @@
+using System.Reactive.Disposables;
 using Browser.Abstractions;
-using Browser.Settings.Abstractions;
+using Browser.Abstractions.Navigation;
+using Disposable;
 
 namespace Browser.App.Tests;
 
-public class BrowserAppTests : IClassFixture<AppServiceFixture>
+public class BrowserAppTests : DisposableBase,IClassFixture<AppServiceFixture>
 {
     private readonly AppServiceFixture _appService;
+    private readonly CompositeDisposable _disposables = new();
 
     public BrowserAppTests(AppServiceFixture appService)
     {
         _appService = appService;
     }
     
-    [Fact]
-    public void Browser_CurrentPage_ShouldBeHomePage()
-    {
-        // Arrange
-        var browser = _appService.GetService<IBrowser>();
-        var settings = _appService.GetService<IBrowserSettings>();
-
-        // Act
-
-        
-        // Assert
-        var homeAddress = settings.General.HomeAddress.Trim('/');
-        var currentPageAddress = browser.CurrentPage.Value.Source.Value.ToString().Trim('/');
-        Assert.Equal(homeAddress, currentPageAddress);
-    }
     
-    /*
-    [Fact]
-    public void Browser_CurrentPage_ShouldBeHomePage_WhenNavigateToHome()
+    [Theory]
+    [InlineData("https://example.com")]
+    [InlineData("https://duckduckgo.com")]
+    public void Browser_Navigate_CurrentPageShouldBeNewPage(string newAddress)
     {
         // Arrange
         var browser = _appService.GetService<IBrowser>();
-        var settings = _appService.GetService<IBrowserSettings>();
-        var newAddress = "example.com";
+        var newUri = new Uri(newAddress);
+        Uri raisedUri = null;
+        
+        _disposables.Add(browser.Source.Subscribe(it =>
+        {
+            raisedUri = it;
+        }));
 
         // Act
         browser.Navigate(newAddress);
         
         // Assert
-        var currentPageAddress = browser.CurrentPage.Value.Source.Value.ToString().Trim('/');
-        Assert.Equal(newAddress, currentPageAddress);
+        var currentPageUri = browser.CurrentPage.Value.Source.Value;
+        Assert.Equal(currentPageUri, newUri);
+        
+        Assert.NotNull(raisedUri);
+        Assert.Equal(raisedUri, newUri);
     }
-    */
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _disposables.Dispose();
+        }
+    }
 }
