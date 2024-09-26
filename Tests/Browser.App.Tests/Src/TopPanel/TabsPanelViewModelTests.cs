@@ -42,7 +42,7 @@ public class TabsPanelViewModelTests :  IClassFixture<AppServiceFixture>
         var tabsPanelViewModel = _topPanelViewModel.TabsPanelViewModel;
         var browser = _appService.GetService<IBrowser>();
         var pagesCount = browser.Pages.Count;
-        IPage newPage = null;
+        IPage? newPage = null;
         
         browser.PageAdded.Subscribe(it =>
         {
@@ -67,7 +67,7 @@ public class TabsPanelViewModelTests :  IClassFixture<AppServiceFixture>
         tabsPanelViewModel.CreateTabCommand.Execute(null);
         
         var pagesCount = browser.Pages.Count;
-        IPage removedPage = null;
+        IPage? removedPage = null;
         
         browser.PageRemoved.Subscribe(it =>
         {
@@ -91,7 +91,7 @@ public class TabsPanelViewModelTests :  IClassFixture<AppServiceFixture>
         // Arrange
         var navigationPanelViewModel = _topPanelViewModel.NavigationPanelViewModel;
         var browser = _appService.GetService<IBrowser>();
-        IPage reloadedPage = null;
+        IPage? reloadedPage = null;
         
         browser.PageReloaded.Subscribe(it =>
         {
