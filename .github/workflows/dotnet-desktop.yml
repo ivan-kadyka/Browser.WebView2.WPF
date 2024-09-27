@@ -4,9 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       run_publish:
-        description: "Set to true to run the publish job manually"
+        description: "Run publish"
         required: false
-        default: "false"
+        type: boolean
+        default: false
   push:
     branches:
       - master
@@ -50,15 +51,14 @@ jobs:
       # Build the solution
       - name: Build the solution
         run: dotnet build --configuration Release
-      
-      # Run tests with code coverage collection
-      - name: Run Tests with Code Coverage
-        run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage"
-
-  coverage:
+  tests_coverage:
     runs-on: windows-latest
     needs: build
     steps:
+      # Run tests with code coverage collection
+      - name: Run Tests with Code Coverage
+        run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage"
+        
       # Checkout the repository (required to access the code and test results)
       - name: Checkout code
         uses: actions/checkout@v3
