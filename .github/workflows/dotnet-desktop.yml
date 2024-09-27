@@ -2,6 +2,11 @@ name: Build & Tests
 
 on:
   workflow_dispatch:
+    inputs:
+      run_publish:
+        description: "Set to true to run the publish job manually"
+        required: false
+        default: "false"
   push:
     branches:
       - master
@@ -16,8 +21,8 @@ jobs:
     runs-on: windows-latest
     env:
       NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
-    environment: AppConfig  
-
+    environment: AppConfig
+    
     steps:
       # Checkout the repository
       - name: Checkout code
@@ -49,6 +54,14 @@ jobs:
       # Run tests with code coverage collection
       - name: Run Tests with Code Coverage
         run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage"
+
+  coverage:
+    runs-on: windows-latest
+    needs: build
+    steps:
+      # Checkout the repository (required to access the code and test results)
+      - name: Checkout code
+        uses: actions/checkout@v3
       
       # Generate code coverage report in Cobertura format
       - name: Generate Code Coverage Report
@@ -64,15 +77,23 @@ jobs:
           files: coverage/Cobertura.xml
           fail_ci_if_error: true
           verbose: true
+
+  publish:
+    runs-on: windows-latest
+    needs: build
+    if: github.ref_name == 'develop' || github.ref_name == 'master' || github.event.inputs.run_publish == 'true'
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Publish the build artifacts
+      - name: Publish Build Artifacts
+        run: dotnet publish --configuration Release --output ../publish
       
-      
-#      # Publish the build artifacts from 'Src'
-#      - name: Publish Build Artifacts
-#        run: dotnet publish --configuration Release --output ../publish
-#      
-#      # Upload build artifacts (optional)
-#      - name: Upload Build Artifacts
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: PublishedBuild
-#          path: ./publish
+      # Upload build artifacts (optional)
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: PublishedBuild
+          path: ./publish
