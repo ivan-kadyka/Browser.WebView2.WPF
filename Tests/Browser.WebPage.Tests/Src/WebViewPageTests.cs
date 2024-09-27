@@ -1,3 +1,4 @@
+using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
 using Browser.Abstractions.Settings;
 using Browser.Core.UriResolver;
@@ -7,28 +8,26 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Microsoft.Web.WebView2.Wpf;
 
+namespace Browser.WebPage.Tests;
 
 public class WebViewPageTests : IDisposable
 {
-    private readonly PageId _pageId;
     private readonly IWebView2 _webView;
     private readonly IMessenger _messenger;
-    private readonly IBrowserPageSettings _settings;
-    private readonly IUriResolver _uriConverter;
-    private readonly ILogger _logger;
-    private readonly WebViewPage _webViewPage;
+    private readonly WebViewPage _browserPage;
 
     public WebViewPageTests()
     {
-        _pageId = PageId.New();
         _webView = Substitute.For<IWebView2>();
         _messenger = Substitute.For<IMessenger>();
-        _settings = Substitute.For<IBrowserPageSettings>();
-        _settings.Source.Returns(new Uri("https://example.com"));
-        _uriConverter = Substitute.For<IUriResolver>();
-        _logger = Substitute.For<ILogger>();
+        
+        var pageId = PageId.New();
+        var settings = Substitute.For<IBrowserPageSettings>();
+        settings.Source.Returns(new Uri("https://example.com"));
+        var uriConverter = Substitute.For<IUriResolver>();
+        var logger = Substitute.For<ILogger>();
 
-        _webViewPage = new WebViewPage(_pageId, _webView, _messenger, _settings, _uriConverter, _logger);
+        _browserPage = new WebViewPage(pageId, _webView, _messenger, settings, uriConverter, logger);
     }
 
     [Fact]
@@ -38,7 +37,7 @@ public class WebViewPageTests : IDisposable
         _webView.CanGoForward.Returns(true);
 
         // Act
-        _webViewPage.Forward();
+        _browserPage.Forward();
 
         // Assert
         _webView.Received().GoForward();
@@ -52,7 +51,7 @@ public class WebViewPageTests : IDisposable
         _webView.CanGoForward.Returns(false);
 
         // Act
-        _webViewPage.Forward();
+        _browserPage.Forward();
 
         // Assert
         _webView.DidNotReceive().GoForward();
@@ -66,7 +65,7 @@ public class WebViewPageTests : IDisposable
         _webView.CanGoBack.Returns(true);
 
         // Act
-        _webViewPage.Back();
+        _browserPage.Back();
 
         // Assert
         _webView.Received().GoBack();
@@ -80,7 +79,7 @@ public class WebViewPageTests : IDisposable
         _webView.CanGoBack.Returns(false);
 
         // Act
-        _webViewPage.Back();
+        _browserPage.Back();
 
         // Assert
         _webView.DidNotReceive().GoBack();
@@ -91,27 +90,56 @@ public class WebViewPageTests : IDisposable
     public async Task Load_EnsureCoreWebView2Async_Called()
     {
         // Act
-        await _webViewPage.Load();
+        await _browserPage.Load();
 
         // Assert
         await _webView.Received().EnsureCoreWebView2Async();
     }
 
     [Fact]
-    public async Task Reload_InvokesReload()
+    public async Task ReloadAsync_Normal_InvokesReloadWebView()
     {
         // Arrange
         var token = new CancellationToken();
 
         // Act
-        await _webViewPage.Reload(token);
+        await _browserPage.Reload(token);
+
+        // Assert
+        _webView.Received().Reload();
+    }
+    
+    [Fact]
+    public void Reload_Normal_InvokesReloadWebView()
+    {
+        // Arrange & Act
+        _browserPage.Reload();
 
         // Assert
         _webView.Received().Reload();
     }
 
+    [Fact]
+    public async Task Push_Normal_InvokesNavigate()
+    {
+        // Arrange
+        var options = new NavigateOptions("https://example.com");
+
+        Uri? changedUri = null;
+        _browserPage.Source.Subscribe(uri => changedUri = uri);
+      
+        await _browserPage.Load();
+
+        // Act
+        _browserPage.Push(options);
+
+        // Assert
+        Assert.NotNull(changedUri);
+        Assert.Equal(options.Address, changedUri!.ToString().Trim('/'));
+    }
+
     public void Dispose()
     {
-        _webViewPage.Dispose();
+        _browserPage.Dispose();
     }
 }
