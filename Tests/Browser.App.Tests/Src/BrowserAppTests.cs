@@ -4,7 +4,6 @@ using Browser.Abstractions.Exceptions;
 using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
 using Browser.Abstractions.Page.Factory;
-using Browser.App.Tests.Stubs;
 using Browser.App.Tests.Utils;
 using Disposable;
 
@@ -28,7 +27,7 @@ public class BrowserAppTests : DisposableBase, IClassFixture<AppServiceFixture>
         // Arrange
         var browser = _appService.GetService<IBrowser>();
         var newUri = new Uri(newAddress);
-        Uri raisedUri = null;
+        Uri? raisedUri = default;
         
         _disposables.Add(browser.Source.Subscribe(it =>
         {
@@ -87,7 +86,7 @@ public class BrowserAppTests : DisposableBase, IClassFixture<AppServiceFixture>
         // Arrange
         var browser = _appService.GetService<IBrowser>();
         var currentPage = browser.CurrentPage.Value;
-        IPage reloadedPage = null;
+        IPage? reloadedPage = default;
         
         _disposables.Add(browser.PageReloaded.Subscribe(it =>
         {
@@ -110,7 +109,7 @@ public class BrowserAppTests : DisposableBase, IClassFixture<AppServiceFixture>
         var browser = _appService.GetService<IBrowser>();
         var currentPage = browser.CurrentPage.Value;
         var pagesCount = browser.Pages.Count;
-        IPage newPage = null;
+        IPage? newPage = default;
         
         _disposables.Add(browser.PageAdded.Subscribe(it =>
         {
@@ -118,7 +117,7 @@ public class BrowserAppTests : DisposableBase, IClassFixture<AppServiceFixture>
         }));
 
         // Act
-        var resultPage = await browser.CreatePage(new PageCreateOptions(new Uri("https://example.com")));
+        await browser.CreatePage(new PageCreateOptions(new Uri("https://example.com")));
         
         // Assert
         Assert.NotNull(newPage);
@@ -133,7 +132,7 @@ public class BrowserAppTests : DisposableBase, IClassFixture<AppServiceFixture>
         // Arrange
         var browser = _appService.GetService<IBrowser>();
         var pagesCount = browser.Pages.Count;
-        IPage removedPage = null;
+        IPage? removedPage = default;
         
         _disposables.Add(browser.PageRemoved.Subscribe(it =>
         {

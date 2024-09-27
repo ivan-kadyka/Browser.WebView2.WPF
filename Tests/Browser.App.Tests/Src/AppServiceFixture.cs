@@ -13,12 +13,12 @@ namespace Browser.App.Tests;
 
 public class AppServiceFixture : IAsyncLifetime
 {
-    private readonly ServiceProvider _serviceProvider;
+    private readonly AppServiceProvider _serviceProvider;
     private readonly MainPresenter _mainPresenter;
 
     public AppServiceFixture()
     {
-        _serviceProvider = AppServiceProvider.Create(OverrideServices);
+        _serviceProvider = AppServiceProvider.CreateTestInstance(OverrideServices);
         _mainPresenter = _serviceProvider.GetRequiredService<MainPresenter>();
     }
     

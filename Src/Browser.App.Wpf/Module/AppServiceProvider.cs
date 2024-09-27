@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BrowserApp.Module;
 
-internal class AppServiceProvider : IServiceProvider
+internal class AppServiceProvider : IServiceProvider, IAsyncDisposable, IDisposable
 {
     private static AppServiceProvider? _instance;
 
-    private readonly IServiceProvider _serviceProvider;
+    private readonly ServiceProvider _serviceProvider;
     private static readonly object _locker = new();
 
     private AppServiceProvider(Action<IServiceCollection>? registerCallback = null)
@@ -28,7 +29,7 @@ internal class AppServiceProvider : IServiceProvider
         return _serviceProvider.GetService(serviceType);
     }
 
-    public static IServiceProvider Create(Action<IServiceCollection>? registerCallback = null)
+    public static AppServiceProvider Create()
     {
         if (_instance == null)
         {
@@ -36,11 +37,33 @@ internal class AppServiceProvider : IServiceProvider
             {
                 if (_instance == null)
                 {
-                    _instance = new AppServiceProvider(registerCallback);
+                    _instance = new AppServiceProvider();
                 }
             }
         }
 
         return _instance;
+    }
+    
+    internal static AppServiceProvider CreateTestInstance(Action<IServiceCollection>? registerCallback = null)
+    {
+        if (_instance == null)
+        {
+            _instance = new AppServiceProvider(registerCallback);
+        }
+        
+        return _instance;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await _serviceProvider.DisposeAsync();
+        _instance = null;
+    }
+
+    public void Dispose()
+    {
+        _serviceProvider.Dispose();
+        _instance = null;
     }
 }

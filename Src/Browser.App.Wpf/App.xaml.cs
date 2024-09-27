@@ -9,7 +9,7 @@ namespace BrowserApp
     {
         private IPresenter? _mainPresenter;
 
-        private readonly ServiceProvider _serviceProvider;
+        private readonly AppServiceProvider _serviceProvider;
         
         public App()
         {
