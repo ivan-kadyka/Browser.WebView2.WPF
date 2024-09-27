@@ -57,8 +57,8 @@ jobs:
     steps:
       # Run tests with code coverage collection
       - name: Run Tests with Code Coverage
-        run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage"
-        
+        run: dotnet test Browser.Wpf.sln  --no-build --configuration Release --collect:"XPlat Code Coverage"
+    
       # Checkout the repository (required to access the code and test results)
       - name: Checkout code
         uses: actions/checkout@v3
