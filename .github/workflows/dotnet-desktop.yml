@@ -78,7 +78,7 @@ jobs:
         if: steps.publish_app.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
-          name: Build-${{ github.event.ref }}-${{ github.run_id }}  # Include branch name and run ID
+          name: Build-${{ github.run_id }}  # Include run ID
           path: ./publish
   
   upload_tests_coverage:
