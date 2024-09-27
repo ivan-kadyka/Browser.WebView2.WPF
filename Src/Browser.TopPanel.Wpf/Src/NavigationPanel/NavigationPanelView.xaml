@@ -27,13 +27,13 @@
         </Style>
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal">
-        <ui:Button Style="{StaticResource IconButtonStyle}" Command="{Binding BackCommand}">
+        <ui:Button Style="{StaticResource IconButtonStyle}" ToolTipService.ShowOnDisabled="True" ToolTip="Go to back" Command="{Binding BackCommand}">
             <svgc:SvgViewbox Source="pack://application:,,,/Browser.TopPanel.Wpf;component/Images/arrow-left.svg"/>
         </ui:Button>
-        <ui:Button Style="{StaticResource IconButtonStyle}" Command="{Binding ForwardCommand}">
+        <ui:Button Style="{StaticResource IconButtonStyle}" ToolTipService.ShowOnDisabled="True" ToolTip="Go to forward" Command="{Binding ForwardCommand}">
             <svgc:SvgViewbox Source="pack://application:,,,/Browser.TopPanel.Wpf;component/Images/arrow-right.svg"/>
         </ui:Button>
-        <ui:Button Style="{StaticResource IconButtonStyle}" Command="{Binding ReloadCommand}">
+        <ui:Button Style="{StaticResource IconButtonStyle}" ToolTipService.ShowOnDisabled="True" ToolTip="Reload current page, Ctrl+R" Command="{Binding ReloadCommand}">
             <svgc:SvgViewbox Source="{Binding ReloadIconSource}"/>
         </ui:Button>
     </StackPanel>
