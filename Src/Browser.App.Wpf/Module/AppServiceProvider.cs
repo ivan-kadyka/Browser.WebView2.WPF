@@ -58,12 +58,10 @@ internal class AppServiceProvider : IServiceProvider, IAsyncDisposable, IDisposa
     public async ValueTask DisposeAsync()
     {
         await _serviceProvider.DisposeAsync();
-        _instance = null;
     }
 
     public void Dispose()
     {
         _serviceProvider.Dispose();
-        _instance = null;
     }
 }

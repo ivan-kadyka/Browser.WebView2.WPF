@@ -25,10 +25,14 @@ namespace BrowserApp
         }
 
 
-        protected override void OnExit(ExitEventArgs e)
+        protected override async void OnExit(ExitEventArgs e)
         {
-            _serviceProvider.Dispose();
             base.OnExit(e);
+            
+            if (_mainPresenter != null)
+                await _mainPresenter.Stop();
+         
+            _serviceProvider.Dispose();
         }
     }
 }

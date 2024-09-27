@@ -9,4 +9,6 @@ public interface IMainWindow : IView
     void SetPageContent(object content);
     
     void Show();
+    
+    void Close();
 }

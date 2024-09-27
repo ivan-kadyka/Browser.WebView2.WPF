@@ -1,4 +1,5 @@
-﻿using Browser.Core.Module;
+﻿using Browser.Abstractions;
+using Browser.Core.Module;
 using Browser.WebPage.Wpf.Module;
 using Microsoft.Extensions.DependencyInjection;
 using PresenterBase.Presenter;
@@ -21,7 +22,8 @@ public static class AppModule
             c.GetRequiredService<MainViewModel>(),
             c.GetRequiredService<IMainWindow>(),
             c.GetRequiredKeyedService<IPresenter>(TopPanelModule.PresenterName),
-            c.GetRequiredKeyedService<IPresenter>(BrowserPageModule.PresenterName)));
+            c.GetRequiredKeyedService<IPresenter>(BrowserPageModule.PresenterName),
+            c.GetRequiredService<IBrowserObservable>()));
 
         return services;
     }
