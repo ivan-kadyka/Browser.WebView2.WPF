@@ -49,19 +49,28 @@ jobs:
       # Build the solution
       - name: Build the solution
         run: dotnet build --configuration Release
-  tests_coverage:
+        
+      # Run tests with code coverage collection
+      - name: Run Tests with Code Coverage
+        run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage"
+
+      # Upload test results and coverage reports as artifacts
+      - name: Upload Code Coverage Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage
+          path: '**/coverage.cobertura.xml'  # Adjust path if necessary  
+  upload_tests_coverage:
     runs-on: windows-latest
     needs: build
     environment: AppConfig
     steps:
-      # Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v3
+      # Download the coverage artifacts from the build job
+      - name: Download Code Coverage Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: code-coverage
         
-      # Run tests with code coverage collection
-      - name: Run Tests with Code Coverage
-        run: dotnet test Browser.Wpf.sln --configuration Release --collect:"XPlat Code Coverage"
-      
       # Generate code coverage report in Cobertura format
       - name: Generate Code Coverage Report
         run: |
