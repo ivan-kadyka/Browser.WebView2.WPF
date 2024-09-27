@@ -4,6 +4,7 @@ using Browser.TopPanel.Wpf.Module;
 using Browser.WebPage.Wpf.Factory;
 using Browser.WebPage.Wpf.Module;
 using BrowserApp;
+using BrowserApp.Main;
 using BrowserApp.Module;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Web.WebView2.Wpf;

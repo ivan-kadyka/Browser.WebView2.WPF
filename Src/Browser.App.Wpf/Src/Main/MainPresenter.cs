@@ -6,7 +6,7 @@ using Browser.Abstractions;
 using Browser.Abstractions.Page;
 using PresenterBase.Presenter;
 
-namespace BrowserApp;
+namespace BrowserApp.Main;
 
 internal class MainPresenter : Presenter
 {

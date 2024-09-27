@@ -1,6 +1,6 @@
 using PresenterBase.View;
 
-namespace BrowserApp;
+namespace BrowserApp.Main;
 
 public interface IMainWindow : IView
 {

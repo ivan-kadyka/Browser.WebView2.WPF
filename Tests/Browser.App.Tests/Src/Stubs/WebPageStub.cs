@@ -1,5 +1,4 @@
 using System.Reactive.Disposables;
-using Browser.Abstractions.Exceptions;
 using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
 using Reactive.Extensions.Observable;
@@ -22,7 +21,6 @@ namespace Browser.App.Tests.Stubs
         public object Content { get; } = new();
         
         private readonly IMessenger _messenger;
-        private readonly IBrowserPageSettings _settings;
         private readonly IUriResolver _uriResolver;
        
         private readonly ILogger _logger;
@@ -43,18 +41,16 @@ namespace Browser.App.Tests.Stubs
             Id = id;
             
             _messenger = messenger;
-            _settings = settings;
             _uriResolver = uriResolver;
             _testExceptionProxy = testExceptionProxy;
             _logger = logger;
             _messenger = messenger;
-            _settings = settings;
             _uriResolver = uriResolver;
             _logger = logger;
 
-            _navigationHistory = new UndoRedoStack<Uri>(_settings.Source);
+            _navigationHistory = new UndoRedoStack<Uri>(settings.Source);
             
-            _disposables.Add(_navigationHistory.Current.Subscribe(uri =>
+            _disposables.Add(_navigationHistory.Current.Subscribe(_ =>
             {
                 OnNavigationMessages();
             }));

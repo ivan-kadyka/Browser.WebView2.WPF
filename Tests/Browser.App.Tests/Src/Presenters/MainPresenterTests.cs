@@ -1,6 +1,7 @@
 using System.Reactive.Disposables;
 using Browser.Abstractions;
 using BrowserApp;
+using BrowserApp.Main;
 using Disposable;
 
 namespace Browser.App.Tests.Presenters;

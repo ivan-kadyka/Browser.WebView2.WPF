@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using BrowserApp.Main;
 using BrowserApp.Module;
 using Microsoft.Extensions.DependencyInjection;
 using PresenterBase.Presenter;

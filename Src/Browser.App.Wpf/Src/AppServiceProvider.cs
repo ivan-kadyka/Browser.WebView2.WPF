@@ -1,7 +1,8 @@
 ﻿using System;
+using BrowserApp.Module;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BrowserApp.Module;
+namespace BrowserApp;
 
 internal class AppServiceProvider : IServiceProvider, IDisposable
 {
@@ -13,7 +14,7 @@ internal class AppServiceProvider : IServiceProvider, IDisposable
     private AppServiceProvider(Action<IServiceCollection>? registerCallback = null)
     {
         var services = new ServiceCollection();
-        services.AddAppServices();
+        services.AddBrowserAppModule();
         
         if (registerCallback != null)
         {
