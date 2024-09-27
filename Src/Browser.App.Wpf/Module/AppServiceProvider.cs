@@ -3,23 +3,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BrowserApp.Module;
 
-internal class AppServiceProvider
+internal class AppServiceProvider : IServiceProvider
 {
-    private static ServiceProvider? _instance;
-    
-    private AppServiceProvider(){}
+    private static AppServiceProvider? _instance;
 
-    public static ServiceProvider Create(Action<IServiceCollection>? registerCallback = null)
-    {
-        if (_instance == null)
-        {
-            _instance = CreateInternalServiceProvider(registerCallback);
-        }
+    private readonly IServiceProvider _serviceProvider;
+    private static readonly object _locker = new();
 
-        return _instance;
-    }
-
-    private  static ServiceProvider CreateInternalServiceProvider(Action<IServiceCollection>? registerCallback = null)
+    private AppServiceProvider(Action<IServiceCollection>? registerCallback = null)
     {
         var services = new ServiceCollection();
         services.AddAppServices();
@@ -29,6 +20,27 @@ internal class AppServiceProvider
             registerCallback(services);
         }
         
-        return services.BuildServiceProvider();
+        _serviceProvider = services.BuildServiceProvider();
+    }
+    
+    public object? GetService(Type serviceType)
+    {
+        return _serviceProvider.GetService(serviceType);
+    }
+
+    public static IServiceProvider Create(Action<IServiceCollection>? registerCallback = null)
+    {
+        if (_instance == null)
+        {
+            lock (_locker)
+            {
+                if (_instance == null)
+                {
+                    _instance = new AppServiceProvider(registerCallback);
+                }
+            }
+        }
+
+        return _instance;
     }
 }
