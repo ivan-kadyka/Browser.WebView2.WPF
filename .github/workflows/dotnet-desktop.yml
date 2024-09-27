@@ -88,11 +88,11 @@ jobs:
 
       # Publish the build artifacts
       - name: Publish Build Artifacts
-        run: dotnet publish --configuration Release --output ../publish
+        run: dotnet publish --configuration Release --output ./publish
       
       # Upload build artifacts (optional)
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: PublishedBuild
+          name: Build-${{ github.run_number }}  # Include run number
           path: ./publish
