@@ -71,14 +71,14 @@ jobs:
       - name: Publish App Artifacts
         id: publish_app  # Assign an ID to reference later
         if: github.ref_name == 'develop' || github.ref_name == 'master' || github.event.inputs.run_publish == 'true'
-        run: dotnet publish --configuration Release --output ../publish
+        run: dotnet publish Src/Browser.App.Wpf/Browser.App.Wpf.csproj --configuration Release --output ./publish
 
       # Upload build artifacts (conditional on the success of the publish app step)
       - name: Upload App Artifacts
         if: steps.publish_app.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
-          name: PublishedBuild
+          name: Build-${{ github.event.ref }}-${{ github.run_id }}  # Include branch name and run ID
           path: ./publish
   
   upload_tests_coverage:
