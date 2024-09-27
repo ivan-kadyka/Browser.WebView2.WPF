@@ -55,13 +55,13 @@ jobs:
     runs-on: windows-latest
     needs: build
     steps:
+      - # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
       # Run tests with code coverage collection
       - name: Run Tests with Code Coverage
         run: dotnet test Browser.Wpf.sln  --no-build --configuration Release --collect:"XPlat Code Coverage"
-    
-      # Checkout the repository (required to access the code and test results)
-      - name: Checkout code
-        uses: actions/checkout@v3
       
       # Generate code coverage report in Cobertura format
       - name: Generate Code Coverage Report
