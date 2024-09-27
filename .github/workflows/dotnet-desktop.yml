@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       run_publish:
-        description: "Run publish"
+        description: "Publish App"
         required: false
         type: boolean
         default: false
@@ -65,7 +65,22 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: code-coverage-report
-          path: 'coverage/Cobertura.xml'  # Adjust path if necessary  
+          path: 'coverage/Cobertura.xml'  # Adjust path if necessary 
+          
+      # Publish the build artifacts (optional)
+      - name: Publish App Artifacts
+        id: publish_app  # Assign an ID to reference later
+        if: github.ref_name == 'develop' || github.ref_name == 'master' || github.event.inputs.run_publish == 'true'
+        run: dotnet publish --configuration Release --output ../publish
+
+      # Upload build artifacts (conditional on the success of the publish app step)
+      - name: Upload App Artifacts
+        if: steps.publish_app.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: PublishedBuild
+          path: ./publish
+  
   upload_tests_coverage:
     runs-on: windows-latest
     needs: build
@@ -86,23 +101,3 @@ jobs:
           files: coverage/Cobertura.xml
           fail_ci_if_error: true
           verbose: true
-
-  publish:
-    runs-on: windows-latest
-    needs: build
-    if: github.ref_name == 'develop' || github.ref_name == 'master' || github.event.inputs.run_publish == 'true'
-    steps:
-      # Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      # Publish the build artifacts
-      - name: Publish Build Artifacts
-        run: dotnet publish --configuration Release --output ../publish
-      
-      # Upload build artifacts (optional)
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: PublishedBuild
-          path: ./publish
