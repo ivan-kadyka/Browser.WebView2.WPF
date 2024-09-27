@@ -7,6 +7,10 @@
         <UseWPF>true</UseWPF>
         <RootNamespace>BrowserApp</RootNamespace>
     </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DebugType>embedded</DebugType>
+    </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\Browser.WebPage.Wpf\Browser.WebPage.Wpf.csproj" />
       <ProjectReference Include="..\Core\Browser.Core\Browser.Core.csproj" />

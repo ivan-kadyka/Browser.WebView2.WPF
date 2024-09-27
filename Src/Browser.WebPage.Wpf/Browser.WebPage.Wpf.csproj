@@ -6,6 +6,10 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\Core\Browser.Abstractions\Browser.Abstractions.csproj" />
       <ProjectReference Include="..\Core\Browser.Core\Browser.Core.csproj" />

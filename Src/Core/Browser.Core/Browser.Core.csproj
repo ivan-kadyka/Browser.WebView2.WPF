@@ -6,6 +6,10 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\..\Core\Browser.Settings\Browser.Settings.csproj" />
       <ProjectReference Include="..\..\Infra\Disposable\Disposable.csproj" />
