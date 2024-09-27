@@ -46,7 +46,7 @@ public class AppServiceFixture : IAsyncLifetime
     public async Task DisposeAsync()
     {
        await _mainPresenter.Stop();
-       await _serviceProvider.DisposeAsync();
+       _serviceProvider.Dispose();
     }
 }
 

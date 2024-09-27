@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BrowserApp.Module;
 
-internal class AppServiceProvider : IServiceProvider, IAsyncDisposable, IDisposable
+internal class AppServiceProvider : IServiceProvider, IDisposable
 {
     private static AppServiceProvider? _instance;
 
@@ -53,12 +52,6 @@ internal class AppServiceProvider : IServiceProvider, IAsyncDisposable, IDisposa
         }
         
         return _instance;
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        await _serviceProvider.DisposeAsync();
-        _instance = default;
     }
 
     public void Dispose()
