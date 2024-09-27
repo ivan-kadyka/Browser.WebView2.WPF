@@ -77,10 +77,7 @@ jobs:
         with:
           name: code-coverage-report
           path: coverage
-          
-      - name: List Downloaded Files for Debugging
-        run: dir /s .  # Check the file structure after download    
-
+        
       # Upload code coverage to Codecov
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v3
