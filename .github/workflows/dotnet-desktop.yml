@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       run_publish:
-        description: "Publish App"
+        description: "Run publish"
         required: false
         type: boolean
         default: false
@@ -17,7 +17,7 @@ on:
       - master
       - develop
 env:
-   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+  NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
 
 jobs:
   build:
@@ -31,7 +31,7 @@ jobs:
       - name: Set up .NET Core SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6.x'
+          dotnet-version: '6.x'  # Adjust to your .NET version
       
       # Cache NuGet packages
       - name: Cache NuGet packages
@@ -49,50 +49,25 @@ jobs:
       # Build the solution
       - name: Build the solution
         run: dotnet build --configuration Release
-        
-      # Run tests with code coverage collection
-      - name: Run Tests with Code Coverage
-        run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage"
-        
-      # Generate code coverage report in Cobertura format
-      - name: Generate Code Coverage Report
-        run: |
-          dotnet tool install -g dotnet-reportgenerator-globaltool
-          reportgenerator "-reports:Tests/**/coverage.cobertura.xml" "-targetdir:coverage" -reporttypes:Cobertura  
-
-      # Upload test results and coverage reports as artifacts
-      - name: Upload Code Coverage Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: code-coverage-report
-          path: 'coverage/Cobertura.xml'  # Adjust path if necessary 
-          
-      # Publish the build artifacts (optional)
-      - name: Publish App Artifacts
-        id: publish_app  # Assign an ID to reference later
-        if: github.ref_name == 'develop' || github.ref_name == 'master' || github.event.inputs.run_publish == 'true'
-        run: dotnet publish Src/Browser.App.Wpf/Browser.App.Wpf.csproj --configuration Release --output ./publish
-
-      # Upload build artifacts (conditional on the success of the publish app step)
-      - name: Upload App Artifacts
-        if: steps.publish_app.outcome == 'success'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Build-${{ github.run_id }}  # Include run ID
-          path: ./publish
-  
-  upload_tests_coverage:
+  tests_coverage:
     runs-on: windows-latest
     needs: build
     environment: AppConfig
     steps:
-      # Download the coverage report artifact
-      - name: Download Code Coverage Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: code-coverage-report
-          path: coverage
-        
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # Run tests with code coverage collection
+      - name: Run Tests with Code Coverage
+        run: dotnet test Browser.Wpf.sln --configuration Release --collect:"XPlat Code Coverage"
+      
+      # Generate code coverage report in Cobertura format
+      - name: Generate Code Coverage Report
+        run: |
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          reportgenerator "-reports:Tests/**/coverage.cobertura.xml" "-targetdir:coverage" -reporttypes:Cobertura
+      
       # Upload code coverage to Codecov
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v4
@@ -101,3 +76,23 @@ jobs:
           files: coverage/Cobertura.xml
           fail_ci_if_error: true
           verbose: true
+
+  publish:
+    runs-on: windows-latest
+    needs: build
+    if: github.ref_name == 'develop' || github.ref_name == 'master' || github.event.inputs.run_publish == 'true'
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Publish the build artifacts
+      - name: Publish Build Artifacts
+        run: dotnet publish --configuration Release --output ../publish
+      
+      # Upload build artifacts (optional)
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: PublishedBuild
+          path: ./publish
