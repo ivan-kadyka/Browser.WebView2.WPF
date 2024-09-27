@@ -1,7 +1,13 @@
-name: Build Browser.WebView2.WPF Application
+name: Build & Tests App
 
 on:
   workflow_dispatch:
+    inputs:
+      run_publish:
+        description: "Publish App"
+        required: false
+        type: boolean
+        default: false
   push:
     branches:
       - master
@@ -10,73 +16,88 @@ on:
     branches:
       - master
       - develop
+env:
+   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
 
 jobs:
   build:
     runs-on: windows-latest
-    env:
-      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
-    environment: AppConfig  
-
     steps:
       # Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       # Set up .NET Core SDK
       - name: Set up .NET Core SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6.x'  # Adjust to your .NET version
+          dotnet-version: '6.x'
       
       # Cache NuGet packages
       - name: Cache NuGet packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
       
-      # Change working directory to 'Src' and restore NuGet packages
+      # Restore NuGet packages
       - name: Restore NuGet packages
         run: dotnet restore
-        working-directory: Src
       
-      # Build the project in 'Src' directory
+      # Build the solution
       - name: Build the solution
         run: dotnet build --configuration Release
-        working-directory: Src
-      
+        
       # Run tests with code coverage collection
       - name: Run Tests with Code Coverage
         run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage"
-        working-directory: Src
-      
+        
       # Generate code coverage report in Cobertura format
       - name: Generate Code Coverage Report
         run: |
           dotnet tool install -g dotnet-reportgenerator-globaltool
-          reportgenerator "-reports:Tests/**/coverage.cobertura.xml" "-targetdir:coverage" -reporttypes:Cobertura
-      
+          reportgenerator "-reports:Tests/**/coverage.cobertura.xml" "-targetdir:coverage" -reporttypes:Cobertura  
+
+      # Upload test results and coverage reports as artifacts
+      - name: Upload Code Coverage Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: 'coverage/Cobertura.xml'  # Adjust path if necessary 
+          
+      # Publish the build artifacts (optional)
+      - name: Publish App Artifacts
+        id: publish_app  # Assign an ID to reference later
+        if: github.ref_name == 'develop' || github.ref_name == 'master' || github.event.inputs.run_publish == 'true'
+        run: dotnet publish Src/Browser.App.Wpf/Browser.App.Wpf.csproj --configuration Release --output ./publish
+
+      # Upload build artifacts (conditional on the success of the publish app step)
+      - name: Upload App Artifacts
+        if: steps.publish_app.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build-${{ github.run_id }}  # Include run ID
+          path: ./publish
+  
+  upload_tests_coverage:
+    runs-on: windows-latest
+    needs: build
+    environment: AppConfig
+    steps:
+      # Download the coverage report artifact
+      - name: Download Code Coverage Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: code-coverage-report
+          path: coverage
+        
       # Upload code coverage to Codecov
       - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage/Cobertura.xml
           fail_ci_if_error: true
           verbose: true
-      
-      
-#      # Publish the build artifacts from 'Src'
-#      - name: Publish Build Artifacts
-#        run: dotnet publish --configuration Release --output ../publish
-#        working-directory: Src
-#      
-#      # Upload build artifacts (optional)
-#      - name: Upload Build Artifacts
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: PublishedBuild
-#          path: ./publish
