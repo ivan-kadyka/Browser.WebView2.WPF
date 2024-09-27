@@ -52,6 +52,7 @@ jobs:
   tests_coverage:
     runs-on: windows-latest
     needs: build
+    environment: AppConfig
     steps:
       # Checkout the repository
       - name: Checkout code
@@ -69,7 +70,6 @@ jobs:
       
       # Upload code coverage to Codecov
       - name: Upload Coverage to Codecov
-        environment: AppConfig
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
