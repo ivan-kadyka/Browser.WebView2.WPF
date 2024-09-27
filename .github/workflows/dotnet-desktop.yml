@@ -55,7 +55,7 @@ jobs:
     runs-on: windows-latest
     needs: build
     steps:
-      - # Checkout the repository
+      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
         
