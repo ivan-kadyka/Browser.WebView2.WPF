@@ -1,4 +1,4 @@
-name: Build & Tests
+name: Build & Tests & Publish Workflow
 
 on:
   workflow_dispatch:
@@ -16,14 +16,14 @@ on:
     branches:
       - master
       - develop
+env:
+   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+   
+environment: AppConfig
 
 jobs:
   build:
     runs-on: windows-latest
-    env:
-      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
-    environment: AppConfig
-    
     steps:
       # Checkout the repository
       - name: Checkout code
