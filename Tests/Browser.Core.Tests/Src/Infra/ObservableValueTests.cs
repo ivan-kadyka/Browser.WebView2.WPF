@@ -1,5 +1,4 @@
 using System.Reactive.Disposables;
-using Disposable;
 using Reactive.Extensions.Observable;
 
 namespace Browser.Core.Tests.Infra
