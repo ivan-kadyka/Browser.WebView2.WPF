@@ -128,7 +128,7 @@ internal class WebViewPage : DisposableBase, IBrowserPage
     public void Push(INavigateOptions options)
     {
         var uri = _uriResolver.GetUri(options.Address);
-        _webView.CoreWebView2.Navigate(uri.ToString());
+        _webView.CoreWebView2?.Navigate(uri.ToString());
     }
     
 

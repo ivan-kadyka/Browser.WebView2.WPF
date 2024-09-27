@@ -1,6 +1,6 @@
 using PresenterBase.View;
 
-namespace BrowserApp;
+namespace BrowserApp.Main;
 
 public interface IMainWindow : IView
 {
@@ -9,4 +9,6 @@ public interface IMainWindow : IView
     void SetPageContent(object content);
     
     void Show();
+    
+    void Close();
 }
