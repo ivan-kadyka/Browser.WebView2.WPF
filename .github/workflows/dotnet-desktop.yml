@@ -61,7 +61,7 @@ jobs:
         
       # Run tests with code coverage collection
       - name: Run Tests with Code Coverage
-        run: dotnet test Browser.Wpf.sln  --no-build --configuration Release --collect:"XPlat Code Coverage"
+        run: dotnet test Browser.Wpf.sln --configuration Release --collect:"XPlat Code Coverage"
       
       # Generate code coverage report in Cobertura format
       - name: Generate Code Coverage Report
