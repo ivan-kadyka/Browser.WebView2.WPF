@@ -1,4 +1,4 @@
-name: Build Browser.WebView2.WPF Application
+name: Build & Tests
 
 on:
   workflow_dispatch:
@@ -38,20 +38,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
       
-      # Change working directory to 'Src' and restore NuGet packages
+      # Restore NuGet packages
       - name: Restore NuGet packages
         run: dotnet restore
-        working-directory: Src
       
-      # Build the project in 'Src' directory
+      # Build the solution
       - name: Build the solution
         run: dotnet build --configuration Release
-        working-directory: Src
       
       # Run tests with code coverage collection
       - name: Run Tests with Code Coverage
         run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage"
-        working-directory: Src
       
       # Generate code coverage report in Cobertura format
       - name: Generate Code Coverage Report
@@ -72,7 +69,6 @@ jobs:
 #      # Publish the build artifacts from 'Src'
 #      - name: Publish Build Artifacts
 #        run: dotnet publish --configuration Release --output ../publish
-#        working-directory: Src
 #      
 #      # Upload build artifacts (optional)
 #      - name: Upload Build Artifacts
