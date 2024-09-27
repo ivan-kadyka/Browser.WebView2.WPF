@@ -31,7 +31,7 @@ public class AppServiceFixture : IAsyncLifetime
     {
         services.AddSingleton<IWebViewFactory, WebViewFactoryMock>();
         services.AddSingleton<IBrowserPageFactory, WebPageFactoryMock>();
-        services.AddTransient<IMainWindow>(_ =>  Substitute.For<IMainWindow>());
+        services.AddSingleton<IMainWindow>(_ =>  Substitute.For<IMainWindow>());
         services.AddKeyedTransient<IView>(TopPanelModule.ViewName, (_, _) => Substitute.For<IView>());
         services.AddKeyedTransient<IView>(BrowserPageModule.ViewName, (_, _) => Substitute.For<IView>());
         

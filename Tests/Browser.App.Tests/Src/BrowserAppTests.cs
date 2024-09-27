@@ -5,6 +5,7 @@ using Browser.Abstractions.Navigation;
 using Browser.Abstractions.Page;
 using Browser.Abstractions.Page.Factory;
 using Browser.App.Tests.Utils;
+using BrowserApp;
 using Disposable;
 
 namespace Browser.App.Tests;
@@ -183,6 +184,21 @@ public class BrowserAppTests : DisposableBase, IClassFixture<AppServiceFixture>
         
         // Assert
         Assert.NotNull(browser);
+    }
+    
+    [Fact]
+    public async Task RemovePage_LastPage_MainWindowShouldBeClosed()
+    {
+        // Arrange
+        var browser = _appService.GetService<IBrowser>();
+        var mainWindow = _appService.GetService<IMainWindow>();
+        var currentPage = browser.CurrentPage.Value;
+        
+        // Act
+        await browser.RemovePage(currentPage.Id);
+        
+        // Assert
+        mainWindow.Received().Close();
     }
     
 
