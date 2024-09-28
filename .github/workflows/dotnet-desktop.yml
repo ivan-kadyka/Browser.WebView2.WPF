@@ -1,4 +1,4 @@
-name: Build & Tests App
+name: Browser Desktop App
 
 on:
   workflow_dispatch:
@@ -8,6 +8,14 @@ on:
         required: false
         type: boolean
         default: false
+      architecture:
+        description: "architecture"
+        required: false
+        default: "win-x64"
+        type: choice
+        options:
+          - win-x64
+          - win-arm64  
   push:
     branches:
       - master
@@ -18,49 +26,40 @@ on:
       - develop
 env:
   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+  DOTNET_VERSION: '6.x'
+  BUILD_CONFIGURATION: 'Release'
 
 jobs:
   build:
     runs-on: windows-latest
     steps:
-      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      # Set up .NET Core SDK
-      - name: Set up .NET Core SDK
-        uses: actions/setup-dotnet@v4
+        
+      - name: Setup solution
+        uses: ./.github/actions/common-steps
         with:
-          dotnet-version: '6.x'  # Adjust to your .NET version
-      
-      # Cache NuGet packages
-      - name: Cache NuGet packages
-        uses: actions/cache@v4
-        with:
-          path: ${{ github.workspace }}/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-      
-      # Restore NuGet packages
-      - name: Restore NuGet packages
-        run: dotnet restore
-      
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+    
       # Build the solution
-      - name: Build the solution
-        run: dotnet build --configuration Release
+      - name: Build solution
+        run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }}
   tests_coverage:
     runs-on: windows-latest
     needs: build
     environment: AppConfig
     steps:
-      # Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  
+        
+      - name: Setup solution
+        uses: ./.github/actions/common-steps
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
       
       # Run tests with code coverage collection
       - name: Run Tests with Code Coverage
-        run: dotnet test Browser.Wpf.sln --configuration Release --collect:"XPlat Code Coverage"
+        run: dotnet test Browser.Wpf.sln --configuration ${{ env.BUILD_CONFIGURATION }} --collect:"XPlat Code Coverage"
       
       # Generate code coverage report in Cobertura format
       - name: Generate Code Coverage Report
@@ -79,20 +78,24 @@ jobs:
 
   publish:
     runs-on: windows-latest
-    needs: build
+    needs: tests_coverage
     if: github.ref_name == 'develop' || github.ref_name == 'master' || github.event.inputs.run_publish == 'true'
     steps:
-      # Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  
+        
+      - name: Setup solution
+        uses: ./.github/actions/common-steps
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       # Publish the build artifacts
       - name: Publish Build Artifacts
-        run: dotnet publish --configuration Release --output ./publish
+        run:  dotnet publish Src\Browser.App.Wpf\Browser.App.Wpf.csproj --configuration ${{ env.BUILD_CONFIGURATION }} --framework net6.0-windows --output publish --runtime ${{ inputs.architecture }} --self-contained false -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true -p:PublishSingleFile=true -p:UseAppHost=true
       
       # Upload build artifacts (optional)
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Build-${{ github.run_number }}  # Include run number
+          name: BrowserApp-${{ inputs.architecture }}-${{ github.run_number }}  # Include run number
           path: ./publish

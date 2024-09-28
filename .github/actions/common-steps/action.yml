@@ -1,0 +1,23 @@
+name: Setup .NET Project
+description: Steps for common tasks like checking out code and setting up .NET SDK
+inputs:
+  dotnet-version:
+    description: 'Specify the .NET SDK version to use'
+    required: true
+    default: '6.x'
+    
+runs:
+  using: 'composite'
+  steps:      
+    - name: Set up .NET Core SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ inputs.dotnet-version }}
+
+    - name: Cache NuGet packages
+      uses: actions/cache@v4
+      with:
+        path: ${{ github.workspace }}/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
