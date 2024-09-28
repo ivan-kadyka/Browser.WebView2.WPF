@@ -59,6 +59,14 @@ jobs:
       # Build the solution
       - name: Build the solution
         run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }}
+      
+        
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: |
+            Src/Browser.App.Wpf/bin/${{ env.BUILD_CONFIGURATION }}  
   tests_coverage:
     runs-on: windows-latest
     needs: build
@@ -67,10 +75,15 @@ jobs:
       # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v4
+        
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build  
       
       # Run tests with code coverage collection
       - name: Run Tests with Code Coverage
-        run: dotnet test Browser.Wpf.sln --configuration ${{ env.BUILD_CONFIGURATION }} --collect:"XPlat Code Coverage"
+        run: dotnet test Browser.Wpf.sln --configuration ${{ env.BUILD_CONFIGURATION }} --collect:"XPlat Code Coverage" --no-build
       
       # Generate code coverage report in Cobertura format
       - name: Generate Code Coverage Report
