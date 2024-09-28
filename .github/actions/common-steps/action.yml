@@ -8,10 +8,7 @@ inputs:
     
 runs:
   using: 'composite'
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4  
-      
+  steps:      
     - name: Set up .NET Core SDK
       uses: actions/setup-dotnet@v4
       with:
