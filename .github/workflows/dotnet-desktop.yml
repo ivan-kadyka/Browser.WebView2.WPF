@@ -8,6 +8,14 @@ on:
         required: false
         type: boolean
         default: false
+      architecture:
+        description: "architecture"
+        required: false
+        default: "win-x64"
+        type: choice
+        options:
+          - win-x64
+          - win-arm64  
   push:
     branches:
       - master
@@ -88,11 +96,11 @@ jobs:
 
       # Publish the build artifacts
       - name: Publish Build Artifacts
-        run: dotnet publish --configuration Release --output ./publish
+        run:  dotnet publish Src\Browser.App.Wpf\Browser.App.Wpf.csproj --configuration Release --framework net6.0-windows --output publish --runtime ${{ inputs.architecture }}" --self-contained false -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true -p:PublishSingleFile=true -p:UseAppHost=true
       
       # Upload build artifacts (optional)
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Build-${{ github.run_number }}  # Include run number
+          name: BrowserApp-${{ inputs.architecture }}"-${{ github.run_number }}  # Include run number
           path: ./publish
