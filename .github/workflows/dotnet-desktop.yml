@@ -36,13 +36,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         
-      - name: Setup and Restore
+      - name: Setup solution
         uses: ./.github/actions/common-steps
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
     
       # Build the solution
-      - name: Build the solution
+      - name: Build solution
         run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }}
   tests_coverage:
     runs-on: windows-latest
@@ -52,7 +52,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4  
         
-      - name: Setup and Restore
+      - name: Setup solution
         uses: ./.github/actions/common-steps
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
@@ -84,7 +84,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4  
         
-      - name: Setup and Restore
+      - name: Setup solution
         uses: ./.github/actions/common-steps
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
