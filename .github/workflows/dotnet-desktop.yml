@@ -1,4 +1,4 @@
-name: Build & Tests App
+name: Desktop App
 
 on:
   workflow_dispatch:
