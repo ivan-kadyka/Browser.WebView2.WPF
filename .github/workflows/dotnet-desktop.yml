@@ -33,29 +33,11 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      # Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      # Set up .NET Core SDK
-      - name: Set up .NET Core SDK
-        uses: actions/setup-dotnet@v4
+      - name: Setup and Restore
+        uses: ./.github/actions/common-steps
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-      
-      # Cache NuGet packages
-      - name: Cache NuGet packages
-        uses: actions/cache@v4
-        with:
-          path: ${{ github.workspace }}/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-      
-      # Restore NuGet packages
-      - name: Restore NuGet packages
-        run: dotnet restore
-      
+    
       # Build the solution
       - name: Build the solution
         run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }}
@@ -64,9 +46,11 @@ jobs:
     needs: build
     environment: AppConfig
     steps:
-      # Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v4
+      steps:
+      - name: Setup and Restore
+        uses: ./.github/actions/common-steps
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
       
       # Run tests with code coverage collection
       - name: Run Tests with Code Coverage
@@ -92,9 +76,11 @@ jobs:
     needs: tests_coverage
     if: github.ref_name == 'develop' || github.ref_name == 'master' || github.event.inputs.run_publish == 'true'
     steps:
-      # Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v4
+      steps:
+      - name: Setup and Restore
+        uses: ./.github/actions/common-steps
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       # Publish the build artifacts
       - name: Publish Build Artifacts
