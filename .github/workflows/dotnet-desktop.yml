@@ -26,6 +26,8 @@ on:
       - develop
 env:
   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+  DOTNET_VERSION: '6.x'
+  BUILD_CONFIGURATION: 'Release'
 
 jobs:
   build:
@@ -39,7 +41,7 @@ jobs:
       - name: Set up .NET Core SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6.x'  # Adjust to your .NET version
+          dotnet-version: ${{ env.DOTNET_VERSION }}
       
       # Cache NuGet packages
       - name: Cache NuGet packages
@@ -56,7 +58,7 @@ jobs:
       
       # Build the solution
       - name: Build the solution
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }}
   tests_coverage:
     runs-on: windows-latest
     needs: build
@@ -68,7 +70,7 @@ jobs:
       
       # Run tests with code coverage collection
       - name: Run Tests with Code Coverage
-        run: dotnet test Browser.Wpf.sln --configuration Release --collect:"XPlat Code Coverage"
+        run: dotnet test Browser.Wpf.sln --configuration ${{ env.BUILD_CONFIGURATION }} --collect:"XPlat Code Coverage"
       
       # Generate code coverage report in Cobertura format
       - name: Generate Code Coverage Report
@@ -96,7 +98,7 @@ jobs:
 
       # Publish the build artifacts
       - name: Publish Build Artifacts
-        run:  dotnet publish Src\Browser.App.Wpf\Browser.App.Wpf.csproj --configuration Release --framework net6.0-windows --output publish --runtime ${{ inputs.architecture }} --self-contained false -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true -p:PublishSingleFile=true -p:UseAppHost=true
+        run:  dotnet publish Src\Browser.App.Wpf\Browser.App.Wpf.csproj --configuration ${{ env.BUILD_CONFIGURATION }} --framework net6.0-windows --output publish --runtime ${{ inputs.architecture }} --self-contained false -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true -p:PublishSingleFile=true -p:UseAppHost=true
       
       # Upload build artifacts (optional)
       - name: Upload Build Artifacts
