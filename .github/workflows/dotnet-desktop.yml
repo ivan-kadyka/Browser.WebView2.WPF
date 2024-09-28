@@ -87,7 +87,7 @@ jobs:
 
   publish:
     runs-on: windows-latest
-    needs: build
+    needs: tests_coverage
     if: github.ref_name == 'develop' || github.ref_name == 'master' || github.event.inputs.run_publish == 'true'
     steps:
       # Checkout the repository
