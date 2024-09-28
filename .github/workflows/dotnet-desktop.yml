@@ -34,7 +34,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Setup and Restore
-        uses: ./.github/actions/common-steps
+        uses: .github/actions/common-steps.yml
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
     
@@ -46,9 +46,8 @@ jobs:
     needs: build
     environment: AppConfig
     steps:
-      steps:
       - name: Setup and Restore
-        uses: ./.github/actions/common-steps
+        uses: .github/actions/common-steps.yml
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
       
@@ -76,9 +75,8 @@ jobs:
     needs: tests_coverage
     if: github.ref_name == 'develop' || github.ref_name == 'master' || github.event.inputs.run_publish == 'true'
     steps:
-      steps:
       - name: Setup and Restore
-        uses: ./.github/actions/common-steps
+        uses: .github/actions/common-steps.yml
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
