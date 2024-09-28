@@ -1,14 +1,18 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using Browser.Abstractions;
+using Browser.Abstractions.Page;
 using PresenterBase.Presenter;
 
-namespace BrowserApp;
+namespace BrowserApp.Main;
 
 internal class MainPresenter : Presenter
 {
     private readonly IPresenter _topPanelPresenter;
     private readonly IPresenter _pagePresenter;
-    
+
     public override object Content => _view;
     
     private readonly IMainWindow _view;
@@ -17,7 +21,8 @@ internal class MainPresenter : Presenter
         MainViewModel viewModel,
         IMainWindow view,
         IPresenter topPanelPresenter,
-        IPresenter pagePresenter)
+        IPresenter pagePresenter,
+        IBrowserObservable browserObservable)
     {
         _view = view;
         
@@ -27,8 +32,16 @@ internal class MainPresenter : Presenter
         _view.DataContext = viewModel;
         _view.SetTopPanelContent(topPanelPresenter.Content);
         _view.SetPageContent(pagePresenter.Content);
+        
+        AddDisposable(browserObservable.PageRemoved.Subscribe(_ => OnPagesChanged(browserObservable.Pages)));
     }
-    
+
+    private void OnPagesChanged(IReadOnlyList<IPage> pages)
+    {
+        if (pages.Count == 0)
+            _view.Close();
+    }
+
     protected override async Task OnStarted(CancellationToken token = default)
     {
         await base.OnStarted(token);

@@ -1,4 +1,4 @@
-﻿namespace BrowserApp
+﻿namespace BrowserApp.Main
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using BrowserApp.Main;
 using BrowserApp.Module;
 using Microsoft.Extensions.DependencyInjection;
 using PresenterBase.Presenter;
@@ -9,7 +10,7 @@ namespace BrowserApp
     {
         private IPresenter? _mainPresenter;
 
-        private readonly ServiceProvider _serviceProvider;
+        private readonly AppServiceProvider _serviceProvider;
         
         public App()
         {
@@ -25,10 +26,14 @@ namespace BrowserApp
         }
 
 
-        protected override void OnExit(ExitEventArgs e)
+        protected override async void OnExit(ExitEventArgs e)
         {
-            _serviceProvider.Dispose();
             base.OnExit(e);
+            
+            if (_mainPresenter != null)
+                await _mainPresenter.Stop();
+         
+            _serviceProvider.Dispose();
         }
     }
 }

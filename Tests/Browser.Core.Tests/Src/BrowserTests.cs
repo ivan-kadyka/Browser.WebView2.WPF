@@ -1,5 +1,4 @@
 ﻿using Browser.Abstractions;
-using Browser.Abstractions.Page;
 using Browser.Abstractions.Page.Factory;
 using Browser.Settings.Abstractions;
 using Browser.Settings.Sections;

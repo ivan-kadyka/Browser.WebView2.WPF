@@ -7,6 +7,10 @@
         <RootNamespace>Browser.Abstractions</RootNamespace>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\..\Infra\Reactive.Extensions\Reactive.Extensions.csproj" />
     </ItemGroup>

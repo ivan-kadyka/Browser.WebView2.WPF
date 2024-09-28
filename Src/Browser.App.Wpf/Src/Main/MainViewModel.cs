@@ -2,7 +2,7 @@
 using Browser.Core.Commands;
 using PresenterBase.ViewModel;
 
-namespace BrowserApp;
+namespace BrowserApp.Main;
 
 internal class MainViewModel : ViewModelBase
 {
