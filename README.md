@@ -14,8 +14,6 @@
 >
 
 <div style="display: flex; flex-direction: row;">
- <img src="docs/images/browser_preview_1.png"   style="width: 48%;"/>
- <img src="docs/images/browser_preview_2.png"  style="width: 51%;"/>
 </div>
 
 ## Projects structure
