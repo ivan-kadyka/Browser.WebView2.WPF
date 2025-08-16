@@ -206,7 +206,7 @@ INavigationRouter
 public interface INavigationRouter : IPathObservable
 {
     /// <summary>
-    /// Navigates forward in the navigation history.
+    /// Navigates forward in the navigation history
     /// </summary>
     void Forward();
     
